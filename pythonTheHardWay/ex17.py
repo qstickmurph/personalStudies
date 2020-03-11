@@ -10,7 +10,7 @@ inData = inFile.read()
 
 print(f"The input file is {len(inData)} bytes long")
 
-print("Does the output file exist? {exists(toFile)}")
+print(f"Does the output file exist? {exists(toFile)}")
 print("Ready? Hit RETURN to continue, CRTL-C to abort")
 input()
 
