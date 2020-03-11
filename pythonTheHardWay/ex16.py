@@ -23,9 +23,7 @@ line3 = input("line3 = ")
 
 print("I'm going to write thses to the file.")
 
-target.write(line1 + "\n")
-target.write(line2 + "\n")
-target.write(line3 + "\n")
+target.write(line1 + "\n" + line2 + "\n" + line3 + "\n")
 
 print("And finally, we close it.")
 target.close()
