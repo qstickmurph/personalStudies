@@ -10,5 +10,3 @@ class Room(object):
 
     def addPaths(self, paths):
         self.paths.update(paths)
-
-
