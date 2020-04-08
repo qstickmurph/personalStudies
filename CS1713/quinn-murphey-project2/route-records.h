@@ -1,8 +1,9 @@
-#ifndef ROUTE-RECORDS.H
-#define ROUTE-RECORDS.H
+#ifndef ROUTE_RECORDS_H
+#define ROUTE_RECORDS_H
 
+#include <stdio.h>
 
-typedef struct RouteRecords RouteRecord{
+typedef struct RouteRecord{
 	
 	char origin[4];
 	char destination[4];
