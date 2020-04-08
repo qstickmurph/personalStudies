@@ -1,0 +1,97 @@
+Symbol review notes:
+
+KEYWORDS:
+
+*and: Logical and, same as mathematical and [True and False == False]
+*as: Second half of "with-as" statement which is as follows
+	with-as: The with as statement allows for an object to be initialized (with variable name after as) such that the __enter__() function always runs before the with-as block and the __exit__() function will always run when the program breaks out of the with-as block or finishes the block. This allows for guaranteed proper closing statements for an object such as close() for a file. [with open("file.txt") as f: . . .]
+*assert: This allows you to assert that a condition is true. What this means, is that if the program contradicts the assertion, the program stops and sends an optional error message. If the program agrees with the assertion, then the code keeps running. [assert (condition), "Error message"]
+*break: breaks out of the inner-most loop it is in and continues after the loop block [while True: break]
+*class: defines a class (expand more on this after OOP training)
+*continue: jumps to very end of the loop, runs the ending code in a for loop, then checks the condition to see if the loop continues running. [while True: continue]
+*def: defines a function [def Function(x,i): . . .]:
+*del: deletes an entry from a dict
+*do: first part of do-while loop. Same as while, but always runs at least once and checks at the end of the loop.
+*elif: else if function
+*else: runs if no elif of if function preceeding ran
+*except: part of an try-except-finally statement as follows
+	try-except-finally: The try block outlines the code to attempt to run, then the except (error) [as var] block if the exception error was called. Last, the finally block always runs, usually to clean up. 
+*exec: runs a string as a dynamically created python function. Can also pass local and global dictionaries through to the function. [exec('a = 5\na*=5\nprint(a)')]
+*finally: runs code after either try or except block finish. Usually used for clean up code. See except.
+*for: A loop which is determined at the time it begins, usually over a collection of things.
+*from: Used in a from-import-as statement, used to define the module from which you are importing from.
+	from-import-as: From defined as above. Import imports the submodule, subpackage, or object named inside of from. and as allows you to locally rename the import object.
+*global: Declare that you are refering to the global variable inside of a local scenario
+*if: Runs the below code if the condition evaluates as true.
+*import: see from
+*in: defines the string, list, tuple, dict, set, frozenset, etc which you are iterating over
+*is: same as ==
+*lambda: a small anonymous function. [s = lambda y: y*y; s(3)]
+*not: logical not
+*or: logical or
+*pass: lets python know this block is empty without raising a syntax error
+*print: print this string
+*raise: Raise an exception [raise ValueError(errorMessage)]
+*return: exit the function with a return value [def Y(): return -1]
+*try: see except
+*while: a loop which continues to run until the condition is not met. Checks at the start of each loop
+*with: see as
+*yield: Pause here and return to caller, continued by calling same fucntion with .next() function
+
+DATATYPES:
+
+*True: true boolean value
+*False: false boolean value
+*None: same as nothing or null
+*bytes: stores bytes [x = b"Hello"]
+*strings: stores text info [x = "Hello"]
+*numbers: stores integers [x = 100]
+*floats: stores decimals [x = 10.1]
+*lists: stores an ordered list of things [ list = [1, 'x', 2.5, 123123] ]
+*dicts: stpres a key=value mapping of things [ dict = {'x': 1, 'y': 2} ] each element is key : value
+*set: an unordered collection of unique objects [ set = {'x', 'y', 'z'} ]
+
+STRING ESCAPE SEQUENCES:
+
+\\ backslash
+\' single quote
+\" double quote
+\a bell
+\b backspace
+\f formfeed
+\n newline
+\r carriage
+\t tab
+\v vertical tab
+
+OPERATORS:
+
++ add
+- subtract
+* multiplication
+** power of
+/ division
+// floor division
+% modulus or string interpolate
+< less than
+> greater than
+<= less than or equal
+>= greater than or equal
+== equal
+!= not equal
+() parenthesis
+[] brackets
+{} braces (curly brackets)
+@ decorators
+, comma
+: colon
+. dot
+= assign-equal
+; semi-colon
++= add and assign
+-= subtract and assign
+*= multiply and assign
+/= divide and assign
+//= floor divide and assign
+% modulus and assign
+**= power and assign
