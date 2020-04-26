@@ -1,8 +1,8 @@
 ###########################
 # 6.0002 Problem Set 1a: Space Cows 
-# Name:
-# Collaborators:
-# Time:
+# Name: Quinn Murphey
+# Collaborators: None
+# Time: April 25 2020
 
 from ps1_partition import get_partitions
 import time
@@ -24,8 +24,11 @@ def load_cows(filename):
     Returns:
     a dictionary of cow name (string), weight (int) pairs
     """
-    # TODO: Your code here
-    pass
+    weights = {}
+    f = open("ps1_cow_data.txt")   
+
+
+    return weights
 
 # Problem 2
 def greedy_cow_transport(cows,limit=10):
