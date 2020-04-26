@@ -11,8 +11,12 @@ typedef struct Student {     // Define elements for each Student Node
 
 void print(Student *s);
 
-void insertStudentSortedByName(Student *s);
+Student *insertStudentSortedByName(Student *s, Student *new);
 
-void sortListByID(Student *s);
+void Split(Student *head, Student **frontRef, Student **backRef);
+
+Student *Merge(Student *a, Student *b);
+	
+void sortListByID(Student **headRef);
 
 #endif

@@ -1,13 +1,46 @@
-/* main.c file */
-#include<stdio.h> 
-#include<string.h> 
-#include"student.h" 
-int main(int argc, char *argv[]) {     
-	// Check for the command line argument and open the file for reading the data.     
-	// For each line read, call the function “insertStudentSortedByName()” to create and add the student in the linked list in alphabetical order of the student name. Keep track of the head pointer.     
-	// Print the original list by calling the “print()” function. This print execution will print the list sorted by name.     
-	// Sort the linked list in increasing order of the student ID by calling the “sortListByID()” function.     
-	// Print this sorted list again, by calling the “print()” function. This print execution will print the list sorted by ID.     
+#include<stdio.h>
+#include<string.h>
+#include<stdlib.h>
+#include"student.h"
+
+int main(int argc, char *argv[]) {
+
+	FILE *inFile;
+	char buffer[1000];
+
+	if(argc != 2){
+		printf("usage: runMe <fileName>\n");
+		return -1;
+	}
 	
+	inFile = fopen(argv[1], "r");
+	if(inFile == NULL){
+		printf("Invalid file name\n");
+		return -1;
+	}
+	
+	Student *head;
+	while(fgets(buffer, 1000, inFile) != NULL){
+		Student *new = (Student*)(malloc(sizeof(Student)));
+		if (3 != sscanf(buffer, "%d,%[^,],%lf", &(new->id), new->name, &(new->gpa))){// skips if incorrectly formatted
+			continue;
+		}
+		if(head == NULL){
+			head = new;
+		}else{
+			head = insertStudentSortedByName(head, new);
+		}
+	}
+
+	printf("Students sorted by name: \n");
+	print(head);
+	printf("\n");
+
+	sortListByID(&head);
+
+	printf("Students sorted by id: \n");
+	print(head);
+	printf("\n");
+
 	return 0; 
 }
