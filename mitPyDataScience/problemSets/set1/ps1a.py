@@ -25,9 +25,11 @@ def load_cows(filename):
     a dictionary of cow name (string), weight (int) pairs
     """
     weights = {}
-    f = open("ps1_cow_data.txt")   
-
-
+    f = open(filename, "r")
+    lines = f.readlines()
+    lines = [line.split(',') for line in lines]
+    for line in lines:
+        weights[line[0]] = (int)(line[1])
     return weights
 
 # Problem 2
@@ -53,8 +55,25 @@ def greedy_cow_transport(cows,limit=10):
     transported on a particular trip and the overall list containing all the
     trips
     """
-    # TODO: Your code here
-    pass
+    result = []
+    tempCows = cows
+    
+    while len(tempCows) > 0: # loop until no cows remain
+        trip = []
+        currentWeight = 0
+        while currentWeight < limit and len(tempCows) > 0: # loop until spaceship is full
+            currentCow = (None,0) # base cow
+            for cow in tempCows.items(): # find max cow
+                if cow[1] > currentCow[1] and currentWeight + cow[1] <= limit:
+                    currentCow = cow
+            if currentCow == (None, 0):
+                break
+            trip.append(currentCow[0])
+            tempCows.pop(currentCow[0])
+            currentWeight += currentCow[1]
+        result.append(trip)
+
+    return result
 
 # Problem 3
 def brute_force_cow_transport(cows,limit=10):
@@ -78,8 +97,48 @@ def brute_force_cow_transport(cows,limit=10):
     transported on a particular trip and the overall list containing all the
     trips
     """
-    # TODO: Your code here
-    pass
+    
+    cowList = []
+    for name, weight in cows.items():
+        tempList = [name, weight]
+        cowList.append(tempList)
+
+    indexList = []
+    for i in range(len(cowList)):
+        indexList.append(i)
+    
+    minTrips = len(cowList)
+    bestRun = None
+    for partition in get_partitions(indexList): # loop over every partition
+        tripCount=0
+        valid = True
+        for trip in partition: # loop over each trip in partition
+            weightSum = 0
+            tripCount += 1
+            for index in trip: # sum weight of each trip
+                weightSum += cowList[index][1]
+            if weightSum > limit:
+                valid = False
+                # print("Denied {} because trip {} had weight {}".format(partition, trip, weightSum))
+                break
+        if valid and tripCount < minTrips: 
+            bestRun = partition
+            minTrips = len(bestRun)
+        elif valid:
+            print(f"Denied {partition} because {tripCount} >= {minTrips}")
+    
+    print(bestRun)
+    result = []
+    for trip in bestRun:
+        temp = []
+        for index in trip:
+            temp.append(cowList[index])
+        result.append(temp)
+    
+    return result
+
+
+
         
 # Problem 4
 def compare_cow_transport_algorithms():
@@ -97,3 +156,6 @@ def compare_cow_transport_algorithms():
     """
     # TODO: Your code here
     pass
+
+#print(greedy_cow_transport(load_cows('ps1_cow_data.txt'), 10))
+print(brute_force_cow_transport(load_cows('ps1_cow_data.txt'), 10))
