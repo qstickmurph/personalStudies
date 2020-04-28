@@ -2,7 +2,7 @@
 # 6.0002 Problem Set 1a: Space Cows 
 # Name: Quinn Murphey
 # Collaborators: None
-# Time: April 25 2020
+# Time: 2.5 hours
 
 from ps1_partition import get_partitions
 import time
@@ -125,9 +125,10 @@ def brute_force_cow_transport(cows,limit=10):
             bestRun = partition
             minTrips = len(bestRun)
         elif valid:
-            print(f"Denied {partition} because {tripCount} >= {minTrips}")
+            pass
+            #print(f"Denied {partition} because {tripCount} >= {minTrips}")
     
-    print(bestRun)
+    #print(bestRun)
     result = []
     for trip in bestRun:
         temp = []
@@ -141,7 +142,7 @@ def brute_force_cow_transport(cows,limit=10):
 
         
 # Problem 4
-def compare_cow_transport_algorithms():
+def compare_cow_transport_algorithms(f):
     """
     Using the data from ps1_cow_data.txt and the specified weight limit, run your
     greedy_cow_transport and brute_force_cow_transport functions here. Use the
@@ -154,8 +155,25 @@ def compare_cow_transport_algorithms():
     Returns:
     Does not return anything.
     """
-    # TODO: Your code here
-    pass
+    print(f"Loading cows from {f}")
+    cows = load_cows(f)
+    print("Greedy Method:")
+    start = time.time()
+    out = greedy_cow_transport(cows, 10)
+    end = time.time()
+    print(f"\tTrip Data: {out}")
+    print(f"\tNumber of Trips: {len(out)}")
+    print(f"\tRuntime: {end-start}")
 
-#print(greedy_cow_transport(load_cows('ps1_cow_data.txt'), 10))
-print(brute_force_cow_transport(load_cows('ps1_cow_data.txt'), 10))
+    cows = load_cows(f)
+    print("Brute Force Method:")
+    start = time.time()
+    out = brute_force_cow_transport(cows, 10)
+    end = time.time()
+    print(f"\tTrip Data: {out}")
+    print(f"\tNumber of Trips: {len(out)}")
+    print(f"\tRuntime: {end-start}")
+    
+
+if __name__ == "__main__":
+    compare_cow_transport_algorithms('ps1_cow_data.txt')
