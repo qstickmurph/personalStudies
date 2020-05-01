@@ -1,10 +1,10 @@
 from drunkenWalkClasses import Location, Field, Drunk, UsualDrunk
+from newDrunks import ColdDrunk, EWDrunk
 
 def walk(f, d, numSteps):
     """Assumes f is a Field, d is a Drunk in f, and numSteps is an int >= 0
        Moves d numSteps times; returns the distance between the final location
        and the location at the start of the walk. """
-
 
     start = f.getLoc(d)
     for s in range(numSteps):
@@ -36,11 +36,12 @@ def drunkTest(walkLengths, numTrials, dClass):
         print(' Mean =', round(sum(distances)/len(distances), 4))
         print(' Max =', max(distances), 'Min =', min(distances))
 
+def simAll(drunkKinds, walkLengths, numTrials):
+    for dClass in drunkKinds:
+        drunkTest(walkLengths, numTrials, dClass)
+
 if __name__ == '__main__':
-    d = UsualDrunk()
-    f = Field()
-    origin = Location(0,0)
-    f.addDrunk(d, origin)
-    for s in range(0):
-        f.moveDrunk(d)
-    # drunkTest((10, 100, 1000, 10000), 100, UsualDrunk)
+    drunkKinds = [UsualDrunk, ColdDrunk, EWDrunk]
+    walkLengths = (10, 100, 1000, 10000)
+    numTrials = 100
+    simAll(drunkKinds, walkLengths, numTrials)

@@ -7,8 +7,7 @@ class Location(object):
         self.y = y
 
     def move(self, deltaX, deltaY):
-        self.x += deltaX
-        self.y += deltaY
+        return Location(self.x + deltaX, self.y + deltaY)
 
     def getX(self):
         return self.x
