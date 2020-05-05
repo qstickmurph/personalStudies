@@ -5,11 +5,11 @@ typedef enum CardType {ATTACK, DEFEND, RUN} CardType;
 typedef struct Card{
 	CardType type;
 	int value;
-	Card *next;
+	struct Card *next;
 }Card;
-Card *createCard(Card *head);
-Card *removeCard(Card *head, Card *c);
-Card *addCard(Card *head);
+Card *createCard();
+Card *removeCard(Card *head);
+Card *addCard(Card *head, Card *c);
 int getLength(Card *head);
 void printCard(Card *head);
 void printCards(Card *head);

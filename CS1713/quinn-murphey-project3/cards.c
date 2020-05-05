@@ -1,5 +1,6 @@
 #include "cards.h"
 #include <stdlib.h>
+#include <stdio.h>
 
 Card *createCard(){
 	Card *card = (Card*)(malloc(sizeof(Card)));
@@ -20,23 +21,31 @@ Card *createCard(){
 }
 
 Card *removeCard(Card *head){
+	if(head == NULL){
+		return head;
+	}
 	Card *newHead = head->next;
 	free(head);
 	return newHead;
 }
 
 Card *addCard(Card *head, Card *c){
-	if(head->value < c->value){
+	if(head->value <= c->value){
 		c->next = head;
 		return c;
 	}
 	for(Card *h = head; h != NULL; h=h->next){
-		if(h->next->value < c->value){
+		if(h->next == NULL){
+			h->next = c;
+			return head;
+		}
+		else if(h->next->value <= c->value){
 			c->next = h->next;
 			h->next = c;
 			return head;
 		}
 	}
+	return head;
 }
 
 int getLength(Card *head){
@@ -57,24 +66,33 @@ void printCard(Card *head){
 	}
 }
 
-void printCards(Card *head);{
+void printCards(Card *head){
 	for(Card *h = head; h != NULL; h = h->next){
-		if(h->type == ATTACK){
-			printf("A%d", h->value);
-		}else if(h->type == DEFEND){
-			printf("D%d", h->value);
-		}else{
-			printf("R%d", h->value);
+		printCard(h);
+		if(h->next != NULL){
+			printf(", ");
 		}
 	}	
 }
 
 Card *buildCards(int n){
-	
+	if(n <= 0){
+		return NULL;
+	}
+	Card *h = createCard();
+	for(int i = 1; i < n; ++i){
+		Card *new = createCard();
+		h = addCard(h, new);
+	}
+	return h;
 }
 
 Card *destroyCards(Card *head){
-	
+	if(head == NULL){
+		return head;
+	}
+	Card *next = head->next;
+	free(head);
+	destroyCards(next);
+	return head;
 }
-
-#endif
