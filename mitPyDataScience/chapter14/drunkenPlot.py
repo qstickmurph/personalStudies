@@ -67,6 +67,27 @@ def plotLocs(drunkKinds, numSteps, numTrials):
     pylab.ylabel('Steps North/South of Origin')
     pylab.legend(loc = 'lower left')
 
+def traceWalk(drunkKinds, numSteps):
+    styleChoice = styleIterator(('k+', 'r^', 'mo'))
+    f = Field()
+    for dClass in drunkKinds:
+        d = dClass()
+        f.addDrunk(d, Location(0,0))
+        locs = []
+        for s in range(numSteps):
+            f.moveDrunk(d)
+            locs.append(f.getLoc(d))
+        xVals, yVals = [], []
+        for loc in locs:
+            xVals.append(loc.getX())
+            yVals.append(loc.getY())
+        curStyle = styleChoice.nextStyle()
+        pylab.plot(xVals, yVals, curStyle, label=dClass.__name__)
+    pylab.title('Spots visited on walk (' + str(numSteps) + ' steps)')
+    pylab.xlabel('Steps East/West of Origin')
+    pylab.ylabel('Steps North/South of Origin')
+    pylab.legend(loc = 'best')
+
 
 if __name__=='__main__':
     pylab.figure(1)
@@ -74,4 +95,6 @@ if __name__=='__main__':
            (10, 100, 1000, 10000), 100)
     pylab.figure(2)
     plotLocs((UsualDrunk, ColdDrunk, EWDrunk), 100, 200)
+    pylab.figure(3)
+    traceWalk((UsualDrunk, ColdDrunk, EWDrunk), 200)
     pylab.show()
