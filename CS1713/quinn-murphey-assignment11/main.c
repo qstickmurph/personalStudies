@@ -14,24 +14,33 @@ void printMenu(){
 int main(int argc, char *argv[]){
 	BSTNode *root = NULL;
 	int input;
+	int numNodes = 0;
 	printMenu();	
 	scanf("%d", &input);
 	while(input != 0){
 		int secondInput;
-		BSTNode *temp;
-		int numNodes;
 		switch(input){
 			case 1:
 				printf("\n");
 				printf("Input a value : ");
 				scanf("%d", &secondInput);
-				insertNode(root, createNode(secondInput));
+				if(root == NULL || search(root,secondInput) == NULL){
+					numNodes++;
+					root = insertNode(root, createNode(secondInput));
+				}else{
+					printf("That node is already in the tree");
+				}
 				break;
 			case 2:
 				printf("\n");
 				printf("Input a value : ");
 				scanf("%d", &secondInput);
-				removeNode(root, secondInput);
+				if(search(root,secondInput) != NULL){
+					numNodes--;
+					root = removeNode(root, secondInput);
+				}else{
+					printf("That node is not in the tree");
+				}
 				break;
 			case 3:
 				printf("\n");
@@ -55,12 +64,6 @@ int main(int argc, char *argv[]){
 				}
 				break;
 			case 4:
-				temp = root;
-				numNodes = 0;
-				while(temp != NULL){
-					numNodes++;
-					removeNode(temp, findLeftestLowestChild(temp)->val);
-				}
 				printf("\nNumber of nodes: %d", numNodes);
 				break;
 			case 0:

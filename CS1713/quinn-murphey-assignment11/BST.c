@@ -125,8 +125,10 @@ BSTNode* findLeftestLowestChild(BSTNode* root){
 	if(root == NULL){
 		return NULL;
 	}else if(root->left != NULL){
+		printf("\tLooking left");
 		return findLeftestLowestChild(root->left);
 	}else if(root->right != NULL){
+		printf("\tLooking left");
 		return findLeftestLowestChild(root->right);
 	}
 	return root;
