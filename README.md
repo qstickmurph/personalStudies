@@ -1,21 +1,26 @@
 # personalStudies
+This repository contains code for my personal studies both in classes (given by class name CS#### or MAT####) and personal study.
 
 ## CS1713
-This is the compilation of all my class assignments and more
+Computer Programming 2
 
-### Assignment 1
+## CS3424
+Systems Programming
 
-Make a program that finds the roots of a quadratic formula.
+## CS3443
+Application Programming
 
-### Assignment 2
+## CS3753
+Data Science
 
-Make a program that finds the mean, standard deviation, and z scores of a data set
+## CS3884
+Computer Organization
 
-### Assignment 3
+## learnFlask
+Following this tutorial [https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-i-hello-world]
 
-Make a calculator that can add, subtract, multiply, and divide multiple times.
+## mitPyDataScience
+Following the MIT course
 
-### Assignment 4
-
-Make a program that finds the distance between two points and the midpoint of the line segment created by them.
-
+## pythonTheHardWay
+Following the book
