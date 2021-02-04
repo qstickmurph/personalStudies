@@ -2,6 +2,8 @@
 .DS_STORE
 logs/
 pythonEnv/
+HOMLenv/
+dsenv/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
