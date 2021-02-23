@@ -1,0 +1,121 @@
+\documentclass[letterpaper, 12pt]{article}
+\usepackage{comment} % enables the use of multi-line comments (\ifx \fi) 
+\usepackage{fullpage} % changes the margin
+\usepackage[T1]{fontenc}
+\usepackage{selinput}
+\usepackage{enumitem}
+\usepackage{listings}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{setspace}
+\usepackage{bm}
+\usepackage{mathtools}
+
+\SelectInputMappings{
+   aacute={á},
+   ntilde={ñ}
+}
+\newcommand{\Mod}[1]{\ (\mathrm{mod}\ #1)}
+
+\begin{document}
+%Header-Make sure you update this information!!!!
+\noindent\large\textbf{Discrete Mathematics} \hfill \textbf{Quinn Murphey} \\
+\normalsize MAT 2233.001 \hfill Date: 09/09/20 \\
+Dr. Arafat \hfill Due Date: 09/10/20 \\
+
+\noindent\makebox[\linewidth]{\rule{\paperwidth}{0.4pt}}
+
+\section*{HW \#2:}
+\textbf{Let $L(x)$ denote the statement "$x$ has used LaTeX." and $D$ denote the domain of all students in our class. Express each of these quatified propositions in English:}
+\begin{enumerate}
+    \item $\forall x\in D (L(x))$.
+    
+        All the students in our class have used LaTeX.
+    
+    \item $\lnot\exists x\in D (L(x))$.
+    
+        There does not exist a student in our class that has used LaTeX.
+    
+    \item $\exists x\in D (\lnot L(x))$.
+    
+        There is a student in our class that has not used LaTeX.
+\end{enumerate}
+
+\noindent\textbf{Let $Q(x)$ denote the statement "$2^x > 3x$" and $\mathbb{Z}$ denote all integers. Determine the truth value of these statements:}
+\begin{enumerate}
+    \item $Q(2)$.
+    
+        Substituting 2 in for $x$ in $Q(x)$ we get $2^2 > 3\cdot 2$ which is false since 4 is not greater than 6. Thus $Q(2)$ is false.
+    
+    \item $Q(4)$.
+    
+        Substituting 4 in for $x$ in $Q(x)$ we get $2^4 > 3\cdot 4$ which is true since 16 is greater than 12. Thus $Q(4)$ is true.
+    
+    \item $\forall x\in\mathbb{Z} (Q(x) \lor x<4)$.
+    
+        Let $x$ be an arbitrary integer. The proposition $Q(x) \lor x < 4$ is logically equivalent to $\lnot (x < 4) \rightarrow Q(x)$. Thus, if $x < 4$, then this statement is trivially true. However, since $Q(4)$ is true (as shown above) and the left side is growing faster than the right by this point, we can show by a simple inductive argument that $x \geq 4 \rightarrow Q(x)$ for all $x\in\mathbb{Z}$. Additionally, $\lnot (x < 4) \equiv x \geq 4$ by the trichotomy principle. Thus, $\forall x\in\mathbb{Z} (Q(x) \lor x<4)$ is true.
+    
+    \item $\forall x\in\mathbb{Z} (Q(x) \land x < 4)$.
+    
+        This statement is easily false. Let $x = 4 \in\mathbb{Z}$. We see that the right side of the conjunction is false, thus the overall statement must be false.
+\end{enumerate}
+
+\noindent\textbf{Translate the following statments to English where $B(x)$ is "$x$ understands boolean algebra" and $M(x)$ is "$x$ has taken discrete mathematics" and the domain $D$ is all students at UTSA.}
+\begin{enumerate}
+    \item $\forall x\in D (M(x) \rightarrow B(x))$.
+    
+        All of the students at UTSA who have taken Discrete Mathematics understand boolean algebra.
+    
+    \item $\exists x\in D (B(x) \land \lnot M(x))$.
+    
+        There is a student at UTSA who understands boolean algebra and has not taken Discrete Mathematics.
+\end{enumerate}
+
+\noindent\textbf{Let $K(x,y)$ denote the statement "$x$ knows $y$" and $D$ denote the domain of all people. Express the following English sentences as a quantified predicate using all the definitions above.}
+\begin{enumerate}
+    \item Everybody knows somebody.
+    
+        $\forall x\in D \exists y\in D(K(x,y))$.
+    
+    \item There is somebody that no one knows.
+    
+        $\exists y\in D \forall x\in D(\lnot K(x,y))$.
+    
+    \item There is no one who knows everybody.
+    
+        "$\forall x\in D \exists y \in D(\lnot K(x,y))$" or "$\lnot\exists x \in D \forall y \in D(K(x,y))$".
+\end{enumerate}
+
+\noindent\textbf{Rewrite each of these statements such that all of the negation symbols are in front of the predicates $P$ or $Q$.}
+\begin{enumerate}
+    \item $\lnot\exists x (P(x) \land Q(x))$.
+    
+        $\forall x( \lnot P(x) \lor \lnot Q(x))$.
+    
+    \item $\lnot\forall x\exists y\forall z (P(x,y) \rightarrow Q(z,y))$.
+    
+        $\exists x \forall y \exists z (P(x,y) \land \lnot Q(z,y))$.
+\end{enumerate}
+
+\noindent\textbf{Let $S(x,y)$ denote the statement "$x$ has seen $y$" and $D$ denote the set of all students in our class and $M$ be the set of all movies.}
+\begin{enumerate}
+    \item \textbf{Express the following English sentence as a quantified proposition using the definitions above:}
+    "For every movie there is a pair of students in our class who have both seen it."
+    
+        $\forall m \in M \exists x,y\in D(S(x,m) \land S(y,m))$.
+    
+    \item \textbf{Negate the quantified predicate you wrote for part (1).}
+    
+        $\exists m \in M \forall x,y\in D(\lnot S(x,m) \lor \lnot S(y,m))$.
+    
+    \item \textbf{Translate your answer for part (2) back to plain English.}
+    
+        "There exists a movie such that for all pairs of students, at least one of the students has not seen it." 
+        
+        or 
+        
+        "There exists a movie $m$ such that for all pairs of students $(x,y)$, either $x$ has not seen $m$ or $y$ has not seen $m$ or neither have seen $m$."
+\end{enumerate}
+
+\end{document}

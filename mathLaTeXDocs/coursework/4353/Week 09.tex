@@ -1,0 +1,340 @@
+\documentclass[a4paper, 11pt]{article}
+\usepackage{comment} % enables the use of multi-line comments (\ifx \fi) 
+\usepackage{fullpage} % changes the margin
+\usepackage[T1]{fontenc}
+\usepackage{selinput}
+\usepackage{enumitem}
+\usepackage{listings}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{setspace}
+\usepackage{bm}
+\usepackage{mathtools}
+\usepackage{xcolor}
+
+\renewcommand\lstlistingname{Algorithm}
+\renewcommand\lstlistlistingname{Algorithms}
+\def\lstlistingautorefname{Alg.}
+
+\lstdefinestyle{Python}{
+    language        = Python,
+    frame           = lines, 
+    basicstyle      = \footnotesize,
+    keywordstyle    = \color{blue},
+    stringstyle     = \color{green},
+    commentstyle    = \color{red}\ttfamily
+}
+\SelectInputMappings{
+   aacute={á},
+   ntilde={ñ}
+}
+\newcommand{\Mod}[1]{\ (\mathrm{mod}\ #1)}
+
+\begin{document}
+%Header-Make sure you update this information!!!!
+\noindent
+\large\textbf{Mathematical Foundations of Cryptography} \hfill \textbf{Quinn Murphey} \\
+\normalsize MAT 4353.001 \hfill Date: 03/18/19 \\
+Dr. Dueñez \hfill Due Date: 03/19/19 \\
+\noindent\makebox[\linewidth]{\rule{\paperwidth}{0.4pt}}
+\section*{Week 9:}
+    3.22 (write a Sage script!), 3.23 except part (g), 4.1, 4.2, 4.3, 4.5, 4.6, 4.7, 4.8, 6.1, 6.2, 6.3, 6.5, 6.6, 6.7.
+    Extra credit: 6.4. (In Sage, use plot(E) where E is an elliptic curve.  Plots 6.4(d) and 6.4(e) are trickier because they are singular curves, not elliptic curves!)
+    
+\section*{Mandatory}
+
+\noindent\textbf{Problem 3.22:}
+    
+    Use Pollard's $p-1$ method to factor each of the following numbers.
+    \begin{enumerate}[label=(\alph*)]
+        \item $n=1739\Rightarrow \quad$
+        $p = 37 \qquad q = 47$
+        \item $n=220459\Rightarrow \quad$
+        $p = 449 \qquad q = 491$
+        \item $n = 48356747 \Rightarrow \quad$
+        $p = 6917 \qquad q = 6991$
+    \end{enumerate}
+    \lstset{caption={Pollard's p-1 Algorithm}}
+        \lstset{label={lst:alg1}}
+            \begin{lstlisting}[style = Python]
+                def Pollards(N,n,a):
+                for j in range(2,n):
+                    a = power(a,j)
+                    g = gcd(a-1,N)
+                    if g==N:
+                        Pollards(N,n,a+1)
+                    if (g != 1):
+                        return(g)
+                return(1)
+        \end{lstlisting}
+    \textit{Note:} a is an element of $\mathbb{Z}_N$\\
+    
+\noindent\textbf{Problem 3.23:}
+    
+    A prime of the form $2^n-1$ is called a \textit{Mersenne prime}.
+    \begin{enumerate}[label=(\alph*)]
+        \item Factor each of the numbers $2^n-1$ for $n=2,3,\dots,10$. Which ones are Mersenne primes?
+        
+        $2^2-1 = 3 =$ prime.\\
+        $2^3-1 = 7 =$ prime.\\
+        $2^4-1 = 15 = 3\cdot 5$.\\
+        $2^5-1 = 31 =$ prime.\\
+        $2^6-1 = 63 = 3\cdot 3\cdot 7$.\\
+        $2^7-1 = 127 =$ prime.\\
+        $2^8-1 = 255 = 3\cdot 5\cdot 17$.\\
+        $2^9-1 = 511 = 7\cdot 73$.\\
+        $2^{10}-1 = 1023 = 3\cdot 11\cdot 31$.
+        
+        \item Find the first seven Mersenne primes.
+        
+        The first seven Mersenne primes are of the form $2^i-1$ where $i=2, 3, 5, 7, 13, 17, 19$.
+        \item If $n$ is even and $n>2$, prove that $2^n-1$ is not prime.
+        
+        Let $n = 2k$ for some $k$ and write $2^n-1=2^{2k}-1=(2^k-1)(2^k+1)$. Which factors into non unit factors for $k>1$ so $n>2$.
+        \item If $3\vert n$ and $n>3$, prove that $2^n-1$ is not prime.
+        
+        Let $n = 3k$ for some $k$ and write $2^n-1 = 2^{3k}-1 =  (2^k - 1)(2^{2k} + 2^k + 1)$. Since $n>3$, $k>1$ and $2^k-1 > 1$ so it is a nonunit factor.
+        \item More generally, prove that if $n$ is a composite number, then $2^n-1$ is not prime. Thus all Mersenne primes have the form $2^p-1$ with $p$ a prime number.
+        
+        Let $n$ be composite. Then we can write $n=pk$ for prime $p$ and some non unit $k$. Then $2^n-1 = 2^{pk} - 1 = (2^k - 1)(\text{some polynomial in terms of }2^k \text{ over the integers})$. Therefore, since $k>1$, $2^k-1 > 1$.
+        \item What is the largest known Mersenne prime? Is it the largest known prime?
+        
+        $2^{82,589,933}-1$ and yes. Note: Discovered Dec 21, 2018
+    \end{enumerate}
+    
+\noindent\textbf{Problem 4.1:}
+    
+    Samantha uses the RSA signature scheme with primes $p=541$ and $q=1223$ and public verification exponent $e=159853$.
+    \begin{enumerate}[label=(\alph*)]
+        \item What is Samantha's public modulus? What is her private signing key?
+        
+        Public Key: $K_{pub} = (N=p\cdot q,e) = (661643,159853).$\\
+        Private Key: $K_{priv} = (p,q,e^{-1} \text{ mod } 100980) = (541,1123,33397).$
+        \item Samantha signs the digital document $D=630579.$ What is the signature?
+        
+        $D_{sig} = 630579^{33397}\Mod{661643} = 176188$
+    \end{enumerate}
+    
+\noindent\textbf{Problem 4.2:}
+    
+    Samantha uses the RSA signature scheme with public modulus $N=1562501$ and public verification exponent $e=87953$. Adam claims that Samantha has signed each of the documents $$D=119812, \quad D'=161153, \quad D''=586036$$ and the associated signatures are $$S=876453, \quad S'=870099, \quad S''=602754.$$ Which of these are valid signatures?
+    
+    (1) $S=876453$; $S^e \Mod{N} \equiv 876453^{87953} \Mod{N} \equiv 772481 \Mod{N} \not\equiv D$ (Invalid)
+    
+    (2) $S'=870099$; $S^e \Mod{N} \equiv 870099^{87953} \Mod{N} \equiv 772481 \Mod{N} \not\equiv D'$ (Invalid)
+    
+    (3) $S''=602754$; $S^e \Mod{N} \equiv 602754^{87953} \Mod{N} \equiv 586036 \Mod{N} \equiv D''$ (Valid)\\
+    
+\noindent\textbf{Problem 4.3:}
+    
+    Samantha uses the RSA signature scheme with public modulus and public verification exponent $$
+    N = 27212325191 \quad\text{and}\quad e = 22824469379.$$ Use whatever method you want to factor $N$, and then forge Samantha’s signature on the document $D = 12910258780.$
+    
+    $N = 27212325191 = 128311\cdot212081$. Then we can find $L=\text{lcm}(128310,212080)=2721198480$ and $d\equiv e^{-1}\Mod{L} \equiv 2081437739$ to calculate $D_{sig} =\equiv D^d\Mod{L} \equiv 2453013520.$
+    
+\noindent\textbf{Problem 4.5:}
+    
+    Samantha uses the ElGamal signature scheme with prime $p = 6961$ and primitive root $g = 437$.
+    \begin{enumerate}[label=(\alph*)]
+        \item Samantha’s private signing key is $a = 6104$. What is her public verification key?
+        
+        $K_{pub} = (p=6961,g=437)$
+        \item Samantha signs the digital document $D = 5584$ using the ephemeral key $e = 4451$. What is the signature?
+        
+        $S = (S_1, S_2)$ where $S_1\equiv g^e\Mod{p}\equiv437^{4451}\Mod{6961}\equiv 3534 \Mod{6961}$ and $S_2 \equiv (D-aS_1)e^{-1} \Mod{6960} \equiv (5584 - 6104\cdot 3534)\cdot 491 \Mod{6960} \equiv $.
+        
+        Therefore $S=(3534,5888)$.
+    \end{enumerate}
+    
+\noindent\textbf{Problem 4.6:}
+    
+    Samantha uses the ElGamal signature scheme with prime $p = 6961$ and primitive root $g = 437$. Her public verification key is $A = 4250$. Adam claims that Samantha has signed each of the documents
+    $$D=1521, \quad D'=1837,\quad D''=1614$$
+    and that the associated signatures are
+    $$(S_1, S_2) = (4129, 5575),\quad  (S_1′ , S_2′ ) = (3145, 1871), (S_1′′, S_2′′) = (2709, 2994).$$
+    Which of these are valid signatures?
+    
+    (1) $S=(4129, 5575)$; so $A^{S_1}S_1^{S_2} \Mod{6961}\equiv (4250)^{4129}(4129)^{5575}\Mod{6961}\equiv 231 \equiv 437^{1521} \equiv g^D$. (Valid)
+    
+    (2) $S=(3145, 1871)$; so $A^{S_1}S_1^{S_2} \Mod{6961}\equiv (4250)^{3145}(3145)^{1871}\Mod{6961}\equiv 6208 \not\equiv 437^{1837} \equiv g^{D'}$. (Invalid) 
+    
+    (3) $S=(2709, 2994)$; so $A^{S_1}S_1^{S_2} \Mod{6961}\equiv (4250)^{2709}(2709)^{2994}\Mod{6961}\equiv 2243 \equiv 437^{1614} \equiv g^{D''}$. (Valid)\\
+    
+\noindent\textbf{Problem 4.7:}
+    
+    Let $p$ be a prime and let $i$ and $j$ be integers with gcd$(j,p-1) = 1$. Set
+    $$S_1 \equiv g^iA^j \Mod{p},\quad S_2 \equiv -S_1j^{-1} \Mod{p-1},\quad D \equiv -S_1ij^{-1} \Mod{p-1}.$$
+    Prove that $(S_1,S_2)$ is a valid ElGamal signature on the document $D$ for the verification key $A$. Thus Eve can produce signatures on random documents.
+    
+    Since $g$ is a generator for $\mathbb{F}_p$, $A=g^a$ for some integer $a$. 
+    \begin{align*}
+        A^{S_1}S_1^{S_2} &= (A)^{g^iA^j}(g^iA^j)^{-g^iA^{j}j^{-1}}\\
+        &= (g^a)^{g^ig^{aj}}(g^ig^{aj})^{-g^ig^{aj}j^{-1}}\\
+        &= g^{ag^ig^{aj}}(g^{-ig^ig^{aj}j^{-1}}g^{-ag^ig^{aj}jj^{-1}})\\
+        &= g^{-S_1ij^{-1}}(g^{ag^ig^{aj}}g^{-ag^ig^{aj}})\\
+        &= g^{-S_1ij^{-1}}\\
+        &= g^D
+    \end{align*}
+    Which confirms that this signature works for D. This is true because $j$ has an inverse due to the hypothesis that gcd$(j,p-1) = 1$.
+    
+\noindent\textbf{Problem 4.8:}
+    
+    Suppose that Samantha is using the ElGamal signature scheme and that she is careless and uses the same ephemeral key $e$ to sign two documents $D$ and $D'$.
+    \begin{enumerate}[label=(\alph*)]
+        \item Explain how Eve can tell at a glance whether Samantha has made this mistake.
+        
+        Since $S_1$ is not dependent on $D$, they will be equal.
+        
+        \item If the signature on $D$ is $(S_1 , S_2 )$ and the signature on $D'$ is $(S_1' , S_2' )$, explain how Eve can recover s, Samantha’s private signing key.
+        
+        We can combine both signatures to get $S_2 - S_2' \equiv (D-D')k^{-1} \Mod{p-1}$. Since we know both $D$ and $D'$, we can multiply this equation by $(D-D')^{-1} \Mod{p-1}$ (it's decently likely to have an inverse) and be left with $k \Mod{p-1}$. Then we can easily find $(k^{-1})^{-1} \equiv k \Mod{p-1}$ (which is guaranteed to exist by definition of $k$). Now that we have $k$ we multiply $-S_2$ by $k$ to get $aS_1 - D$ which we can add $D$ to get $aS_1 \Mod{p-1}$. Then, since we know $S_1$, we can find $(S_1)^{-1}\Mod{p-1}$ (which again is likely to exist) and multiply $aS_1$ by $(S_1)^{-1}\Mod{p-1}$ to find $a\Mod{p-1}$ and we have the secret key to forge signatures. 
+        
+        The probability that this succeeds is $\left(\frac{\phi(p-1)}{(p-1)}\right)^2$. Since both $D-D'$ and $S_1$ need inverses mod $p-1$.
+        \item Apply your method from (b) to the following example and recover Samantha’s signing key $s$, where Samantha is using the prime $p = 348149$, base $g = 113459$, and verification key $A = 185149.$
+        $$D = 153405,\quad S_1 = 208913,\quad S_2 = 209176,$$ $$D' = 127561,\quad S_1' = 208913,\quad S_2' = 217800.$$
+        
+        \begin{align*}
+            S_2-S_2' &\equiv 339524 \Mod{p-1}\\
+            (D-D')^{-1} &\equiv \text{Does not exist} \Mod{p-1}
+        \end{align*}
+    \end{enumerate}
+    
+    
+    
+\noindent\textbf{Problem 6.1:}
+    
+    Let $E$ be the elliptic curve $E: Y^2 = X^3 -2X + 4$ and let $P=(0,2)$ and $Q = (3,-5)$.
+    \begin{enumerate}[label=(\alph*)]
+        \item $P \oplus Q = (22/9 , 100/27)$
+        \item $2P = (1/4 , -15/8)$ and $2Q =(1/4 , -15/8)$ 
+        \item $3P = (240 , 3718)$ and $3Q = (-237/121 , -845/1331)$
+        
+            
+    \end{enumerate}
+    
+\noindent\textbf{Problem 6.2:}
+    
+    Check that the points $P=(-1,4)$ and $Q=(2,5)$ are points on the elliptic curve $E: Y^2 = X^3 +17$
+    \begin{enumerate}[label=(\alph*)]
+        \item $P \oplus Q = (-8/9 , -109/27)$ and $P \ominus Q = (8 , 23)$
+        \item $2P = (137/64 , -2651/512)$ and $2Q = (-64/25 , 59/125)$
+    \end{enumerate}
+
+\noindent\textbf{Problem 6.3:}
+    
+    Suppose that the cubic polynomial $X^3 + AX + B$ factors as $$X^3 + AX + B = (X-e_1)(X-e_2)(X-e_3).$$ Prove that $\del_E = 4A^3 + 27B^2 = 0$ if and only if two or more of the roots are equal.
+    
+    ($\leftarrow$) Assume two roots are equal. Because the discriminant of a cubic can be written as $(e_1-e_2)^2(e_1-e_3)^2(e_2-e_3)^2$ which is obviously equal to zero when any two roots are equal.
+    
+    ($\rightarrow$) Assume the discriminant is equal to zero. Then $(e_1-e_2)^2(e_1-e_3)^2(e_2-e_3)^2 = 0$ so at least one of the factors and the only way for one of the factors to equal 0 is if two roots are equal, then two or more roots must be equal.
+    
+\noindent\textbf{Problem 6.5:}
+    
+    For each of the following elliptic curves $E$ and finite fields $\mathbb{F}_p$, make a list of the set of points $E(\mathbb{F}_p)$.
+    \begin{enumerate}[label=(\alph*)]
+        \item $E: Y^2 = X^3 + 3X + 2$ over $\mathbb{F}_7$:
+        \{$\mathcal{O}, (0 , 3), (0 , 4), (2 , 3), (2 , 4), (4 , 1), (4 , 6), (5 , 3), (5 , 4)$\}
+        \item $E: Y^2 = X^3 + 2X + 7$ over $\mathbb{F}_{11}$:
+        \{$\mathcal{O}, (6 , 2), (6, 9), (7 , 1), (7 , 10), (10 , 2), (10 , 9)$\}
+        \item $E: Y^2 = X^3 + 4X + 5$ over $\mathbb{F}_{11}$:
+        \{$\mathcal{O}, (0 , 4), (0 , 7), (3 , 0), (6 , 5), (6 , 6), (9 , 0), (10 , 0)$\}
+        \item $E: Y^2 = X^3 + 9X + 5$ over $\mathbb{F}_{11}$:
+        \{$\mathcal{O}, (0 , 4), (0 , 7), (1 , 2), (1 , 9), (2 , 3), (2 , 8), (3 , 2), (3 , 9), (6 , 0),$ $(7 , 2), (7 , 9), (9 , 1), (9 , 10)$\}
+        \item $E: Y^2 = X^3 + 9X + 5$ over $\mathbb{F}_{13}$:
+        \{$\mathcal{O}, (4 , 1), (4 , 12), (8 , 2), (8 , 11), (9 , 3), (9 , 10), (10 , 4), (10 , 9)$\}
+    \end{enumerate}
+    
+\noindent\textbf{Problem 6.6:}
+    
+    Make an addition table for $E$ over $F_p$
+    \begin{enumerate}[label=(\alph*)]
+        \item $E: Y^2 = X^3 + X + 2$ over $\mathbb{F}_5$\\
+        \begin{tabular}{|c|c|c|c|c|c|} 
+             \hline
+                $\oplus$        &   $\mathcal{O}$   &   $(1,2)$         &   $(1,3)$         &   $(4,0)$\\ 
+             \hline
+                $\mathcal{O}$   &   $\mathcal{O}$   &   $(1,2)$         &   $(1,3)$         &   $(4,0)$\\ 
+            \hline
+                $(1,2)$         &   $(1,2)$         &   $(4,0)$         &   $\mathcal{O}$   &   $(1,3)$\\ 
+            \hline
+                $(1,3)$         &   $(1,3)$         &   $\mathcal{O}$   &   $(4,0)$         &   $(1,2)$\\ 
+            \hline
+                $(4,0)$         &   $(4,0)$         &   $(1,3)$         &   $(1,2)$         &   $\mathcal{O}$\\ 
+            \hline
+        \end{tabular}
+        \item $E: Y^2 = X^3 + 2X + 3$ over $\mathbb{F}_7$\\
+        \begin{tabular}{|c|c|c|c|c|c|c|} 
+             \hline
+                $\oplus$        &   $\mathcal{O}$   &   $(2,1)$         &   $(2,6)$         &   $(3,1)$         &   $(3,6)$         &   $(6,0)$\\ 
+             \hline
+                $\mathcal{O}$   &   $\mathcal{O}$   &   $(2,1)$         &   $(2,6)$         &   $(3,1)$         &   $(3,6)$         &   $(6,0)$\\
+            \hline
+                $(2,1)$         &   $(2,1)$         &   $(3,6)$         &   $\mathcal{O}$   &   $(2,6)$         &   $(6,0)$         &   $(3,1)$\\ 
+            \hline
+                $(2,6)$         &   $(2,6)$         &   $\mathcal{O}$   &   $(3,1)$         &   $(6,0)$         &   $(2,1)$         &   $(3,6)$\\ 
+            \hline
+                $(3,1)$         &   $(3,1)$         &   $(2,6)$         &   $(6,0)$         &   $(3,6)$         &   $\mathcal{O}$   &   $(2,1)$\\ 
+            \hline
+                $(3,6)$         &   $(3,6)$         &   $(6,0)$         &   $(2,1)$         &   $\mathcal{O}$   &   $(3,1)$         &   $(2,6)$\\ 
+            \hline
+                $(6,0)$         &   $(6,0)$         &   $(3,1)$         &   $(3,6)$         &   $(2,1)$         &   $(2,6)$         &   $\mathcal{O}$\\ 
+            \hline
+        \end{tabular}
+        \item $E: Y^2 = X^3 + 2X + 5$ over $\mathbb{F}_{11}$\\
+        \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|} 
+             \hline
+                $\oplus$ & $\mathcal{O}$ & (0,4) & (0,7) & (3,4) & (3,7) & (4,0) & (8,4) & (8,7) & (9,2) & (9,9)\\
+            \hline    
+                $\mathcal{O}$ & $\mathcal{O}$ & (0,4) & (0,7) & (3,4) & (3,7) & (4,0) & (8,4) & (8,7) & (9,2) & (9,9)\\
+            \hline                
+                (0,4) & (0,4) & (9,2) & $\mathcal{O}$ & (8,7) & (9,9) & (8,4) & (3,7) & (4,0) & (3,4) & (0,7)\\
+            \hline                
+                (0,7) & (0,7) & $\mathcal{O}$ & (9,9) & (9,2) & (8,4) & (8,7) & (4,0) & (3,4) & (0,4) & (3,7)\\
+            \hline                
+                (3,4) & (3,4) & (8,7) & (9,2) & (8,4) & $\mathcal{O}$ & (9,9) & (0,7) & (3,7) & (4,0) & (0,4)\\
+            \hline                
+                (3,7) & (3,7) & (9,9) & (8,4) & $\mathcal{O}$ & (8,7) & (9,2) & (3,4) & (0,4) & (0,7) & (4,0)\\
+            \hline                
+                (4,0) & (4,0) & (8,4) & (8,7) & (9,9) & (9,2) & $\mathcal{O}$ & (0,4) & (0,7) & (3,7) & (3,4)\\
+            \hline                
+                (8,4) & (8,4) & (3,7) & (4,0) & (0,7) & (3,4) & (0,4) & (9,2) & $\mathcal{O}$ & (9,9) & (8,7)\\
+            \hline                
+                (8,7) & (8,7) & (4,0) & (3,4) & (3,7) & (0,4) & (0,7) & $\mathcal{O}$ & (9,9) & (8,4) & (9,2)\\
+            \hline                
+                (9,2) & (9,2) & (3,4) & (0,4) & (4,0) & (0,7) & (3,7) & (9,9) & (8,4) & (8,7) & $\mathcal{O}$\\
+            \hline                
+                (9,9) & (9,9) & (0,7) & (3,7) & (0,4) & (4,0) & (3,4) & (8,7) & (9,2) & $\mathcal{O}$ & (8,4)\\
+            \hline                
+        \end{tabular}
+    \end{enumerate}
+    
+\noindent\textbf{Problem 6.7:}
+    
+    Let $E$ be the elliptic curve $$E: y^2 = x^3 + x + 1.$$ 
+    Compute the number of points in the group $E(\mathbb{F}_p)$ for each of the following. Also, compute the trace of the frobenius $t_p = p+1- #E(\mathbb{F}_p)$ and verrify $\lvert t_p\rvert \leq 2\sqrt{p}$.
+    \begin{enumerate}[label=(\alph*)]
+        \item $p=3$
+        
+        $\#E(\mathbb{F}_3) = 4$\\
+        $t_p = 4-4 = 0 \leq 2\sqrt{3}$
+        \item $p=5$
+        
+        $\#E(\mathbb{F}_5) = 9$
+        $t_p = 6-9 = -3$ and $3 \leq 2\sqrt{5}$
+        \item $p=7$
+        
+        $\#E(\mathbb{F}_7) = 5$
+        $t_p = 8-5 = 3 \leq 2\sqrt{7}$
+        \item $p=11$
+        
+        $\#E(\mathbb{F}_{11}) = 14$
+        $t_p = 12-14 = -2$ and $2 \leq 2\sqrt{11}$
+    \end{enumerate}
+
+    
+    
+    
+    
+    
+
+\end{document}

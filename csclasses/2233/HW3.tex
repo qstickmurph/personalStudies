@@ -1,0 +1,118 @@
+\documentclass[letterpaper, 12pt]{article}
+\usepackage{comment} % enables the use of multi-line comments (\ifx \fi) 
+\usepackage{fullpage} % changes the margin
+\usepackage[T1]{fontenc}
+\usepackage{selinput}
+\usepackage{enumitem}
+\usepackage{listings}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{setspace}
+\usepackage{bm}
+\usepackage{mathtools}
+
+\SelectInputMappings{
+   aacute={á},
+   ntilde={ñ}
+}
+\newcommand{\Mod}[1]{\ (\mathrm{mod}\ #1)}
+
+\begin{document}
+%Header-Make sure you update this information!!!!
+\noindent\large\textbf{Discrete Mathematics} \hfill \textbf{Quinn Murphey} \\
+\normalsize MAT 2233.001 \hfill Date: 09/16/20 \\
+Dr. Arafat \hfill Due Date: 09/17/20 \\
+
+\noindent\makebox[\linewidth]{\rule{\paperwidth}{0.4pt}}
+
+\section*{HW \#3:}
+\textbf{Consider the following claim:}\\
+\textbf{For all integers $m$ and $n$. if $(m-n)$ is odd then $m$ is odd or $n$ is odd.}
+\begin{enumerate}
+    \item Prove the claim using a proof by contrapositive.
+    
+        We will prove this claim by contrapositive. Let both $m$ and $n$ be even. We can then write $m=2k$ and $n=2l$ for some $m,l\in\mathbb{Z}$. Then, $m - n = 2k - 2l = 2(k - l)$ by a simple substitution and distributive property. Additionally, the integers are closed under subtraction so $k-l\in\mathbb{Z}$, thus $m-n$ is an even number. Therefore if $m-n$ is odd then $m$ or $n$ must be odd.
+    
+    \item Prove the claim using a proof by contradiction.
+    
+        We will prove this claim by contradiction. $m-n$ is an odd number. Assume $m$ and $n$ are even. We can then write $m=2k$ and $n=2l$ for some $m,l\in\mathbb{Z}$. Then, $m - n = 2k - 2l = 2(k - l)$ by a simple substitution and distributive property. Additionally, the integers are closed under subtraction so $k-l\in\mathbb{Z}$, thus $m-n$ is an even number which contradicts our claim that $m-n$ is an odd number. Therefore $m$ and $n$ cannot both be even. 
+\end{enumerate}
+
+\noindent\textbf{Prove the following for all $x\in\mathbb{R}:$}
+$$x\in\mathbb{Q}\leftrightarrow x-5\in\mathbb{Q} \leftrightarrow x/3\in\mathbb{Q}$$
+
+Assume $x\in\mathbb{Q}$. Then $x = \frac{q}{d}$ for some $q,d\in\mathbb{Z}$. Thus we can write $x-5 = \frac{q - 5d}{d}$. Since $d\in\mathbb{Z}$ and the integers are closed under both multiplication and subtraction, $q-5d\in\mathbb{Z}$ and $\frac{q-5d}{d}\in\mathbb{Q}$. Thus $x-5\in\mathbb{Q}$. An almost identical argument can be used to show $x-5\in\mathbb{Q} \rightarrow x\in\mathbb{Q}$. Therefore, $x\in\mathbb{Q}\Leftrightarrow x-5\in\mathbb{Q}$.
+
+Assume $x-5\in\mathbb{Q}$. Then $x\in\mathbb{Q}$. Then $x = \frac{q}{d}$ for some $q,d\in\mathbb{Z}$. Thus we can write $x/3 = \frac{q}{3d}$. Since $q,3d\in\mathbb{Z}$ still, $x/3\in\mathbb{Q}$. Assume $x/3\in\mathbb{Q}$. Then $x/3 = \frac{q}{d}$ for some $q,d\in\mathbb{Z}$. Thus we can write $x = \frac{3q}{d}$. Since $3q,d\in\mathbb{Z}$ still, $x\in\mathbb{Q}$. $x\in\mathbb{Q}\rightarrow x-5\in\mathbb{Q}$. Therefore $x-5\in\mathbb{Q}\Leftrightarrow x/3\in\mathbb{Q}$.
+
+Therefore, by these two proofs we get $x\in\mathbb{Q}\Leftrightarrow x-5\in\mathbb{Q}$ and $x-5\in\mathbb{Q}\Leftrightarrow x/3\in\mathbb{Q}$. Thus, $x\in\mathbb{Q}\leftrightarrow x-5\in\mathbb{Q} \leftrightarrow x/3\in\mathbb{Q}$.
+\newpage
+\noindent\textbf{Use a proof by cases to show that:}
+$$\left(\max\left(x,y\right) + \min\left(x,y\right)\right)^2 + \min\left(x,y\right)\max\left(x,y\right) = x^2 + 3xy + y^2$$
+where $x,y,z\in\mathbb{R}.$
+
+We will prove this statement by an exhaustion of cases. By the law of trichotomy, $x < y$ or $x=y$ or $x>y$ for all $x,y\in\mathbb{R}$.
+\begin{itemize}
+    \item[Case 1:] ($x\geq y$) Assume $x\geq y$. Then, $\max(x,y) = x$ and $\min(x,y) = y$. Then we can substitute these values into the original equation to get
+    \begin{align*}
+        \left(\max\left(x,y\right) + \min\left(x,y\right)\right)^2 + \min\left(x,y\right)\max\left(x,y\right) &= (x + y)^2 +xy\\
+        &= (x^2 + 2xy + y^2) + xy\\
+        &= x^2 +3xy +y^2
+    \end{align*}
+    Thus $\left(\max\left(x,y\right) + \min\left(x,y\right)\right)^2 + \min\left(x,y\right)\max\left(x,y\right) = x^2 + 3xy + y^2$.
+    
+    \item[Case 2:] ($y \geq x$) Assume $x\geq y$. Then, $\max(x,y) = y$ and $\min(x,y) = x$. Then we can substitute these values into the original equation to get
+    \begin{align*}
+        \left(\max\left(x,y\right) + \min\left(x,y\right)\right)^2 + \min\left(x,y\right)\max\left(x,y\right) &= (y + x)^2 +yx\\
+        &= (y^2 + 2yx + x^2) + yx\\
+        &= x^2 +3xy +y^2
+    \end{align*}
+    Thus $\left(\max\left(x,y\right) + \min\left(x,y\right)\right)^2 + \min\left(x,y\right)\max\left(x,y\right) = x^2 + 3xy + y^2$.
+\end{itemize}
+Therefore, by the conjunction of these two cases, $\left(\max\left(x,y\right) + \min\left(x,y\right)\right)^2 + \min\left(x,y\right)\max\left(x,y\right) = x^2 + 3xy + y^2$ for all $x\in\mathbb{Q}$.
+
+\begin{enumerate}
+    \item \textbf{Prove or disprove that if $x^y$ is an irrational number, then $x$ or $y$ is also an irrational number.}
+    
+        We know that $\sqrt{2}$ is irrational. However, $\sqrt{2} = 2^{1/2}$ by definition of fractional exponents. Therefore the statement is false.
+        
+    \item \textbf{Prove that if $x^2$ is irrational, then $x$ is irrational.}
+    
+        Assume that $x$ is rational. Then $x = \frac{p}{d}$ for some $p,d\in\mathbb{Z}$. Then $x^2 = \frac{p^2}{d^2}$. However, since $\mathbb{Z}$ is closed under multiplication, $p^2,d^2\in\mathbb{Z}$. Thus $x^2\in\mathbb{Q}$. Therefore, if $x^2$ is irrational, then $x$ is irrational.
+\end{enumerate}
+
+\begin{enumerate}
+    \item \textbf{Use set builder notation to give a description of the set} \{-3, -2, -1, 0, 1, 2, 3, 4, 5\}.
+    
+        $\{x\in\mathbb{Z} : x\in\{-3, -2, -1, 0, 1, 2, 3, 4, 5\}\}$ or $\{x\in\mathbb{Z} : -3 \leq x \leq 5$\}.
+    
+    \item \textbf{Let $A = \{a,b,c\}$, $B=\{x,y\},$ and $C = \{5,10\}$}
+    
+        $A\times B\times C = \{(a,b,c) : a\in A, b\in B, c\in C\}$.
+        
+        $C\times A\times B = \{(c,a,b) : a\in A, b\in B, c\in C\}$.
+    
+    \item \textbf{Let $A = \{1, 4, 8, 16\}$ and $B = \{2, 4, 16, 32, 64\}$. Find $A\cup B, A\cap B, A\setminus B, B\setminus A,  |\mathcal{P}(A)|$.}
+    
+        $A\cup B =\{ x : x\in A \lor x\in B\}$.
+        
+        $A\cap B = \{ x : x\in A \land x\in B\}$.
+        
+        $A\setminus B = \{ x\in A : x\not\in B\}$.
+        
+        $B\setminus A = \{ x\in B : x\not\in A\}$.
+        
+        Since $A$ is finite, $|\mathcal{P}(A)| = 2^{|A|} = 2^4 = 16$.
+        
+\end{enumerate}
+
+\noindent Prove $A\cup (A\cap B) = A$.\\
+
+$A\subseteq A\cup (A\cap B)$ is obvious since $a\in A \Rightarrow (a\in A \lor (a\in A \land a\in B)) \Rightarrow x\in A\cup (A\cap B)$.
+
+$A\cup (A\cap B)\subseteq A$ is true because $x\in (A\cup (A\cap B))$ iff $(x\in A \lor (x\in A \land x\in B))$. However, by the Absorption Laws, this is logically equivalent to $x\in A$. Thus $x\in (A\cup (A\cap B)) \Rightarrow x\in A$ so $A\cup (A\cap B)\subseteq A$.
+
+By these two, $A\cup (A\cap B) = A$.
+
+\end{document}

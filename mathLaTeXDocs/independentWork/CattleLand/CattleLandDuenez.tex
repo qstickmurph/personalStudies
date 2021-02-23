@@ -1,0 +1,168 @@
+\documentclass[11pt,letterpaper]{amsart}
+
+\usepackage[margin=1.5in]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{asypictureB}
+
+\theoremstyle{plain}
+\newtheorem*{theorem}{Theorem}
+\newtheorem*{proposition}{Proposition}
+\newtheorem*{lemma}{Lemma}
+\newtheorem*{corollary}{Corollary}
+
+\theoremstyle{definition}
+\newtheorem*{definition}{Definition}
+\newtheorem*{remarks}{Remarks}
+
+\newcommand{\cC}{\ensuremath{\mathcal{C}}}
+\newcommand{\cP}{\ensuremath{\mathcal{P}}}
+\newcommand{\tE}{\ensuremath{\widetilde{E}}}
+\newcommand{\tG}{\ensuremath{\widetilde{G}}}
+\newcommand{\tV}{\ensuremath{\widetilde{V}}}
+
+\newcommand{\Cb}{\ensuremath{C_{\bullet}}}
+\newcommand{\Db}{\ensuremath{D_{\bullet}}}
+\newcommand{\Eb}{\ensuremath{E_{\bullet}}}
+
+\begin{document}
+\title{``Cattle Land'': A path-counting problem}
+\author{Eduardo Due\~nez}
+\date{}
+\maketitle
+
+\begin{theorem}
+Consider the directed graph $\mathcal{L}$ whose vertices are lattice points $(i,j)$, having ``\emph{up}'' edges $U_{i,j}$ from $(i,j)$ to $(i,j+1)$, as well as ``\emph{right}'' edges $R_{i,j}$ from $(i,j)$ to $(i+1,j)$, for all integers $i,j$.
+
+\emph{Admissible} vertices are $(i,j)$ with $i<j$.
+A (directed) path on~$\mathcal{L}$ is \emph{admissible} if it only visits admissible vertices.
+
+Let $(v,w),(x,y)$ be admissible lattice points such that $v\le x$ and $w\le y$.
+Then there are exactly $\binom{x+y-v-w}{x-v} - \binom{x+y-v-w}{x-w}$ admissible paths from $(v,w)$ to $(x,y)$.
+\end{theorem}
+
+\begin{proof}
+A directed path~$\gamma$ in $\mathcal{L}$ from $(v,w)$ to $(x,y)$ exists iff $v\le x$ and $w\le y$.
+Such path may be regarded as a sequence of $l = (x-v)+(y-w)$ edges $E_1,\dots,E_l$.
+Each edge $E_k$ is either an up-edge $U_{i_k,j_k}$ or a down-edge $R_{i_k,j_k}$, where $(i_k,j_k)$ is $E_k$'s tail.
+Clearly, $r=x-v$ of the edges are right-edges, while $u=y-w$ are up-edges;
+moreover, $\gamma$ is uniquely identified with the sequence $\Db = \{D_1,\dots,D_l\}$ of directions ($\mathrm{U}$~for up, $\mathrm{R}$~for right) of its edges (i.e., $D_k=\mathrm{U}$ if $E_k$ is an up edge; $D_k=\mathrm{R}$ if $E_k$ is a right edge).
+
+Sequences $\Db$ consisting of $r$ symbols~$\mathrm{R}$ and $u$ symbols~$\mathrm{U}$ will be called \emph{$(r,u)$-sequences.}
+The \emph{reflection} of an $(r,u)$-sequence $\Db = \{D_1,\dots,D_l\}$  is the $(u,r)$-sequence $\Db' = \{D'_1,\dots,D'_{r+u}\}$ where $D_k' = \mathrm{U}$ if $D_k = \mathrm{R}$, and $D_k' = \mathrm{R}$ if $D_k = \mathrm{U}$.
+If an $(r,u)$-sequence $\Db$ encodes a path from $(v,w)$ to $(v+r,w+u)$ then its reflection $\Db'$ encodes a path from $(v,w)$ to $(v+u,w+r)$ (and vice versa).
+
+Let $\Gamma$ be the set of finite-length paths in~$\mathcal{L}$, and $\mathfrak{I}$ the set of inadmissible finite-length paths.
+The set of paths (resp., inadmissible paths) from $(v,w)$ to $(x,y)$ will be denoted $\Gamma_{v,w}^{x,y}$ (resp., $\mathfrak{I}_{v,w}^{x,y}$).
+Note that $\mathfrak{I}_{v,w}^{x,y} = \Gamma_{v,w}^{x,y}$ (i.e., all paths are inadmissible) when $(v,w)$ or $(x,y)$ are inadmissible.
+(Also, $\mathfrak{I}_{v,w}^{x,y} = \Gamma_{v,w}^{x,y} = \emptyset$ when $v>x$ or $w>y$.)
+For $v\le x$ and $w\le y$, the identification of paths $\gamma\in\Gamma_{v,w}^{x,y}$ with $(r,u) = (x-v,y-w)$-sequences $E_1,\dots,E_{r+u}$ shows that $\#\Gamma_{v,w}^{x,y} = P(r,u) = \binom{r+u}{r}$.
+
+For the moment, fix $(v,w)$ and $(x,y)$ such that $(v,w)$---but not necessarily~$(x,y)$---is admissible.
+Given $\gamma\in \mathfrak{I}_{v,w}^{x,y}$ encoded by an $(r,u) = (x-v,y-w)$-sequence~$\Db$, the first inadmissible vertex visited by~$\gamma$ must clearly be of the form~$(i,i)$. % that is least having this property.
+The rest of~$\gamma$ (from vertex $(i,i)$ on) is encoded by the $(r',u') = (x-i,y-i)$-sequence $\Eb = \{D_{2i},\dots,D_{r+u}\}$;
+its reflection $\Eb'= \{D'_{2i},\dots,D'_{r+u}\}$ (an $(u',r')=(y-i,x-i)$-sequence) encodes a path from $(i,i)$ to $(i+u',i+r') = (y,x)$, hence the sequence $\widetilde{\Db} = \{D_1,\dots,D_{2i},D'_{2i+1},\dots,D'_{r+u}\}$ encodes a path $\widetilde{\gamma}$ from $(v,w)$ to $(y,x)$.
+Since $\widetilde{\gamma}$ still visits~$(i,i)$, $\widetilde{\gamma}$ is inadmissible.
+For fixed $(v,w)$ is admissible, this establishes a mapping $\gamma\mapsto \mathfrak{R}(\gamma) = \widetilde{\gamma}$ from $\mathfrak{I}_{v,w}^{x,y}$ to $\mathfrak{I}_{v,w}^{y,x}$. % (since $(x,y)$ is admissible, $(y,x)$ is inadmissible).
+It is clear from its definition that $\mathfrak{R}$ is an involution, i.e., $\mathfrak{R}(\mathfrak{R}(\gamma)) = \gamma$ for all $\gamma\in \mathfrak{I}_{v,w}^{x,y}$;
+in particular, $\#\mathfrak{I}_{v,w}^{x,y} = \#\mathfrak{I}_{v,w}^{y,x}$ for $(v,w)$ admissible.
+
+\begin{figure}
+    \centering
+    \def\asywidth{10cm}
+    \begin{asypicture}{name=CattleLand}
+    size(@asywidth,0);
+
+    int v = 0;
+    int w = 2;
+    int x = 10;
+    int y = 13;
+    
+    // pair P = (v,w);
+    // pair Q = (x,y);
+    // pair R = (y,x);
+    
+    pair LL = (w-1,w-1);
+    pair UR = (y+1,y+1);
+    
+    label("$(v,w)$", (v,w), SW);
+    label("$(x,y)$", (x,y), N);
+    label("$(y,x)$", (y,x), E);
+    label("$i=j$", UR, NE);
+    
+    
+    void drawcell( pair A, pair B )
+    {
+      draw( A--(B.x,A.y), lightgray, Arrow);
+      draw( A--(A.x,B.y), lightgray, Arrow);
+      draw( (A.x,B.y)--B, lightgray, Arrow);
+      draw( (B.x,A.y)--B, lightgray, Arrow);
+    }
+    
+    pen[] colores = {orange, black, blue+linewidth(1.5), red+dotted};
+    
+    for(int i = v; i < y; ++i)
+      for(int j = w; j < y; ++j)
+        drawcell( (i,j), (i+1,j+1) );
+    
+    for(int i = v; i <= y; ++i)
+      for(int j = w; j <= y; ++j)
+        dot( (i,j), colores[i<j?1:0] );
+    
+    draw( LL--UR, dotted+red );
+    
+    pair[][] trajectory =
+      {
+       {E,N,E,N,N,E,N,E,E,E,E,E,N,N,N,E,E,N,N,N,N},
+       {E,N,E,N,N,E,N,E,E,E,N,N,E,E,E,N,N,E,E,E,E}
+      };
+    
+    pen currcolor;
+    pair currpoint, nextpoint;
+    
+    for(int i = 0; i<2; ++i)
+      {
+        currcolor = black;
+        currpoint = (v,w);
+        for(pair Z : trajectory[i])
+          {
+    	nextpoint = currpoint + Z;
+    	draw( currpoint--nextpoint, currcolor, Arrow);
+    	currpoint = nextpoint;
+    	if( currpoint.x == currpoint.y )
+    	  currcolor = colores[2+i];
+          }
+      }
+    \end{asypicture}
+    \caption{An inadmissible path $\gamma$ from $(v,w)$ to $(x,y)$ (black/blue solid), and the corresponding path $\widetilde{\gamma}$ from $(v,w)$ to $(y,x)$ (black/red dotted) obtained by reflecting the portion of~$\gamma$ past the first inadmissible diagonal node $(i,i)$ visited.}
+    \label{fig:my_label}
+\end{figure}
+Assume now that both $(v,w)$ and $(x,y)$ are admissible such that $v\le x$ and $w\le y$.
+Let $m = x-v$, $n = y-w$.
+Then $(y,x)$ is inadmissible, so $\#\mathfrak{I}_{v,w}^{x,y} = \#\mathfrak{I}_{v,w}^{y,x} = \#\Gamma_{v,w}^{y,x} = \binom{m'+n'}{m'}$ with $m' = y-v = m + (y-x)$ and $n' = x-w = n + (x-y)$.
+Thus, the number of admissible paths from $(v,w)$ to $(x,y)$ is $\#(\Gamma_{v,w}^{x,y}\setminus \mathfrak{I}_{v,w}^{x,y}) = \#\Gamma_{v,w}^{x,y} - \#\Gamma_{v,w}^{y,x} = P(x-v,y-w) - P(x-w,y-v)$.
+\end{proof}
+
+\begin{proof}[Second proof, more succinct]
+  Paths $\gamma:(v,w)\to(x,y)$ consist of $r = x-v$ right edges and $u = y-w$ up edges.
+  Any such $\gamma$ is uniquely encoded by the ordered sequence of $r$ (otherwise identical) symbols~R (for right), plus $u$ identical symbols~U (for up) successively indicating whether the next edge of~$\gamma$ is right or up.
+  All such sequences of $r$ symbols R and $u$ symbols U are so obtained;
+  therefore, there are $P(r,u) = \binom{r+u}{r}$ paths $(v,w)\to(x,y)$.
+  Any inadmissible path $\gamma$ necessarily meets a ``diagonal'' inadmissible vertex~$(i,i)$.
+  Reflecting $\gamma$ past the first such diagonal vertex yields a path $\widetilde{\gamma}:(v,w)\to(y,x)$.
+  Note that every path $\delta:(v,w)\to(y,x)$ is inadmissible since $(y,x)$ is inadmissible, and the path obtained reflecting $\delta$ past the first diagonal vertex it visits is an inadmissible path $\widetilde{\delta} : (v,w)\to(x,y)$.
+  It is clear that the transformations $\gamma\mapsto \delta=\widetilde{\gamma}$ and $\delta\mapsto \gamma=\widetilde{\gamma}$ are mutual inverses;
+  they establish a bijection between inadmissible paths $\gamma:(v,w)\to(x,y)$ and all paths $\delta : (v,w)\to(y,x)$.
+  It follows that there are $P(x-v,y-w) - P(x-w,y-v)$ admissible paths $(v,w)\to(x,y)$.
+\end{proof}
+
+\begin{corollary}
+  Given nonnegative integers $m,n$ with $m\le n$, the number of right/up paths from $(0,0)$ to $(m,n)$ visiting only vertices $(i,j)$ with $i\le j$ is equal to $\frac{n-m+1}{n+1}\binom{m+n}{n}$;
+  in particular, the number of such paths from $(0,0)$ to $(n,n)$ is equal to the $n$-th Catalan number $\frac{1}{n+1}\binom{2n}{n}$.
+\end{corollary}
+\begin{proof}
+  Translating those paths up by 1 unit they are identified with admissible paths from $(0,1)$ to $(m,n+1)$.
+  By the theorem, their number is equal to $\binom{m+n}{n} - \binom{m+n}{n+1} = \frac{n-m+1}{n+1}\binom{m+n}{n}$.
+\end{proof}
+\end{document}

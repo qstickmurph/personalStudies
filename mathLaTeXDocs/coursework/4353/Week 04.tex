@@ -1,0 +1,95 @@
+\documentclass[a4paper, 11pt]{article}
+\usepackage{comment} % enables the use of multi-line comments (\ifx \fi) 
+\usepackage{fullpage} % changes the margin
+\usepackage[T1]{fontenc}
+\usepackage{selinput}
+\usepackage{enumitem}
+\usepackage{listings}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{setspace}
+
+\SelectInputMappings{
+   aacute={á},
+   ntilde={ñ}
+}
+\newcommand{\Mod}[1]{\ (\mathrm{mod}\ #1)}
+
+\begin{document}
+%Header-Make sure you update this information!!!!
+\noindent
+\large\textbf{Mathematical Foundations of Cryptography} \hfill \textbf{Quinn Murphey} \\
+\normalsize MAT 4353.001 \hfill Date: 02/15/19 \\
+Dr. Dueñez \hfill Due Date: 02/18/19 \\
+\noindent\makebox[\linewidth]{\rule{\paperwidth}{0.4pt}}
+\section*{Week 4}
+    2.3, 2.5, 2.6, 2.7, 2.8, 2.9, 2.12, 2.15.
+    
+\section*{Mandatory}
+
+\noindent\textbf{Problem 2.3:}
+    
+    Let $g$ be a primitive root for $\mathbb{F}_p$
+    \begin{enumerate}[label=(\alph*)]
+        \item Suppose that $x=a$ and $x=b$ are both integer solutions to the congruence  $g^x \equiv h \Mod{p}$. Prove that $a\equiv b \Mod{p-1}$. Explain why this implies that the map below is well-defined.
+        $$log_g:\mathbb{F}_p^* \rightarrow \frac{\mathbb{Z}}{(p-1)\mathbb{Z}}$$
+        
+        To prove that this function is well defined, let $a,a'\in\mathbb{F}_p$ and let $a\equiv a' \Mod{p}$. We need to show that these two elements map to the same element in $\mathbb{Z}/(p-1)\mathbb{Z}$. 
+        $a=a'+ np$ for some $n\in\mathbb{Z}$.
+        $$g^a=g^{a'+ np}=g^{a'}g^{np}=g^{a'}(1)=g^{a'}$$
+        Therefore $log_g$ is well defined.
+        
+        \item Prove that $log_g(h_1h_2) = log_g(h_1) + log_g(h_2) \quad\text{ for all } h_1,h_2\in\mathbb{F}_p^*$
+        
+        if $log_g(h_1)= x_1 $ and $log_g(h_2)=x_2$ then $h_1=g^{x_1}$ and $h_2=g^{x_2}$ and $$h_1h_2 = g^{x_1}g^{x_2} = g^{x_1+x_2}$$ then $$log_g(h_1h_2) = x_1+x_2 = log_g(h_1)+log_g(h_2).$$
+        so $log_g(h_1h_2) = log_g(h_1)+log_g(h_2)$
+        
+        \item Prove that $log_g(h_1^n) = n*log_g(h_1) \quad\text{ for all } h_1\in\mathbb{F}_p^*$ and $n\in\mathbb{Z}$
+        
+        We will prove this by induction on $n$.
+        
+        Base Case: 
+        
+    \end{enumerate}
+    
+\noindent\textbf{Problem 2.5:}
+    
+    
+    
+    
+    
+\noindent\textbf{Problem 2.6:}
+    
+    
+    
+    
+    
+\noindent\textbf{Problem 2.7:}
+    
+    
+    
+    
+    
+\noindent\textbf{Problem 2.8:}
+    
+    
+    
+    
+    
+\noindent\textbf{Problem 2.9:}
+    
+    
+    
+    
+    
+\noindent\textbf{Problem 2.12:}
+    
+    
+    
+    
+    
+\noindent\textbf{Problem 2.15:}
+    
+    
+    
+\end{document}

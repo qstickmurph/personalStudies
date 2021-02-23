@@ -1,0 +1,116 @@
+\documentclass[a4paper, 11pt]{article}
+\usepackage{comment} % enables the use of multi-line comments (\ifx \fi) 
+\usepackage{fullpage} % changes the margin
+\usepackage[T1]{fontenc}
+\usepackage{selinput}
+\usepackage{enumitem}
+\usepackage{listings}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{setspace}
+\usepackage{bm}
+\usepackage{mathtools}
+
+\SelectInputMappings{
+   aacute={á},
+   ntilde={ñ}
+}
+\newcommand{\Mod}[1]{\ (\mathrm{mod}\ #1)}
+
+\begin{document}
+%Header-Make sure you update this information!!!!
+\noindent
+\large\textbf{Mathematical Foundations of Cryptography} \hfill \textbf{Quinn Murphey} \\
+\normalsize MAT 4353.001 \hfill Date: 03/18/19 \\
+Dr. Dueñez \hfill Due Date: 03/19/19 \\
+\noindent\makebox[\linewidth]{\rule{\paperwidth}{0.4pt}}
+\section*{Week 8:}
+    3.3, 3.6, 3.7, 3.10, 3.11, 3.13, 3.15, 3.17
+    
+\section*{Mandatory}
+
+\textbf{Problem 3.3:}
+    
+    Let $p$ and $q$ be distinct primes and let $e$ and $d$ be positive integers satisfying $$de \equiv c \Mod{p}.$$ Suppose further that $c$ is an integer with gcd$(c,pq)>1$. Prove that $$x\equiv c^d \Mod{pq}\quad \text{is a solution to the congruence} \quad x^e \equiv c \Mod{pq},$$ thereby completing the proof of Proposition 3.5
+    
+    
+    
+\noindent\textbf{Problem 3.6:}
+    
+    Euler's phi function has many beautiful properties
+    \begin{enumerate}[label=(\alph*)]
+        \item If $p$ and $q$ are distict primes, how is $\phi(pq)$ related to $\phi(p)$ and $\phi(q)$?
+        \item If $p$ is prime, what is the value of $\phi(p^2)$? How about $\phi(p^j)$? Prove that your formula for $\phi(p^j)$ is correct.
+        \item Let $M$ and $N$ be integers satisfying gcd($M,N)=1$. Prove the multiplication formula $$\phi(MN)=\phi(M)\phi(N)$$
+        \item Let $p_1,p_2,\dots,p_r$ be the distict primes that divide $N$. Use your results from (b) and (c) to prove the following: $$\phi(N) = N\prod_{i=1}^{r} \left(1-\frac{1}{p_i}\right)$$
+        \item Use the formula in (d) to compute the following values of $\phi(N).$
+        \begin{enumerate}[label=(\roman*)]
+            \item $\phi(1728)$
+            \item $\phi(1575)$
+            \item $\phi(889056)$
+        \end{enumerate}
+    \end{enumerate}
+    
+    
+    
+\noindent\textbf{Problem 3.7:}
+    
+    Alice publishes her RSA public key: modulus $N=2038667$ and exponent $103$.
+    \begin{enumerate}[label=(\alph*)]
+        \item Bob wants to send Alice the message $m=892383.$ What ciphertext does Bob send to Alice?
+        \item Alice knows that her modulus factors into a product of two primes, one of which is $1301$. Find a decryption exponent $d$ for Alice.
+        \item Alice receives the ciphertext $c=317730$ from Bob. Decrypt the message.
+    \end{enumerate}
+    
+    
+    
+\noindent\textbf{Problem 3.10:}
+    
+    A $\textit{decryption exponent}$ for an RSA public key $(N,e)$ is an integer an integer $d$ with the property that $a^{de} \equiv a \Mod{N}$ for all integers $a$ that are relatively prime to $N$.
+    \begin{enumerate}[label=(\alph*)]
+        \item Suppose that Eve has a magic box that creates decryption exponents for $(N,e)$ for a fixed modulus $N$ and for a large number of different exponents $e$. Explain how Eve can use her magic box to try to factor $N$.
+        \item Let $N=38749709$. Eve's magic box tells her that the encryption exponent $e=10988423$ has decryption exponent $d=16784693$ and the encryption element $e=25910155$ has decryption element $d=11514115$. Use this info to factor $N$.
+        \item Let $N=225022969$. Eve's magic box tells her the following three encyption/decryption pairs for $N$: $$(70583995, 4911157), \quad (173111957, 7346999), \quad (180311381, 29597249).$$ Use this information to factor $N$.
+        \item Let $N = 1291233941$. eve's magic box tells her the following three encryption decryption pairs for $N$: $$(1103927639, 76923209),\quad (1022313977, 106791263),\quad (387632407, 7764043).$$ Use this information to factor $N$.
+    \end{enumerate}
+
+\noindent\textbf{Problem 3.11:}
+    
+    Here is an example of a public key system that was proposed at a cryptography conference. It was designed to be more efficent than RSA.
+    Alice chooses two large primes $p$ and $q$ and she publishes $N=pq$. It is assumed that $N$ is hard to factor. Alice chooses random numbers $g, r_1,$ and $r_2$ modulo $N$ and computes $$g_1 \equiv g^{r_1(p-1)}\Mod{N} \qquad \text{and} \qquad g_2\equiv g^{r_2(q-1)}\Mod{N}$$
+    
+    
+    
+\noindent\textbf{Problem 3.13:}
+    
+    Alice decides to use RSA with the public key $N=1889570071$. In order to guard against transmission errors, Alice has Bob encrypt his message twice, once using the encryption exponent $e_1=1021763679$ and once using the encryption exponent $e_2=519424709$. Eve intercepts both encrypted messages $$c_1=1244183534 \qquad c_2=732959709$$.
+    Assume that Eve also knows $N$ and the two encryption exponents. Use the method defined in Example 3.15 to help Eve recover Bob's plaintext without factoring $N$. 
+    
+    
+    
+\noindent\textbf{Problem 3.15:}
+    
+    Use the Miller-Rabin text on each of the following numbers. Ine each either provide a witness or conlcude that $n$ is probably prime by providing 10 numbers which are not witnesses.
+    \begin{enumerate}[label=(\alph*)]
+        \item $n=1105$
+        \item $n=294409$
+        \item $n=118901509$
+        \item $n=118901527$
+        \item $n=294439$
+        \item $n=118901521$
+        \item $118915387$
+    \end{enumerate}
+    
+    
+    
+\noindent\textbf{Problem 3.17:}
+    
+    The function $\pi(X)$ counts the number of primes between $2$ and $X$.
+    \begin{enumerate}[label=(\alph*)]
+        \item Compute the values of $\pi(20),\pi(30),$and $\pi(100)$
+        \item Write a program to compute $\pi(X)$ and use it to compute $\pi(X)$ and the ratio $\pi(X)/(X/\ln(X))$ for $X = 100, 1000, 10000,$and $100000$. Does your list of ratios make for the prime number theorem plausible.
+    \end{enumerate}
+    
+    
+    
+\end{document}

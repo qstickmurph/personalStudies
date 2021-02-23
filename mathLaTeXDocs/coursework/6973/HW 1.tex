@@ -1,0 +1,120 @@
+\documentclass[letterpaper, 12pt]{article}
+\usepackage{comment} % enables the use of multi-line comments (\ifx \fi) 
+\usepackage{fullpage} % changes the margin
+\usepackage[T1]{fontenc}
+\usepackage{selinput}
+\usepackage{enumitem}
+\usepackage{listings}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{setspace}
+\usepackage{bm}
+\usepackage{mathtools}
+
+\SelectInputMappings{
+   aacute={á},
+   ntilde={ñ}
+}
+\newcommand{\Mod}[1]{\ (\mathrm{mod}\ #1)}
+
+\begin{document}
+%Header-Make sure you update this information!!!!
+\noindent
+\large\textbf{Advanced Number Theory} \hfill \textbf{Quinn Murphey} \\
+\normalsize MAT 6973.001 \hfill Date: 09/15/19 \\
+Dr. Dueñez \hfill Due Date: 09/18/19 \\
+\noindent\makebox[\linewidth]{\rule{\paperwidth}{0.4pt}}
+\section*{HW \#1:}
+\textbf{Prove that $\mathbb{Q}(\sqrt{2},\sqrt{3})=\mathbb{Q}(\sqrt{2}+\sqrt{3})$.  This illustrates the theorem that every number field is a simple extension of $\mathbb{Q}$.}
+
+\begin{itemize}
+    \item[($\subseteq$)] Let $\alpha\in\mathbb{Q}(\sqrt{2},\sqrt{3})$. Then $\alpha = q_{0,0} + q_{1,0}\sqrt{2} + q_{0,1}\sqrt{3} + q_{1,1}\sqrt{2}\sqrt{3}.$ Because $\sqrt{2}^2=2$ and $\sqrt{3}^2=3$. Let $\beta = (\sqrt{2}+\sqrt{3})$. We can rewrite this as $$\alpha = (q_{0,0} - 3q_{1,1}/2) + (11q_{0,1}/2 -9q_{1,0}/2)\beta + (q_{1,1}/2)\beta^2 + (q_{1,0}/2 - q_{0,1}/2)\beta^3$$ because $\sqrt{2} = \frac{-9}{2}\beta + \frac{1}{2}\beta^3,\sqrt{3} = \frac{11}{2}\beta-\frac{1}{2}\beta^3,\sqrt{2}\sqrt{3}= \frac{1}{2}\beta^2-\frac{3}{2}$. Therefore $\mathbb{Q}(\sqrt{2},\sqrt{3})\subseteq \mathbb{Q}(\sqrt{2}+\sqrt{3})$ because $[\mathbb{Q}(\sqrt{2}+\sqrt{3}):\mathbb{Q}] = 4$.
+    
+    \item[($\supseteq$)] Let $\alpha\in\mathbb{Q}(\sqrt{2}+\sqrt{3})$. Then $\alpha = q_0 + q_1(\sqrt{2}+\sqrt{3}) + q_2(\sqrt{2}+\sqrt{3})^2 + q_3(\sqrt{2}+\sqrt{3})^3$ because $(\sqrt{2}+\sqrt{3})^4 = -1 + 10(\sqrt{2}+\sqrt{3})^2$. We can rewrite this as $\alpha = (q_0+5q_2) + (q_1 + 11q_3)\sqrt{2} + (q_1 + 9q_3)\sqrt{3} + (2q_2)\sqrt{2}\sqrt{3}$. Obviously every element of $\mathbb{Q}(\sqrt{2},\sqrt{3})$ can be written this way. Therefore $\mathbb{Q}(\sqrt{2}+\sqrt{3}) \subseteq \mathbb{Q}(\sqrt{2},\sqrt{3})$.
+\end{itemize}
+
+    By both of these, $\mathbb{Q}(\sqrt{2},\sqrt{3})=\mathbb{Q}(\sqrt{2}+\sqrt{3})$.\\
+
+\textbf{Is it also true that $\mathbb{Z}[\sqrt{2},\sqrt{3}] = \mathbb{Z}[\sqrt{2}+\sqrt{3}]$.}
+
+    This is not true, because for an arbitrary $\mathbb{Z}[\sqrt{2},\sqrt{3}]\ni\alpha=q_{0,0} + q_{1,0}\sqrt{2} + q_{0,1}\sqrt{3} + q_{1,1}\sqrt{2}\sqrt{3},$ $\alpha$ is only in $\mathbb{Z}[\beta]$ if each of the converted coefficients is in $\mathbb{Z}$. However, the coefficient for $\beta^2$, ($q_{1,1}/2$) is not in $\mathbb{Z}$ for any $\alpha$.\\
+
+\textbf{Prove the following lemma that is implicitly used in the proof of equation (1.9) “by an easy iterative argument”.
+LEMMA.  If $p$ is a prime and $n$ is a positive integer, then $(1+\sqrt{-p})^n \equiv 1 + n\sqrt{-p} \mod{p^{v+1}}$, where $v$ is the largest integer such that $p^v$ divides $n$.}
+    
+    Let $p$ be prime and $n\in\mathbb{Z}^+$ and let $v$ be the largest integer such that $p^v | n$. We will prove this lemma by induction.
+    
+    The base case of $n=1$ is trivial due to both sides being equal.
+    
+    Inductive Step: Assume $(1+\sqrt{-p})^n \equiv 1 + n\sqrt{-p} \mod{p^{v+1}}$.
+    %$$(1+\sqrt{-p})^n= \sum_{i=1}^{n}\binom{n}{i}1^{n-i}(\sqrt{-p})^i.$$
+    $$(1+\sqrt{-p})^{n+1} \equiv (1+n\sqrt{-p})(1+\sqrt{-p}) \mod{p^{v+1}} = 1 + \sqrt{-p} + n\sqrt{-p} - np = 1 + (n+1)\sqrt{-p} - np$$
+    which is equivalent to $1 + (n+1)\sqrt{-p} \mod{p^{v+1}}$ because $p^v | n \Rightarrow p^{v+1} | np$.
+    
+    Therefore, $(1+\sqrt{-p})^n \equiv 1 + n\sqrt{-p} \mod{p^{v+1}}$ for any $n,p$.\\
+    
+\textbf{THEOREM.  If $\pi\in\mathcal{O}_F$ is an algebraic integer in a quadratic number field $F$, and if the norm $N(\pi)=\pi\pi'$ is equal to a prime number $p$, then $\pi$ is a "prime of $\mathcal{O}_F$" in the following sense:
+Whenever $\alpha,\beta\in\mathcal{O}_F$ satisfy that $\pi$ divides $\alpha\beta$, then $\pi$ divides either $\alpha$ or $\beta$.}
+
+    Let $\Delta_F$ be even. Then $D\not\equiv 1 \mod{4}$ so every $\pi\in\mathcal{O}_F$ can be written $\pi_1+\pi_2\sqrt{D}$ for $\pi_1,\pi_2\in\mathbb{Z}$. Note: For $\alpha\in\mathcal{O}_F$, $\pi|\alpha\Rightarrow\frac{\alpha}{\pi}\in\mathcal{O}_F$. Let $N(\pi)=p$ for $p$ prime. Let $\alpha=\alpha_1+\alpha_2\sqrt{D}$, $\beta=\beta_1+\beta_2\sqrt{D}$, and $\pi=\alpha\beta$. Then to prove $\pi$ prime in $\mathcal{O}_F$, we can prove that $\frac{\alpha}{\pi}\not\in\mathcal{O}_F \text{ and }\frac{\beta}{\pi}\not\in\mathcal{O}_F \Rightarrow \frac{\alpha\beta}{\pi}\not\in\mathcal{O}_F$. We can rewrite $\frac{\alpha}{\pi}$ as $\frac{\alpha\pi'}{p}$ and similarly for $\frac{\beta}{\pi}$. 
+    
+    Assume that $\frac{\alpha\pi'}{p},\frac{\beta\pi'}{p}\not\in\mathcal{O}_F$. Also, $\alpha\pi'=(\alpha_1\pi_1-\alpha_2\pi_2D)+(\alpha_2\pi_1-\alpha_1\pi_2)\sqrt{D}$ and $\beta\pi'$ similar. Then at least one coefficient of $\alpha\pi'$ and $\beta\pi'$ must not be congruent to $0$ modulo $p$. Additionally, $\pi_1,\pi_2\not\equiv 0\mod{p}$. For convenience of notation, let $\alpha\pi'=\gamma=\gamma_1+\gamma_2\sqrt{D}$ and similarly for $\beta\pi'=\delta$. Then we have $$\frac{\alpha\beta}{\pi}=\pi\left(\frac{\alpha}{\pi}\frac{\beta}{\pi}\right) = \frac{\pi(\alpha\pi')(\beta\pi')}{p^2}=\frac{\alpha\beta\pi'}{p}.$$
+    
+    We have $$\alpha\beta\pi' = \beta_1(\alpha_1\pi_1-\alpha_2\pi_2D)+\beta_2D(\alpha_2\pi_1-\alpha_1\pi_2) + \beta_1(\alpha_2\pi_1-\alpha_1\pi_2)\sqrt{D}+\beta_2(\alpha_1\pi_1-\alpha_2\pi_2D)\sqrt{D}$$
+    
+    Assume that $p | D$. Then obviously $p\not|\,\alpha_1\pi_1,\beta_1\pi_1$. So the integral part of $\alpha\beta\pi'$ is equivalent to $\beta_1\alpha_1\pi_1$ modulo $p$ which is nonzero. Assume that $p \not|\; D$.
+    
+%    We will prove this theorem by cases. ($\Delta_F$ even/odd, divisible by $p$).
+%    \begin{itemize}
+%        \item[Case 1:]($\Delta_F$ odd) 
+%        \begin{itemize}
+%            \item[Case 1a:]($\Delta_F$ divisible by $p$) 
+%            
+%                
+%            
+%            \item[Case 1b:]($\Delta_F$ not divisible by $p$) (REQUIRED)
+%            
+%                If $\Delta_F$ is odd, then $D\equiv 1 \mod{4}$. Therefore, $\mathcal{O}_F=\mathbb{Z}[\frac{1+\sqrt{D}}{2}].$ Then, any $\pi\in\mathcal{O}_F$ can be written $a+b\sqrt{D}$ for $a,b\in\mathbb{Z}/2$ (either both rationals over 2 or both integers). The conjugate is $\pi'=a-b\sqrt{D}$. Therefore $N(\pi)=a^2-b^2D$. This is an integer because both the numerator of $a^2$ and $b^2D$ are equal to 1, so $4 | a^2-b^2D$. Therefore the norm is an integer. 
+%                %We can easily prove that $\pi | \alpha \Rightarrow N(\pi) | N(\alpha)$ and $\pi | \alpha\beta \Rightarrow N(\pi) | N(\alpha\beta)=N(\alpha)N(\beta)$. 
+%                Additionally, since we know $\Delta_F=D$, $D$ is not divisible by $p$. Therefore, if $N(\pi=a+b\sqrt{D})=p$ and $\pi | \alpha\beta$, then either $a$ and $b$ are both divided by $p$ or neither is. Obviously $p | N(\alpha\beta)=N(\alpha)N(\beta)$, so $p | N(\alpha)$ or $p | N(\beta)$. Without loss of generality, assume $p | N(\alpha)$. For $\alpha = \alpha_1 +\alpha_2\sqrt{D}$, we have either $p$ divides both $\alpha_1,\alpha_2$ or neither. Assume $p |a,b$ and $\alpha_1,\alpha_2$
+%            
+%        \end{itemize}
+%    \end{itemize}
+
+\textbf{Prove that neither 2 nor 3 are primes in the ring $\mathcal{O}_{\mathbb{Q}(\sqrt{-5})}$.  Does this contradict the Theorem above?}
+
+    $2 | 126 = (1+5\sqrt{-5})(1-5\sqrt{-5})$. Neither of which are divisible by 2 in $\mathbb{Z}[\sqrt{-5}]$. Therefore 2 is not prime.
+    
+    $3 | 516 = (4+10\sqrt{-5})(4-10\sqrt{-5})$. Neither of which are divisible by 3 in $\mathbb{Z}[\sqrt{-5}]$. Therefore 3 is not prime.
+
+    $N(2)=4$ and $N(3)=9$. Which are not primes in $\mathbb{Z}$, therefore this does not contradict the above theorem.
+
+\textbf{Prove or disprove the following statement:
+If $\gamma$ is an element of a quadratic number field $F$ having integral norm $N(\gamma)=\gamma\gamma'\in\mathbb{Z}$, then $\gamma$ is an algebraic integer.}
+
+    Let $\gamma=\gamma_1+\gamma_2\sqrt{D}$ in a quadratic number field $F$. Then $\gamma'=\gamma_1-\gamma_2\sqrt{D}$. If $\gamma$ is linear over $\mathbb{Q}$, then obviously $\gamma^2\in\mathbb{Z}\Rightarrow\gamma\in\mathbb{Z}$. So let $\gamma$ be quadratic over $\mathbb{Q}$. Then $(x-\gamma)(x-\gamma')$ is the minimal monic polynomial of $\gamma$ in $\mathbb{Q}[x]$. We can expand this to get
+    $$(x-\gamma)(x-\gamma')= x^2 - (\gamma+\gamma')x +\gamma\gamma'.$$
+    The linear coefficient is integeal due to $\gamma_1\in\mathbb{Z} or \gamma_1\in\mathbb{Z}/2$. Then due to $\gamma\gamma'$ also being integral, $\gamma$ is the root of a monic polynomial in $\mathbb{Z}[x]$. So $\gamma\in\mathbb{A}$.
+    
+    
+\textbf{\underline{Extra-credit:} Does your answer to the question above change if $F$ is a cubic number field or beyond?}
+
+    
+
+\textbf{Prove that every cyclotomic polynomial $\Phi_n(x)$ is a quotient of products of polynomials of the form $x^d-1$.}
+
+    The base case is trivial at $\Phi_1(x)=x-1$.
+    
+    Assume that $\Phi_i(x)$ for $i<n$ is expressible as a quotient of products of polynomials of the form $x^d-1$ for $d\in\mathbb{N}$. Then instead of writing 
+    $$\Phi_n(x)=\prod_{i\in U_n}(x-\zeta_n^i),$$
+    we will write
+    $$\Phi_n(x)=\frac{\prod_{i\in Z_n}(x-\zeta_n^i)}{\prod_{k\not\in U_n}(x-\zeta_n^k)}=\frac{x^n-1}{\prod_{k\not\in U_n}(x-\zeta_n^k)}.$$
+    Let $k\in Z_n$ such that $k\not\in U_n$. Then each $\zeta_n^k$ can be written $\zeta_{n/\gcd(k,n)}^{k/\gcd(k,n)}$ (which is strictly different because $\gcd(k,n)>1)$. Additionally every $\zeta_a^i$ where $a|n$, $a\not=n$, and $i\in U_a$ can be written in terms of $\zeta_n^k$ for some $k\in Z_n\setminus U_n$. Obviously, each $\zeta_a$ can be written this way by letting $k=n/a$. Then each $\zeta_a^i$ for $i\in U_a$ can be written this way by letting $k=in/a$ which is both in $Z_n\setminus U_n$ and $\gcd(in/a,n)=\gcd(n/a,n)=n/a$ because $i$ shares no factors with $a$ so every factor that $i$ and $n$ share, $n/a$ and $n$ also share. Therefore the set $\{\zeta_n^k:k\in Z_n\setminus U_n \}$ is equal to $\bigcup_{a|n;a\not=n}\{\zeta_a^i:i\in U_a\}$. Therefore
+    $$\Phi_n(x)=\frac{x^n-1}{\prod_{a|n;a\not=n}(\prod_{i\in U_a}(x-\zeta_a^i))}$$
+    Since $\Phi_a(x)=\prod_{i\in U_a}(x-\zeta_a^i)$, we can finally rewrite this as
+    $$\Phi_n(x)=\frac{x^n-1}{\prod_{a|n;a\not=n}\Phi_a(x).}$$
+    Therefore, by the inductive hypothesis, we have $\Phi_n(x)$ can be written as a quotient of products of $x^d-1$.
+
+\textbf{\underline{Extra Credit:} Find an explicit formula for $\Phi_n(x)$.}
+
+\end{document}

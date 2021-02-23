@@ -1,0 +1,86 @@
+\documentclass[Main.tex]{subfiles}
+
+\begin{document}
+
+\begin{enumerate}
+    \item (10)
+    
+        Let $(a,b,c,d)$ be a set of four variables. Then let $t\leftarrow a, a\leftarrow b, b\leftarrow c, c\leftarrow d, \text{and } d\leftarrow t.$. Now we have $(b,c,d,a)$. $\hfill\qed$
+    
+    \item (15)
+    
+        Assume $m<n$. Then let $r = m \mod{n}$. Then, since $r \not= 0$, we proceed to E3. Let $m = n$ and $n = r$. However, since $n>m$, $r = m$, so we have the same $m,n$ pair as we began with except flipped. Thus, either $m \geq n$ initially or $m \geq n$ after the first application of E1-E3. $\hfill\qed$
+    
+    \item (20)
+    
+        Let $m,n\in\mathbb{Z}^+$ such that $m \geq n$. The following algorithm returns gcd$(m,n)$.
+        \begin{enumerate}
+            \item[\textbf{F1.}] Let $r = m \mod{n}$. (Note: $0 \leq r < n$.)
+            \item[\textbf{F2.}] If $r=0$, return $n$ and terminate the program. Else, proceed.
+            \item[\textbf{F3.}] Let $m\leftarrow n$ and $n\leftarrow r$. Then repeat from step F1.
+        \end{enumerate} $\hfill\qed$
+    
+    \item (16) 57. $\hfill\qed$
+    
+    \item (12) Analysis of the algorithm "Procedure for reading this book".
+    
+    \begin{enumerate}[label=\arabic*)]
+        \item Finiteness: Steps 12 and 13 are unconditionally self referential. Potentially, this may result in an infiite loop. So this algorithm is not finite.
+        \item Definiteness: The distinction in step 9 between mathematically inclined and not is vague enough to be non definite. Therefore. this algorithm is not definite either.
+        \item Input: There is an input of 0 terms into this algorithm. So this is valid.
+        \item Output: There is no specified output of this algorithm, so this algorithm fails here.
+        \item Effectiveness: There are many very complicated steps of this algorithm such as step 12. Thus, this algorithm is not effective.
+    \end{enumerate}
+    
+        By the above analysis, we can see that the "algorithm" is in fact not an algorithm. $\hfill\qed$
+    
+    \item (20)
+    
+        The value of $m$ may take one of 5 different cases which is one to one with the possible values of $r$. The number of times E1 was run is exactly equal to the number of times we calculate $r$ (based on new parameters from E3 on the second and further time).
+        \begin{enumerate}
+            \item[$r=0:$] Then, by E2, the algorithm terminates, and we ran E1 a single time.
+            \item[$r=1:$] Then, $r=0$ on the next step regardless. So we run E1 twice.
+            \item[$r=2:$] Then, after one cycle $r=1$ and by another, $r=0$. In total, we ran E1 three times.
+            \item[$r=3:$] Then, $r$ follows the chain $r=2\rightarrow r=1\rightarrow r=0$. E1 was ran four times.
+            \item[$r=4:$] $\rightarrow r=1\rightarrow r=0$. Thus, E1 was ran 3 times.
+        \end{enumerate}
+        
+        We can see that the lengths of this algorithm, all of equal "probability", are 1, 2, 3, 4, 3. Thus, our average number of cycles is equal to $$\frac{1 + 2 + 3 + 4 + 3}{5} = 2.6.$$
+        $\hfill\qed$
+    
+    \item (HM21)
+    
+        To show that $U_m$ is well defined, we note that the number of times E1 is ran on a $m, n$ pair, given a fixed $m$, is strictly determined by the value of $r = n \mod{m}$. Since every integer falls into one of the residue classes of $\mathbb{Z}_m$, and every element of the residue class has the same number of runs of E1, this is indeed a finite and well defined function.
+        
+        $U_k$ = $T_k + 1$ because on average, despite the $m$, $n$ will be larger than $m$, requiring an extra step to flip the two numbers. The same logic show that if $n$ is fixed, $m$ will be greater than $n$ on all but finite cases, so it does not required the extra step. $\hfill\qed$
+    
+    \item (M25)
+    
+        Let $A = \{a, b, c\}$. Let $I = \{ a^mb^n : a,b \in A, m,n\in\mathbb{N} \}$. Let $N = 5$. Finally, let $\theta_j, \phi_j, a_j, \text{and } b_j$ be defined as follows:
+        \begin{center}
+            \begin{tabular}{c c c c c c}
+                j$\quad$ & $\theta_j$ & $\phi_j$ & $a_j$ & $b_j$ & Note\\
+                0$\quad$   & ab             & $\emptyset$   & 1 & 1 & Remove 1 ab or go to 2.\\
+                1$\quad$   & $\emptyset$    & c             & 0 & 0 & Add a c to extreme left\\
+                2$\quad$   & a              & b             & 2 & 3 & Replace all a's with b\\
+                3$\quad$   & c              & a             & 3 & 4 & Replace all c's with a\\
+                4$\quad$   & b              & b             & 0 & 5 & If b's remain, repeat from 0
+            \end{tabular} 
+        \end{center}
+        
+        At the termination of this algorithm you are left with an output of $a^{\gcd(m,n)}$. $\hfill\qed$
+    
+    \item (M30)
+    
+        Given two algorithms, $C_1 = (Q_1, I_1, \Omega_1, f_1)$ and $C_2 = (Q_2. I_2, \Omega_2, f_2)$, formulate a set theoretic definition for the statement "$C_2$ is a representation of $C_1$" or "$C_2$ simulates $C_!$". From this we obtain a formal definition of the statement "Program X is an implementation of Algorithm Y".
+        
+        We can say $C_2$ is a representation of $C_1$ if there exists a function $g: I_1 \rightarrow I_2$, a function $h: Q_2 \rightarrow Q_1$ and a function $j: Q_2 \rightarrow\mathbb{N}$ such that
+        \begin{enumerate}
+            \item If x is in $I_1$, then $h(g(x)) = x$.
+            \item If q is in $Q_2$, then $f_1(h(q)) = h(f_2^{j(q)}(q))$.
+            \item If q is in $Q_2$, then $h(q)\in\Omega_1$ iff $q\in\Omega_2$.
+        \end{enumerate}
+    
+\end{enumerate}
+
+\end{document}

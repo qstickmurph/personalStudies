@@ -1,0 +1,323 @@
+\documentclass[a4paper, 11pt]{article}
+\usepackage{comment} % enables the use of multi-line comments (\ifx \fi) 
+\usepackage{fullpage} % changes the margin
+\usepackage[T1]{fontenc}
+\usepackage{selinput}
+\usepackage{enumitem}
+\usepackage{listings}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{setspace}
+\usepackage{bm}
+\usepackage{mathtools}
+
+\SelectInputMappings{
+   aacute={á},
+   ntilde={ñ}
+}
+\newcommand{\Mod}[1]{\ (\mathrm{mod}\ #1)}
+
+\begin{document}
+%Header-Make sure you update this information!!!!
+\noindent
+\large\textbf{Mathematical Foundations of Cryptography} \hfill \textbf{Quinn Murphey} \\
+\normalsize MAT 4353.001 \hfill Date: 03/02/19 \\
+Dr. Dueñez \hfill Due Date: 03/05/19 \\
+\noindent\makebox[\linewidth]{\rule{\paperwidth}{0.4pt}}
+\section*{Week 7:}
+    2.17, 2.20, 2.23, 2.25, 2.28, 2.35, 2.36, 2.38, 2.39.  Extra credit: 2.22, 2.24.
+    
+\section*{Mandatory}
+
+\noindent\textbf{Problem 2.17:}
+
+    Use Shank's babystep-giantstep method to solve the following discrete logarithm problems (a) by hand.
+    
+    \begin{enumerate}[label=(\alph*)]
+        \item $11^x = 21$ in $\mathbb{F}_{71}$
+        
+        We first find the order of $11$ in $\mathbb{F}_{71}:$ $N=70$ and $\lfloor\sqrt{70}\rfloor = 8$. Therefore $n=1+\lfloor\sqrt{70}\rfloor = 9$
+        
+        First we must create two ordered lists by the instruction of Shank's babystep-giantstep
+        \begin{align*}
+            \text{List1} = (1, 11, 50, 53, 15, 23, 40, 14, 12, 61)\\
+            \text{List2} = (21, 5, 35, 32, 11, 6, 42, 10, 70, 64)
+        \end{align*}
+        As we can see, the $2nd$ element of List1 and the $5th$ element of List2 are both equal to $11$. Therefore we have
+        \begin{align*}
+            g^1 &= (g^{-n})^4\cdot h\\
+            g^{1+4n} &= h
+        \end{align*}
+        and since $n=9$, $1+4n=1+4(9)=37$ so we have $x=37$. 
+        
+        We can check and see $11^{37}=21 \Mod{71}$
+        \item $156^x = 116$ in $\mathbb{F}_{593}$
+        
+        $x = 59$
+        \item $650^x = 2213$ in $\mathbb{F}_{3571}$
+        
+        $x = 319$
+    \end{enumerate}
+    (See code in \texttt{QuinnMurphey/Week7/Code.sage})
+    
+\noindent\textbf{Problem 2.20:}
+
+    Let $a,b,m,n$ be integers with gcd($m,n$)=1. Let
+    $$c\equiv (b-a)\cdot m^{-1} \Mod{n}.$$
+    Prove that $x=a+cm$ is a solution to 
+    \begin{equation}
+        x\equiv a \Mod{m} \qquad \text{and} \qquad x\equiv b\Mod{n},    
+    \end{equation}
+    and every solution has the form $x=a+cm+ymn$ for some $y\in\mathbb{Z}$.
+    
+    We will just prove the second half due to the first solution being a specific of the general stated in the second half. 
+    
+    From the first equation from (1) we have $x=a+ym$ for some $y\in\mathbb{Z}$. We can substitute this into the second equation of (1) to get 
+    \begin{align*}
+        a+ym &\equiv b \Mod{n}\\
+        y &\equiv (b-a)m^{-1} \Mod{n}\\
+        &\equiv c \Mod{n}
+    \end{align*}
+    Therefore we have $y=c+zn$ for some $z\in\mathbb{Z}$, so $x=a+(c+zn)m=a+cm+znm$. Therefore every solution $x$ of (1) follows the form $x=a+cm+znm$ and if we let $z=0$, $x = a + cm$ is a solution to (1).
+    
+\noindent\textbf{Problem 2.23:}
+
+    Find square roots modulo the following moduli
+
+    \begin{enumerate}[label=(\alph*)]
+        \item Find a square root of 340 modulo 437
+        
+        We have
+        \begin{align*}
+            x^2 &\equiv 340 \Mod{437=19\cdot23}\\
+            \text{so}\qquad x^2 &\equiv 17\Mod{19} \qquad \text{and} \qquad x^2\equiv 18\Mod{23}.
+        \end{align*}
+        We use the equation in the book to get
+        \begin{equation*}
+            x\equiv 17^\frac{20}{4} \equiv \pm 6 \equiv 6, 13\Mod{19} \qquad \text{and} \qquad x\equiv 18^\frac{24}{4} \equiv \pm 8 \equiv 8, 15\Mod{23}
+        \end{equation*}
+        and we can use Chinese Remainder Theorem on $x\equiv 6 \Mod{19}$ and $x\equiv 8\Mod{23}$ to find $x\equiv215\Mod{437}$ and $215^2\equiv340\Mod{437}$.
+        
+        \item Find a square root of 253 modulo 3143
+        
+        We have
+        \begin{align*}
+            x^2 &\equiv 253 \Mod{3143=7\cdot449}\\
+            \text{so}\qquad x^2 &\equiv 1\Mod{7} \qquad \text{and} \qquad x^2\equiv 253\Mod{449}\\
+        \end{align*}
+        and we can use trial and error to find
+        \begin{equation*}
+            x\equiv \pm 1 \equiv 1,6 \Mod{7} \qquad \text{and} \qquad x \equiv \pm 40 \equiv 40, 409\Mod{449}
+        \end{equation*}
+        and we can use Chinese Remainder Theorem on $x\equiv 1 \Mod{7}$ and $x\equiv 40\Mod{449}$ to find $x\equiv1387\Mod{3143}$. Therefore $1387^2\equiv253\Mod{3143}$.
+        
+        \item Find four square roots of 2833 modulo 4189
+        
+        We have
+        \begin{align*}
+            x^2 &\equiv 2833 \Mod{4183=71\cdot59}\\
+            \text{so}\qquad x^2 &\equiv 64\Mod{71} \qquad \text{and} \qquad x^2\equiv 1\Mod{59}.
+        \end{align*}
+        We can use the equation from the book to get
+        \begin{equation*}
+            x\equiv 64^\frac{72}{4} \equiv \pm 8 \equiv 8,63 \Mod{71} \qquad \text{and} \qquad x \equiv \pm 1 \equiv 1, 58\Mod{59}
+        \end{equation*}
+        and we can use Chinese Remainder Theorem on $x\equiv 8 \Mod{71}$ and $x\equiv 1\Mod{59}$ to find $x\equiv1712\Mod{4183}$, $x\equiv 63 \Mod{71}$ and $x\equiv 1\Mod{59}$ to find $x\equiv3187\Mod{4183}$, $x\equiv 8 \Mod{71}$ and $x\equiv 58\Mod{59}$ to find $x\equiv1002\Mod{4183}$, and $x\equiv 8 \Mod{71}$ and $x\equiv 58\Mod{59}$ to find $x\equiv2477\Mod{3143}$.
+        
+        Therefore the four square roots of $2833\Mod{4183}$ are $1002,1712,2477,3187$
+        
+        \item Find eight square roots of 813 modulo 868
+        
+        We have
+        \begin{align*}
+            x^2 &\equiv 813 \Mod{868=4\cdot7\cdot31}\\
+            \text{so}\qquad x^2 &\equiv 7\Mod{31} \qquad \text{and} \qquad x^2\equiv 1\Mod{7} \qquad \text{and} \qquad x^2\equiv 1\Mod{4}.
+        \end{align*}
+        We can use the equation from the book to get
+        \begin{equation*}
+            x\equiv 7^\frac{32}{4} \equiv 10,21 \Mod{7} \qquad \text{and} \qquad x \equiv \pm 1 \equiv 1, 6\Mod{7} \qquad \text{and} \qquad x \equiv \pm 1\equiv 1,3 \Mod{4}
+        \end{equation*}
+        and we can use Chinese Remainder Theorem as seen in (c) on all 8 possible combinations of 3 equivalences to find the eight square roots of $813\Mod{868}$ to be 41, 83, 351, 393, 475, 517, 785, and 827.
+    \end{enumerate}
+
+\noindent\textbf{Problem 2.25:}
+
+    Suppose $n=pq$ with $p$ and $q$ distinct odd primes.
+    \begin{enumerate}[label=(\alph*)]
+        \item Suppose that gcd($a,pq$)=$1$. Prove that if the equation $x^2\equiv a \Mod{n}$ has any solutions, then it has $4$ solutions.
+        
+        From this we have
+        \begin{equation}
+            x^2\equiv a \Mod{p} \qquad \text{and} \qquad x^2\equiv a \Mod{q}
+        \end{equation}
+        Let $b$ be a solution to $x^2\equiv a \Mod{n}$. Then it is also a solution of both equations in (2). Therefore
+        \begin{equation*}
+            (\pm b)^2 \equiv a\Mod{p} \qquad \text{and} \qquad (\pm b)^2\equiv a \Mod{q}
+        \end{equation*}
+        Also due to the Chinese remainder theorem, any solution to these two congruences solves the equation $x^2\equiv a \Mod{n}$. Now we show these are all unique.
+        
+        First $b \Mod{p} \not\equiv -b\Mod{p}$ or the same with $\Mod{q}$ since neither $p$ or $q$ are multiples of $b$. Therefore every solution to each of the 4 above congruences is unique.
+        
+        \item Suppose that you had a machine that could find all four solutions for some given $a$. How could you use the machine to factor $n$
+        
+        If we let the sum any two of the solutions be $r$, it is either divisible by $p$ or by $q$. Therefore, if we find gcd($r,n$) then we will find one of the facotrs and we can easily find the other by dividing $n$. 
+    \end{enumerate}
+
+    
+
+\noindent\textbf{Problem 2.28:}
+
+    Use the Pohlig-Hellman algorithm to solve for x in each:
+    \begin{equation*}
+        g^x = a \quad \text{in }\mathbb{F}_p
+    \end{equation*}
+    \begin{enumerate}[label=(\alph*)]
+        \item $p=433, \quad g=7, \quad a=166.$
+        
+        $x=47$
+        \item $p=476497, \quad g=10, \quad a=243278.$
+        
+        $x=223755$
+        \item $p=41022299, \quad g=2, \quad a=39183497.$
+        
+        $x=33703314$
+        \item $p=1291799, \quad g=17, \quad a=192988.$
+        
+        $x=984414$
+    \end{enumerate}
+    (See Code.sage)
+    
+
+\noindent\textbf{Problem 2.35:}
+
+    Let $\bm{a}$ and $\bm{b}$ be the polynomials
+    \begin{align*}
+        \bm{a} &= x^5 + 3x^4 - 5x^3 - 3x^2 + 2x + 2\\
+        \bm{b} &= x^5 + x^4 - 2x^3 +4x^2 + x + 5
+    \end{align*}
+    Use the Euclidean Algorithm to compute gcd($\bm{a},\bm{b})$ in each of the following rings:
+    \begin{enumerate}[label=(\alph*)]
+        \item $\mathbb{F}_2[x]$
+        
+        We have
+        \begin{align*}
+            \bm{a} &= x^5 + x^4 + x^3 + x^2 \\
+            \bm{b} &= x^5 + x^4 + x + 1
+        \end{align*}
+        For this we use the euclidean algorithm to find gcd($\bm{a},\bm{b}$).
+        \begin{align*}
+            x^5 + x^4 + x^3 + x^2 &= (1)\cdot(x^5 + x^4 + x + 1) + (x^3 + x^2 + x + 1)\\
+            x^5 + x^4 + x + 1 &= (x^2 + 1)\cdot(x^3 + x^2 + x + 1) + 0
+        \end{align*}
+        Therefore we have gcd($\bm{a},\bm{b})=(x^3 + x^2 + x + 1)$.
+        
+        \item $\mathbb{F}_3[x]$
+        
+        We have
+        \begin{align*}
+            \bm{a} &= x^5 + x^3 + 2x + 2\\
+            \bm{b} &= x^5 + x^4 + x^3 + x^2 + x + 2
+        \end{align*}
+        For this we use the euclidean algorithm to find gcd($\bm{a},\bm{b}$).
+        \begin{align*}
+            x^5 + x^3 + 2x + 2 &= (1)\cdot(x^5 + x^4 + x^3 + x^2 + x + 2) + (2x^4 + 2x^2 + x)\\
+            x^5 + x^4 + x^3 + x^2 + x + 2 &= (2x+2)\cdot(2x^4 + 2x^2 + x) + (x^2+2x+2)\\
+            2x^4 + 2x^2 + x &= (2x^2+2x)\cdot(x^2+2x+2) + 0
+        \end{align*}
+        Therefore we have gcd($\bm{a},\bm{b})=(x^2+2x+2)$.
+        
+        \item $\mathbb{F}_5[x]$
+        
+        We have
+        \begin{align*}
+            \bm{a} &= x^5 + 3x^4 + 2x^2 + 2x + 2\\
+            \bm{b} &= x^5 + x^4 + 3x^3 + 4x^2 + x 
+        \end{align*}
+        For this we use the euclidean algorithm to find gcd($\bm{a},\bm{b}$).
+        \begin{align*}
+            x^5 + 3x^4 + 2x^2 + 2x + 2 &= (1)\cdot(x^5 + x^4 + 3x^3 + 4x^2 + x) + (2x^4 + 2x^3 + 3x^2 + x + 2)\\
+            x^5 + x^4 + 3x^3 + 4x^2 + x &= (3x)\cdot(2x^4 + 2x^3 + 3x^2 + x + 2) + (4x^3 + x^2)\\
+            2x^4 + 2x^3 + 3x^2 + x + 2 &= (3x+1)\cdot(4x^3 + x^2) + (2x^2 + x + 2)\\
+            4x^3 + x^2 &= (2x + 2)\cdot(2x^2 + x + 2) + (4x + 1)\\
+            2x^2 + x + 2 &= (3x+2)\cdot(4x + 1) + 0
+        \end{align*}
+        Therefore we have gcd($\bm{a},\bm{b}) = 4x + 1$.
+        
+        \item $\mathbb{F}_7[x]$
+        
+        We have
+        \begin{align*}
+            \bm{a} &= x^5 + 3x^4 + 2x^3 + 4x^2 + 2x + 2\\
+            \bm{b} &= x^5 + x^4 + 5x^3 + 4x^2 + x + 5
+        \end{align*}
+        For this we use the euclidean algorithm to find gcd($\bm{a},\bm{b}$).
+        \begin{align*}
+            x^5 + 3x^4 + 2x^3 + 4x^2 + 2x + 2 &= (1)\cdot(x^5 + x^4 + 5x^3 + 4x^2 + x + 5) + (2x^4 + 4x^3 + x + 4)\\
+            x^5 + x^4 + 5x^3 + 4x^2 + x + 5 &= (4x + 3)\cdot(2x^4 + 4 x^3 + x + 4) + (3x)\\
+            2x^4 + 4 x^3 + x + 4 &= (3x^3 + 6x^2 + 5)\cdot(3x) + (4)\\
+            3x &= (6x)\cdot(4) + 0
+        \end{align*}
+        Therefore we have gcd($\bm{a},\bm{b}) = 4$.
+    \end{enumerate}
+    
+\begin{comment}
+\noindent\textbf{Problem 2.36:}
+
+    Continuing with the same polynomials $\bm{a}$ and $\bm{b}$ as in Exercise $2.35$, for each of the polynomials rings above find polynomials $\bm{u}$ and $\bm{v}$ satisfying
+    \begin{equation*}
+        \bm{a}\cdot\bm{u} + \bm{b}\cdot\bm{v} = \text{gcd}(\bm{a},\bm{b})
+    \end{equation*}
+
+    \begin{enumerate}[label=(\alph*)]
+        \item 
+        \item 
+        \item 
+        \item 
+    \end{enumerate}
+
+\noindent\textbf{Problem 2.38:}
+
+    See the multiplication table attached.
+
+\noindent\textbf{Problem 2.39:}
+
+    The field $\mathbb{F}_7[x]/(x^2+1)$ is a field with 49 elements, which for the moment we denote by $\mathbb{F}_{49}$
+    \begin{enumerate}[label=(\alph*)]
+        \item Is $2+5x$ a primitive root in $\mathbb{F}_{49}$
+        
+        First we find the list of proper divisors of 48: $\{1,2,3,4,6,8,12,16,24\}$
+        \item Is $2+x$ a primitive root in $\mathbb{F}_{49}$
+        \item Is $1+x$ a primitive root in $\mathbb{F}_49$
+    \end{enumerate}
+    (Hint: Lagrange's theorem says that the order of $u\in\mathbb{F}_{49}$ must divide $48$. So if $u^k\not = 1$ for all proper divisors $k$ of 48, then $u$ is a primitive root.)
+    
+
+\section*{Extra Credit}
+
+\noindent\textbf{Problem 2.22:}
+
+    Let $m_1,m_2,\dots,m_k\in\mathbb{Z}$ and $m=m_1m_2\dots m_k$
+    \begin{enumerate}[label=(\alph*)]
+        \item Prove the map
+        \begin{align*}
+            \frac{\mathbb{Z}}{m\mathbb{Z}} \quad &\xrightarrow{\hspace*{1cm}} \qquad \frac{\mathbb{Z}}{m_1\mathbb{Z}}\times \frac{\mathbb{Z}}{m_2\mathbb{Z}}\times \dots \times  \frac{\mathbb{Z}}{m_k\mathbb{Z}}\\
+            a\text{ mod }m &\xmapsto{\hspace*{1cm}} (a\text{ mod }m_1,a\text{ mod }m_2,\dots,a\text{ mod }m_k)
+        \end{align*}
+        is a well-defined homomorphism of rings. (\textit{Hint:} show that $m\mathbb{Z}$ is the kernel.)
+        \item Assume that $m_1,m_2,\dots,m_k$ are pairwise relatively prime. Prove that the above mapping is injective.
+        \item Assume that $m_1,m_2,\dots,m_k$ are pairwise relatively prime. Prove that the above mapping is surjective.
+        \item Explain why the Chinese remainder theorem is equivalent to the assertion that (b) and (c) are true.
+    \end{enumerate}
+
+\noindent\textbf{Problem 2.24:}
+
+    Let $p$ be an odd prime, let $a$ be an integer that is not divisible by $p$, and let $b$ be a square root of $a$ modulo $p$. This exercise investigates the square root of a modulo powers of $p$.
+    \begin{enumerate}[label=(\alph*)]
+        \item Prove that for some choice of $k$, the number $b+kp$ is a square root of a modulo $p^2$. (($b+kp)^2\equiv a \Mod{p^2}$)
+        \item The number $b=537$ is a square root of $a=476$ modulo the prime $p=1291$. Compute the square root of $476$ modulo $p^2$
+        \item Suppose that $b$ is a square root of $a$ modulo $p^n$. Prove that for some choice of $j$, then number $b+jp^n$ is a square root of $a$ modulo $p^{n+1}$.
+        \item Explain why (c) implies the following statement: If $p$ is an odd prime and if $a$ has a square root modulo $p$, then $a$ has a square root modulo $p^n$ for every power of $p$. Is this true for $p=2$?
+        \item Use the method in (c) to compute the square root of $3$ modulo $13^2$, given $9^2\equiv 3\Mod{13}.$
+    \end{enumerate}
+\end{comment}
+\end{document}

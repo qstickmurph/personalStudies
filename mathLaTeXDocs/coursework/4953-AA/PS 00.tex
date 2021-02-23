@@ -1,0 +1,59 @@
+\documentclass[a4paper, 11pt]{article}
+\usepackage{comment} % enables the use of multi-line comments (\ifx \fi) 
+\usepackage{fullpage} % changes the margin
+\usepackage[T1]{fontenc}
+\usepackage{selinput}
+\usepackage{enumitem}
+\usepackage{listings}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+\newcommand{\Mod}[1]{\ (\mathrm{mod}\ #1)}
+
+\begin{document}
+%Header-Make sure you update this information!!!!
+\noindent
+\large\textbf{Modern Abstract Algebra II} \hfill \textbf{Quinn Murphey} \\
+\normalsize MAT 4953.001 \hfill Date: 01/17/19 \\
+Dr. Patterson \hfill Due Date: 01/18/19 \\
+\noindent\makebox[\linewidth]{\rule{\paperwidth}{0.4pt}}
+
+\section*{Problem Set 0}
+
+\textbf{Problem 1:}
+
+    Given our definition of  $\langle a\rangle$ = $\{ x \in R\colon a \mid x \}$,  prove that $\langle a\rangle$ is a Subring of R and absorbs multiplication: if $a \in \langle a\rangle $ then for all $r \in R, ar \in \langle a\rangle$. \\
+    
+    To prove that $\langle a\rangle$ is a subring, it must be closed under both multiplication and subtraction. So we must prove that $a \mid x$ and $a \mid y$ where $a,x,y \in R$ implies both $a \mid (x-y) $ and $a \mid xy$. 
+    
+    $a \mid (x-y)$ follows immediately from the distributive law of multiplication because $x = af$ for some $f \in R$ and $y = ah$ for some $h \in R$. Therefore $\left( x-y\right)= \left( af-ah\right)= a\left(f-h\right) $ Therefore $a \mid (x-y)$ and $a \in \langle a\rangle$. We also have $xy = (af)(ay) = a(fay)$. Therefore, $a \mid xy$, meaning $a \in \langle a\rangle$
+    
+    Since $\langle a\rangle$ is closed under multiplication and subtraction. We can conclude that $\langle a\rangle$ is a subring of $R$\\
+    
+    Now we'll prove that $\langle a\rangle$ absorbs multiplication. For any arbitrary $b \in \langle a\rangle$ which can be written in terms of $a$ and $n$ s.t. $a=bn$, and $r \in R$, $a \mid anr$ by definition of "divides" since $nr \in R$. Therefore, a absorbs multiplication\\\\
+    
+\noindent\textbf{Problem 2:}
+    
+    Prove that Congruence modulo $m$ (where $m \in R$) is an equivalence relation.\\
+    
+    For a relation to be an equivalence relation. It must satisfy the three properties
+    \begin{enumerate}
+        \item Reflexive Property: $\forall a\in R\left( a \equiv a\Mod{m}\right)$.\\
+        
+            \textit{Proof:} Let $a\in R$ and let $m$ be a fixed element of $R$. We must prove that $m \mid (a-a)$ which is equivalent to $m\mid 0$. Which we already know is true. Therefore, $\forall a\in R\left( a \equiv a\Mod{m}\right)$.
+        \item Symmetric Property: $\forall a,b\in R\left( a\equiv b\Mod{m} \rightarrow b\equiv a \Mod{m}\right)$. \\
+        
+            \textit{Proof:} Let $a,b\in R$ and let $m$ be a fixed element of $R$. We can write $a\equiv b\Mod{m}$ as $\exists m\in R\left( a+mx=b\right)$ which can be easily rewritten as $\exists m\in R\left( a=b-mx\right)$. Now, since $-x$ is also an element of $R$ given that $x\in R$, we can conclude that $b\equiv a\Mod{m}$. Therefore $\forall a,b\in R\left( a\equiv b\Mod{m} \rightarrow b\equiv a \Mod{m}\right)$
+        \item Transitive Property: $\forall a,b,c\in R\left(\left( a\equiv b\Mod{m} \text{ and }  b\equiv c\Mod{m}\right) \rightarrow  a\equiv c\Mod{m}\right)$. \\
+        
+            \textit{Proof:} Let $a,b,c\in R$ and let $m$ be a fixed element of $R$. Assume $a\equiv b\Mod{m} \text{ and }  b\equiv c\Mod{m}$. This means that $m \mid (b-a) \text{ and } m\mid (c-b)$. We also know that "divides" holds through addition so $m \mid \left(\left(c-b\right) +\left(b-a\right)\right)$ which simplifies to $m \mid (c-a)$. Therefore, $a\equiv c \Mod{m}$. Therefore, $\forall a,b,c\in R\left(\left( a\equiv b\Mod{m} \text{ and }  b\equiv c\Mod{m}\right) \rightarrow  a\equiv c\Mod{m}\right)$. 
+    \end{enumerate}
+\newpage
+
+\noindent\textbf{Problem 3:}
+
+    Consider $\mathbb{Q}[x]$,the ring of polynomials in $x$ with rational coefficients, and let $m$ be the polynomial $x^2$. Describe the congruence class $[3x^2 + 5x + 7]_{x^2}$ , the congruence class of $3x^2 + 5x + 7$ modulo $x^2$. \\
+    
+    An element $q\in \mathbb{Q}$ is congruent to $3x^2 + 5x + 7 \Mod{x^2}$ if and only if there exists an element $a\in\mathbb{Q}$ s.t. $q = (3x^2 + 5x + 7) + a*(x^2)$. This means that the congruence class, $[3x^2 + 5x + 7]_{x^2}$, contains all polynomials of the form $c_0+c_1x+c_2x^2 + \dots + c_nx^n $ where $c_0 = 7$ and $c_1 = 5$. This is because when you multiply nonzero polynomials together. The resulting polynomial's degree is equal to the sum of the previous two's degrees. Therefore those two coefficients are unable to be altered while any $c_n$ where $n\geq 2$ can be equal to any rational number.
+
+\end{document}

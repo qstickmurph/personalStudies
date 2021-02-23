@@ -1,0 +1,51 @@
+\documentclass[letterpaper, 12pt]{article}
+\usepackage{comment} % enables the use of multi-line comments (\ifx \fi) 
+\usepackage{fullpage} % changes the margin
+\usepackage[T1]{fontenc}
+\usepackage{selinput}
+\usepackage{enumitem}
+\usepackage{listings}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{setspace}
+\usepackage{bm}
+\usepackage{mathtools}
+
+\SelectInputMappings{
+   aacute={á},
+   ntilde={ñ}
+}
+\newcommand{\Mod}[1]{\ (\mathrm{mod}\ #1)}
+
+\begin{document}
+%Header-Make sure you update this information!!!!
+\noindent
+\large\textbf{Advanced Number Theory} \hfill \textbf{Quinn Murphey} \\
+\normalsize MAT 6973.001 \hfill Date: 10/13/19 \\
+Dr. Dueñez \hfill Due Date: 10/16/19 \\
+\noindent\makebox[\linewidth]{\rule{\paperwidth}{0.4pt}}
+\section*{HW \#2:}
+ 
+
+\textbf{Prove that if $\mathcal{O} = \mathbb{Z}[r]$ is the ring of integers in a quadratic number field $F$, then the discriminant $\Delta_F$ is given by $(r-r')^2=\Delta_F$, where $r'$ is the conjugate of $r$ in $\mathcal{O}$.}\\
+
+    By definition we have $r = \frac{\Delta_F + \sqrt{\Delta_F}}{2}$. Then since $r + r' = \Delta_F$, we have $r'=\frac{\Delta_F-\sqrt{\Delta_F}}{2}$. Then $r-r' = \sqrt{\Delta_F}$ which gives us $(r-r')^2=\Delta_F$.\\
+
+\noindent\textbf{Prove that $\mathfrak{f}$ is a fractional ideal of $F$ if and only if $\mathfrak{f}$ is a nonzero finitely generated $\mathcal{O}_F$-submodule of $F$. More explicitly, prove that fractional ideals $\mathfrak{f}$ are precisely subsets of $F$ of the form $\mathfrak{f} = \mathcal{O}\gamma_1 + \mathcal{O}\gamma_2 + \dots + \mathcal{O}\gamma_n$ for some $\gamma_1,\gamma_2,\dots,\gamma_n$ nonzero elements in $F$.}\\
+
+    \\
+
+\noindent\textbf{Let $\mathfrak{f}$ be a fractional ideal. Prove that $\mathfrak{f}^{-1} = \{\gamma\in F : \gamma\mathfrak{f}\subseteq\mathcal{O}\}$.}\\
+
+
+
+\noindent\textbf{Prove Theorem 6.1 of Shurman’s notes for the prime $p = 2$, i.e., show that 2$\mathcal{O}_F$ splits if $\chi_F(2) = 1$, ramifies if $\chi_F(2) = 0$, and is inert if $\chi_F(2) = -1$.}\\
+
+    
+
+\noindent\textbf{Prove that
+$$K = \ker(N) = \{\mathfrak{f}\in \mathcal{I}_F : N(\mathfrak{f}) = 1\}$$ is a free subgroup of $\mathcal{I}_F$, and find a basis (of independent generators) for it. (Bycontrast, the group of norm-1 fractional ideals of $\mathcal{I}_\mathbb{Q}$ is trivial.)}\\
+
+    
+
+\end{document}

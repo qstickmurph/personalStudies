@@ -1,0 +1,68 @@
+\documentclass[letter paper, 12pt]{article}
+\usepackage{comment} % enables the use of multi-line comments (\ifx \fi) 
+\usepackage{fullpage} % changes the margin
+\usepackage[T1]{fontenc}
+\usepackage{selinput}
+\usepackage{enumitem}
+\usepackage{listings}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{setspace}
+
+\newcommand{\Mod}[1]{\ (\mathrm{mod}\ #1)}
+
+\begin{document}
+%Header-Make sure you update this information!!!!
+\noindent
+\large\textbf{Modern Abstract Algebra II} \hfill \textbf{Quinn Murphey} \\
+\normalsize MAT 4953.001 \hfill Date: 02/21/19 \\
+Dr. Patterson \hfill Due Date: 02/22/19 \\
+\noindent\makebox[\linewidth]{\rule{\paperwidth}{0.4pt}}
+
+\section*{Problem Set 5}
+\doublespacing
+\noindent\textbf{Problem 1:}
+    
+    Prove that every principal ideal domain is a unique factorization domain.
+    
+    Let $x\in D$ where $D$ is a principal ideal domain. Remember that $p\mid q \Leftrightarrow \langle p\rangle \subseteq \langle q\rangle$ (see problem 18.5 below)
+    
+    
+    
+%    \noindent We will prove this by strong Induction on i
+%    
+%    \noindent Base Case: Show $p_i$ has an associate in $\{q_j\}$.
+%    Since $(p_1\mid p_1p_2\dots p_n) \rightarrow (p_1\mid x) \\ \rightarrow(p_1\mid q_1q_2\dots q_m)$. Since $p_1$ is an irreducible and therefore a prime since $D$ is an integral domain. $p_1\mid q_1$ or $p_1\mid q_2$ or ... or $p_1\mid q_{m-1}$ or $p_1\mid q_m$. We can just say $p_1\mid q_1$ without loss of generality. Therefore $np_1=q_1$ for some $n\in D$. Since $q_1$ and $p_1$ is irreducible, $n$ is a unit. This means $p_1$ and $q_1$ are associates.
+%    \noindent Inductive Hypothesis: Assume that all $n_ip_i=q_i$ for units $n_i$ for $i\leq k$. We will prove that $p_{k+1}$ is an associate of some $q_i$ for $i>k$. Since $p_{k+1}\mid x$ so $p_{k+1}\mid q_1q_2\dots q_m$. We can substitute in $n_ip_i=q_i$ for all $q_i$ and get $x=n_1n_2\dots n_kp_1p_2\dots p_kq_{k+1}q_{k+2}\dots q_{m}$
+    
+\noindent\textbf{Problem 2:}
+    
+    Prove that although $\mathbb{Z}[x]$ is a UFD, it is not a principal ideal domain. (Hint: Prove the ideal $S=\{f(x)\in\mathbb{Z}[x] \mid\text{ The constant term is even}\}$ is not a principle ideal.\\
+    
+    Assume $S$ is a principal ideal, this means that we can write $S = \langle f(x)\rangle$ for some $f(x)\in\mathbb{Z}[x]$. Obviously, both $2\in S$ and $2+x \in S$. Since $2=f(x)r(x)$ for some $r(x)\in\mathbb{Z}[x]$. Since deg$(2)=0$, deg$(f(x))=0$ and deg$(r(x))=0$. So, $f(x) = f_0$. Now, $2+x=f(x)r(x)$ for some $r(x)\in\mathbb{Z}[x]$. deg($r(x))=1$ since deg($2+x)=1$ and deg$(f(x))=0$. Let $p(x)=f(x)r(x)=f_0r_1x + f_0r_0$ for $f(x)$ with degree $0$ and $r(x)$ with degree $1$. Since $f_0$ must be even, there is no way for $f_0r_1$ to be equal to $1$. Therefore, the product of these two polynomials can never be equal to $2+x$. This contradicts our assumption that $x+2\in S$. Therefore S is not a principal ideal domain.
+    
+\noindent\textbf{Problem 3:}
+    
+    Prove the rational root theorem for all $f(x)\in\mathbb{Q}[x]$ and $f(x)=a_mx^m+\dots +a_1x + a_0$. If $\frac{p}{r}$ is a reduced root of $f(x)$, then $p\mid a_0$ and $r\mid a_m$. \\
+    
+    Since $\frac{p}{r}$ is a root of $f(x)$, we can write 
+    \begin{align*}
+        0 &= a_m\left(\frac{p}{r}\right)^m + a_{m-1}\left(\frac{p}{r}\right)^{m-1} + \dots + a_1\left(\frac{p}{r}\right) + a_0 &&\text{(Definition of root)}\\
+        0 &= a_mp^m + a_{m-1}p^{m-1}r + \dots + a_1pr^{m-1} + a_0r^m &&\text{(Multiply by }r^m)\\
+        -a_0r^m &= p(a_mp^{m-1} + a_{m-1}p^{m-2} + \dots + a_2p + a_1) &&\text{(3)}\\
+        -a_mp^m &= r(a_0r^{m-1} + a_1r^{m-2} + \dots + a_{m-2}r + a_{m-1}) &&\text{(4)}
+    \end{align*}
+    (3) implies $p\mid a_0r^m$ so $p\mid a_0$ or $p\mid r^m$. Since gcd$(r,p)=1$ by assumption, $p\mid a_0$.
+    
+    \noindent You can do a similar argument from (4) to show $p\mid a_m$.
+    
+\noindent\textbf{Problem 18.5:}
+    
+    Suppose that $a$ and $b$ belong to an integral domain $D$ and $b\not = 0.$ Show that $\langle ab\rangle$ is a proper subset of $\langle b\rangle$ if and only if $a$ is not a unit.\\
+    
+    ($\rightarrow$) Assume that $\langle ab \rangle$ is a proper subset of $\langle b \rangle$. We will prove that $a$ is not a unit. We know that $b\in \langle b\rangle$. Also, if $b\in\langle ab \rangle$ then $\langle ab\rangle \subseteq\langle b\rangle$ which is false by assumption so $b\not\in\langle ab\rangle$. We know that $b=1\cdot b$ and $b\not=d(ab)$ for any $d\in D$. Therefore we have $1\cdot b \not= d(ab)$ for any $d\in D$. Using associativity and cancellation (Integral Domain), we obtain $1\not=da$ for any $d\in D$ which is the definition for $a$ is not a unit.
+    
+    ($\leftarrow$) Assume that $a$ is not a unit. Therefore there is not $d\in D$ such that $1=da$. Also, there is no $d\in D$ such that $b=dab$. Since $b\in\langle b\rangle$, and the above implies that $b\not\in\langle ab\rangle$, $\langle b\rangle \not=\langle ab\rangle$. Also due to closure under multiplication, for all $d\in D$, $da = e$ for some $e\in D$ Therefore for all $d(ab)\in\langle ab\rangle$, there exists an $eb\in\langle b\rangle$ such that $eb=dab$ implying that $\langle ab\rangle \subseteq \langle b\rangle$. Combining these two proofs we obtain $\langle ab\rangle \subset \langle b\rangle$, Completing the proof.
+
+\end{document}
+0

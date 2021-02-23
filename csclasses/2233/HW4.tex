@@ -1,0 +1,155 @@
+\documentclass[letterpaper, 12pt]{article}
+\usepackage{comment} % enables the use of multi-line comments (\ifx \fi) 
+\usepackage{fullpage} % changes the margin
+\usepackage[T1]{fontenc}
+\usepackage{selinput}
+\usepackage{enumitem}
+\usepackage{listings}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{setspace}
+\usepackage{bm}
+\usepackage{mathtools}
+
+\SelectInputMappings{
+   aacute={á},
+   ntilde={ñ}
+}
+\newcommand{\Mod}[1]{\ (\mathrm{mod}\ #1)}
+
+\begin{document}
+%Header-Make sure you update this information!!!!
+\noindent
+\large\textbf{Discrete Mathematics} \hfill \textbf{Quinn Murphey} \\
+\normalsize MAT 2233.001 \hfill Date: 09/28/20 \\
+Dr. Arafat \hfill Due Date: 09/29/20 \\
+\noindent\makebox[\linewidth]{\rule{\paperwidth}{0.4pt}}
+\section*{HW \#4:}
+\textbf{Determine whether each of these functions $f: \{a,b,c,d\} \rightarrow \{a,b,c,d\}$ is one-to-one and whether each of these functions is onto:}
+\begin{enumerate}
+    \item $f(a) = b, f(b) = a, f(c) = c, f(d) = d$.
+    
+    \begin{itemize}
+        \item[Injective:]  Let $x,y\in \text{dom}(f)$ such that $f(x) = f(y)$. Then, since each element in the range of $x_0\in f$ has a unique element in the domain of $f(x_0)\in f$. Thus $x = y$ and $f$ is injective.
+        
+        \item[Surjective:] Let $x\in \text{ran}(f)$. Then for any $x$ there is a $y\in\text{dom}(f)$ such that $f(y) = x$. Thus $f$ is surjective.
+    \end{itemize}
+    
+    \item $f(a) = b, f(b) = b, f(c) = d, f(d) = c$.
+    
+    \begin{itemize}
+        \item[Injective:]  $f(a) = f(b)$ despite $a \not= b$. Thus, $f$ is not injective.
+        
+        \item[Surjective:] There is no $x\in\{a,b,c,d\}$ such that $f(x) = a$. Thus $f$ is not surjective.
+    \end{itemize}
+    
+    \item $f(a) = d, f(b) = a, f(c) = c, f(d) = d$.
+    
+    \begin{itemize}
+        \item[Injective:]  $f(a) = f(d)$ despite $a \not= b$. Thus, $f$ is not injective.
+        
+        \item[Surjective:] There is no $x\in\{a,b,c,d\}$ such that $f(x) = b$. Thus $f$ is not surjective.
+    \end{itemize}
+\end{enumerate}
+
+\noindent\textbf{Determine whether each of these functions $f:\mathbb{R}\rightarrow\mathbb{R}$ is a one-to-one correspondence}
+\begin{enumerate}
+    \item $f(x) = -3x + 4$.
+    \begin{itemize}
+        \item[Injective:]  Let $x,y\in\mathbb{R}$ such that $f(x) = f(y)$. Then we have $-3x + 4 = -3y + 4$. Therefore $x = y$. Thus, $f$ is injective.
+        
+        \item[Surjective:] Let $y\in\mathbb{R}$. Then for $x = \frac{-y+4}{3}\in\mathbb{R}$, $f(x) = -3(\frac{-y + 4}{3}) + 4 = y$. Thus, $f$ is surjective.
+    \end{itemize}
+    
+    \item $f(x) = -3x^2 + 7$.
+    \begin{itemize}
+        \item[Injective:]  $f(-1) = f(1) = 4$. Since $-1=1$, $f$ is not injective.
+        
+        \item[Surjective:] Let $y = 10 \in\mathbb{R}.$ Assume $x\in\mathbb{R}$ such that $f(x) = y$. Then $-3x^2 + 7 = 10 = y \Rightarrow -3x^2 = 3 \Rightarrow x^2 = -1$. However, there is no real number such that $x^2 = -1$ so we have a contradiction. Thus $f$ is not surjective.
+    \end{itemize}
+    
+    \item $f(x) = (x + 2)(x - 1)x$.
+    \begin{itemize}
+        \item[Injective:]  $f(-2) = f(0) = f(1) = 0$. However, since $ -2 \not= 0 \not= 1$, $f$ is not injective.
+        
+        \item[Surjective:] Since $f$ is an odd degree polynomial, $f$ is surjective.
+    \end{itemize}
+\end{enumerate}
+
+\noindent\textbf{Find $f\circ g$ and $g \circ f$ where $f,g:\mathbb{R}\rightarrow\mathbb{R}$ with $f(x) = 3x + 4$ and $g(x) = x^2$.}
+\begin{itemize}
+    \item[$f \circ g:$] $(f \circ g)(x) = f(g(x)) = f(x^2) = 3x^2 + 4$.
+    \item[$g \circ f:$] $(g \circ f)(x) = g(f(x)) = g(3x + 4) = (3 + 4)^2$.
+\end{itemize}
+
+\noindent\textbf{Give an example of a function from $\mathbb{N}$ to $\mathbb{N}$ that is}
+\begin{enumerate}
+    \item \textbf{one-to-one but not onto}.
+    
+        $f(x) = 2x$. Obviously each element of the range is unique, but no odd numbers are resulted.
+    
+    \item \textbf{onto but not one-to-one}.
+    
+        $f(x) = \lfloor x/2 \rfloor$. Obviously, for even $x$ and $x+1$, $f(x) = f(x+1)$. So $f$ is not injective, but $f$ is surjective because each element of $\mathbb{N}$ is a result of $2x$. Thus, $f$ is surjective.
+    
+    \item \textbf{neither one-to-one nor onto}.
+    
+        $f(x) = 0$. Obviously not injective. Also since $\{0\} \not= \mathbb{N}$, $f$ is not surjective.
+    
+\end{enumerate}
+
+\noindent\textbf{What are the first 4 terms of the following sequences:}
+\begin{enumerate}
+    \item $\{(-3)^n\}_{n\in\mathbb{N}}$.
+    
+        $-3, 9, -27, 81, ...$
+    
+    \item $\{(-1)^n + 1\}_{n\in\mathbb{N}}$.
+    
+        $1, 0, 1, 0, ...$
+    
+\end{enumerate}
+
+\noindent\textbf{Use index substitution to rewrite the following summation such that the index starts at 0. Then use the geometric series theorem to compute the value of the summation.}
+$$\sum_{i = 3}^6(-2)^{i-3}$$
+
+$\sum_{i = 3}^6(-2)^{i-3} = \sum_{i = 1}^4(-2)^{i-2} = \frac{1 - (-2)^4}{1 - (-2)} = \frac{1 - 16}{1 + 2} = \frac{-15}{3} = -5$.
+
+\noindent\textbf{For each of the sequences below, find a formula that generates the sequence}
+\begin{enumerate}
+    \item $4,10,16,22,28,34,40,...$
+    
+        $f(n) = 4 + 6n$.
+    
+    \item $5,15,45,135,405,...$
+    
+        $f(n) = 5 + 10*3^{n-1}$. when $n\geq 1$. $f(0) = 5$.
+    
+    \item $10,20,10,20,10,20,10...$
+    
+        If $n$ odd, $f(n) = 10$. If $n$ even, $f(n) = 20$.
+    
+\end{enumerate}
+
+\noindent\textbf{Determine whether each of these functions is $\mathcal{O}(x^2)$. Proof is not required but it may be good to try to justify it.}
+\begin{enumerate}
+    \item True, since $x^2$ grows much faster than $100x + 1000$ due to it being a higher order polynomial.
+    \item True, since $100x^2 + 1000 < 1000x^2$ for $x > 2$.
+    \item False, there is no constant $C$ such that $\frac{x^3}{100} - 1000x^2 < Cx^2$ for $x>N$ for some $N\in\mathbb{N}$. This is due to $\frac{x^3}{100} - 1000x^2$ being a higher order polynomial than $x^2.$
+    \item True, since $\log(x) < x$, $x\log(x) < x^2$ for all $x$.
+\end{enumerate}
+
+\noindent\textbf{Use the definition of $\Theta$ to show that $5n^5 + 4n^4 + 3n^3 + 2n^2 + n \in \Theta(n^5)$.}
+
+    $5n^5 + 4n^4 + 3n^3 + 2n^2 + n \in \mathcal{O}(n^5)$ since $5n^5 + 4n^4 + 3n^3 + 2n^2 + n < 10n^5$ for all $n>2$. Also, $5n^5 + 4n^4 + 3n^3 + 2n^2 + n \in \Omega(n^5)$ since $5n^5 + 4n^4 + 3n^3 + 2n^2 + n > n^5$ for all $n>2$. Thus, $5n^5 + 4n^4 + 3n^3 + 2n^2 + n \in \Theta(n^5)$.\\
+
+\noindent\textbf{Use the definition of $\Theta$ to show that $2n^3 - n + 10 \in\Theta(n^3)$.}
+
+    $2n^3 - n + 10 \in \mathcal{O}(n^3)$ since $2n^3 - n + 10 < 5n^3$ for all $n>2$. Also, $2n^3 - n + 10 \in \Omega(n^3)$ since $2n^3 - n + 10 > n^3$ for all $n>2$. Thus, $2n^3 - n + 10 \in \Theta(n^3)$.\\
+
+\noindent\textbf{Let $f, g, h : \mathbb{N} \rightarrow \mathbb{R}^+$. Use the definition of big-Oh to prove that if $f (n) \in \mathcal{O}(h(n))$ and $g(n) \in \mathcal{O}(h(n))$ then $f (n) + g(n) \in \mathcal{O}(h(n))$. You should use different letters for the constants (i.e. don’t use $c$ to denote the constant for each big-Oh).}
+
+    Let $f(n), g(n)\in\mathcal{O}(h(n))$. Then there exists a $N\in\mathbb{N}$ such that $f(n) < C_1\cdot h(n)$ and $g(n) < C_2\cdot h(n)$ for all $n > N$. Thus, by the properties of $<$ we have that $f(n) + g(n) < C_1\cdot h(n) + C_2\cdot h(n) = (C_1 + C_2)\cdot h(n)$. Thus, since $C_1 + C_2 \in\mathbb{R}, f(n) + g(n) \in\mathcal{O}(h(n))$.
+
+\end{document}

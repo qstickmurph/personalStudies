@@ -1,0 +1,168 @@
+\documentclass[letterpaper, 12pt]{article}
+\usepackage{comment} % enables the use of multi-line comments (\ifx \fi) 
+\usepackage{fullpage} % changes the margin
+\usepackage[T1]{fontenc}
+\usepackage{selinput}
+\usepackage{enumitem}
+\usepackage{listings}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{setspace}
+\usepackage{bm}
+\usepackage{mathtools}
+
+\SelectInputMappings{
+   aacute={á},
+   ntilde={ñ}
+}
+\newcommand{\Mod}[1]{\ (\mathrm{mod}\ #1)}
+
+\begin{document}
+%Header-Make sure you update this information!!!!
+\noindent
+\large\textbf{Discrete Mathematics} \hfill \textbf{Quinn Murphey} \\
+\normalsize MAT 2233.001 \hfill Date: 08/28/20 \\
+Dr. Arafat \hfill Due Date: 09/02/20 \\
+\noindent\makebox[\linewidth]{\rule{\paperwidth}{0.4pt}}
+\section*{HW \#1:}
+\textbf{Let $p,q,r$ and $s$ denote the following propositions:\\\\
+\noindent$p$ denotes "You passed CS2233"\\
+\noindent$q$ denotes "You passed CS3333"\\
+\noindent$r$ denotes "You can register for CS3343"\\
+\noindent$s$ denotes "You understand boolean algebra" \\\\
+\noindent Using $p,q,r$ and $s$, construct compound propositions which represent the following English sentences:}
+\begin{enumerate}
+    \item "You haven't passed CS2233 but you understand boolean algebra."
+    
+        $$\lnot q \land s.$$\qed
+    
+    \item "You can't register for CS3343 only if you haven't passed both CS2233 and CS3333."
+    
+        $$\left(\lnot r \right)\rightarrow \left( \left( \lnot p \right) \land \left( \lnot q \right) \right).$$\qed
+        
+    \item "If you can register for CS3343, then you have passed CS2233, and you understand boolean algebra if you passed CS2233."
+    
+        $$\left(r \rightarrow p\right) \land \left( s \leftarrow p \right).$$\qed
+\end{enumerate}
+
+\noindent\textbf{Show that $\left(\left(\lnot q\right) \land \left(p\lor p\right) \right) \rightarrow \left(\lnot q \right)$ is a tautology.}
+\begin{enumerate}
+    \item Using truth tables:
+    
+    \begin{tabular}{c|c||c|c|c|c}
+        $p$ &   $q$ &   $\lnot q$   &   $p\lor p$   &   $\lnot q \land \left(p \lor p\right)$   &   $\left(\lnot q \land \left(p \lor p\right)\right) \rightarrow \lnot q$\\\hline
+        F   &   F   &   T           &   F           &   F                                       &   T\\
+        F   &   T   &   F           &   F           &   F                                       &   T\\
+        T   &   F   &   T           &   T           &   T                                       &   T\\
+        T   &   T   &   F           &   T           &   F                                       &   T
+    \end{tabular}
+    
+    \qed
+    \newpage
+    \item Using logical equivalences: (\textbf{T} represents a tautological proposition)
+    \begin{align*}
+                    & \left(\lnot q \land \left(p \lor p\right)\right) \rightarrow \lnot q \\
+        \shortintertext{By implication definition} 
+            \equiv  & \lnot\left(\lnot q \land \left(p \lor p\right)\right) \land \left(\lnot q\right) \\
+        \shortintertext{By De Morgan's Laws}
+            \equiv  & \left(\lnot\lnot q \lor \lnot\left( p \lor p\right)\right) \land \left(\lnot q\right)\\
+        \shortintertext{By De Morgan's Laws and Double Negation Law}
+            \equiv  & \left( q \lor \left(\lnot p \land \lnot p\right)\right) \land \left(\lnot q \right)\\
+        \shortintertext{By Distributive Laws}
+            \equiv  & \left( q \land \lnot q\right) \lor \left( \left(\lnot p \lor \lnot p\right) \lor \lnot q\right)\\
+        \shortintertext{By Negation Laws}
+            \equiv  & \mathbf{T} \lor \left(\left( \lnot p \lor \lnot p\right) \lor \lnot q\right)
+        \shortintertext{By Domination Laws}
+            \equiv  & \mathbf{T}
+    \end{align*}
+    Therefore, $\left(\lnot q \land \left(p \lor p\right)\right) \rightarrow \lnot q$ is a tautology. \qed
+\end{enumerate}
+
+\noindent\textbf{Show that $\lnot q \rightarrow \left( p \land r\right) \equiv \left(\lnot q \rightarrow r\right) \land \left(q \lor p \right)$}
+\begin{enumerate}
+    \item Using truth tables: Let $X$ denote $\lnot q \rightarrow \left( p \land r \right)$ and $Y$ denote $\left( \lnot q \rightarrow r \right) \land \left( q\lor p\right)$.
+    
+    \begin{tabular}{c|c|c||c|c|c|c|c|c}
+        $p$ &   $q$ &   $r$ &   $p \land r$ &   $X$  &   $\lnot q\rightarrow r$ &   $q \lor p$  &   $Y$   &  $X \leftrightarrow Y$ \\ \hline
+        F   &   F   &   F   &   F   &   F   &   F   &   F   &   F   &   T   \\
+        F   &   F   &   T   &   F   &   F   &   T   &   F   &   F   &   T   \\
+        F   &   T   &   F   &   F   &   T   &   T   &   T   &   T   &   T   \\
+        F   &   T   &   T   &   F   &   T   &   T   &   T   &   T   &   T   \\
+        T   &   F   &   F   &   F   &   F   &   F   &   T   &   F   &   T   \\
+        T   &   F   &   T   &   T   &   T   &   T   &   T   &   T   &   T   \\
+        T   &   T   &   F   &   F   &   T   &   T   &   T   &   T   &   T   \\
+        T   &   T   &   T   &   T   &   T   &   T   &   T   &   T   &   T
+    \end{tabular} 
+    
+    \qed
+    
+    \item Using logical equivalences:
+    
+    \begin{align*}
+                &\quad \left(\lnot q \rightarrow r\right) \land \left( q \lor p\right)\\
+    \shortintertext{By implication definition}
+        \equiv  &\quad \left( q \lor r \right) \land \left( q \lor p\right)\\
+    \shortintertext{By distributive laws}
+        \equiv  &\quad \left(\left( q \lor r\right) \land q\right) \lor \left(\left(q \lor r \right) \land p \right)\\
+    \shortintertext{By absorption laws}
+        \equiv  &\quad q \lor \left(\left(q \lor r \right) \land p \right)\\
+    \shortintertext{By distributive laws}
+        \equiv  &\quad q \lor \left( p \land q \right) \lor \left(p\land r \right)\\
+    \shortintertext{By absorption laws (and associativity)}
+        \equiv  &\quad q \lor \left( p \land r \right)\\
+    \shortintertext{By implication definition}
+        \equiv  &\quad \lnot q \rightarrow \left(p\land r\right)
+    \end{align*}
+    Therefore, $\lnot q \rightarrow \left( p \land r\right) \equiv \left(\lnot q \rightarrow r\right) \land \left(q \lor p \right)$. (Because equivalence is transitive) \qed
+\end{enumerate}
+
+\noindent\textbf{Show that $\land$ is associative using truth tables:}
+
+\begin{tabular}{c|c|c||c|c|c|c|c}
+    $p$ &   $q$ &   $r$ &   $q\land r$    &   $p \land (q\land r)$  &   $p\land q$  &   $(p\land q) \land r$  &   $(p \land (q\land r)) \leftrightarrow ((p\land q) \land r)$ \\ \hline
+    F   &   F   &   F   &   F   &   F   &   F   &   F   &   T   \\
+    F   &   F   &   T   &   F   &   F   &   F   &   F   &   T   \\
+    F   &   T   &   F   &   F   &   F   &   F   &   F   &   T   \\
+    F   &   T   &   T   &   T   &   F   &   F   &   F   &   T   \\
+    T   &   F   &   F   &   F   &   F   &   F   &   F   &   T   \\
+    T   &   F   &   T   &   F   &   F   &   F   &   F   &   T   \\
+    T   &   T   &   F   &   F   &   F   &   T   &   F   &   T   \\
+    T   &   T   &   T   &   T   &   T   &   T   &   T   &   T   
+\end{tabular}
+
+Therefore, $\land$ is associative. \qed\\
+
+\noindent\textbf{Show that NAND, denoted $\uparrow$, is not associative using truth tables:}
+
+\begin{tabular}{c|c|c||c|c|c|c|c}
+    $p$ &   $q$ &   $r$ &   $q\uparrow r$    &   $p \uparrow (q\uparrow r)$  &   $p\uparrow q$  &   $(p\uparrow q) \uparrow r$  &   $(p \uparrow (q\uparrow r)) \leftrightarrow ((p\uparrow q) \uparrow r)$ \\ \hline
+    F   &   F   &   F   &   T   &   T   &   T   &   T   &   T   \\
+    F   &   F   &   T   &   T   &   T   &   T   &   F   &   F   \\
+    F   &   T   &   F   &   T   &   T   &   T   &   T   &   T   \\
+    F   &   T   &   T   &   F   &   T   &   T   &   F   &   F   \\
+    T   &   F   &   F   &   T   &   F   &   T   &   T   &   F   \\
+    T   &   F   &   T   &   T   &   F   &   T   &   F   &   T   \\
+    T   &   T   &   F   &   T   &   F   &   F   &   F   &   T   \\
+    T   &   T   &   T   &   F   &   T   &   F   &   F   &   F   
+\end{tabular}
+
+Therefore, NAND is not associative. \qed
+
+\newpage
+    \begin{align*}
+                    & \left(\lnot q \land \left(p \lor p\right)\right) \rightarrow \lnot q \\
+        \shortintertext{By implication definition} 
+            \equiv  & \lnot\left(\lnot q \land \left(p \lor p\right)\right) \lor \left(\lnot q\right) \\
+        \shortintertext{By De Morgan's Laws}
+            \equiv  & \left(\lnot\lnot q \lor \lnot\left( p \lor p\right)\right) \lor \left(\lnot q\right)\\
+        \shortintertext{By De Morgan's Laws and Double Negation Law}
+            \equiv  & \left( q \lor \left(\lnot p \land \lnot p\right)\right) \lor \left(\lnot q \right)\\
+        \shortintertext{Rearrange (since or is commutative and associative)}
+            \equiv  & \left( q \lor \lnot q\right) \lor \left(\lnot p\land \lnot p\right)\\
+        \shortintertext{Negation Laws}
+            \equiv  & \mathbf{T}
+    \end{align*}
+    Therefore, $\left(\lnot q \land \left(p \lor p\right)\right) \rightarrow \lnot q$ is a tautology. \qed
+    
+\end{document}

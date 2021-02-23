@@ -1,0 +1,48 @@
+\documentclass[letter paper, 12pt]{article}
+\usepackage{comment} % enables the use of multi-line comments (\ifx \fi) 
+\usepackage{fullpage} % changes the margin
+\usepackage[T1]{fontenc}
+\usepackage{selinput}
+\usepackage{enumitem}
+\usepackage{listings}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{setspace}
+
+\newcommand{\Mod}[1]{\ (\mathrm{mod}\ #1)}
+
+\begin{document}
+%Header-Make sure you update this information!!!!
+\noindent
+\large\textbf{Modern Abstract Algebra II} \hfill \textbf{Quinn Murphey} \\
+\normalsize MAT 4953.001 \hfill Date: 02/05/19 \\
+Dr. Patterson \hfill Due Date: 02/08/19 \\
+\noindent\makebox[\linewidth]{\rule{\paperwidth}{0.4pt}}
+
+\section*{Problem Set 3}
+\doublespacing
+\textbf{Problem 1:}
+    
+     Watch all three FLOW videos on complex numbers (two assigned last week, one this week) and answer  the  following  question:  what  are  the  two  complex  square  roots  of i?   Show  how  De Moivre's theorem can be used to find these, and show how you can verify using basic algebra that your two numbers really are square roots.\\
+    
+    For this problem we can let $i=(x=0,y=1)=(r=1,\theta =\pi/2)$ Therefore since $r=1, r^{1/2}=1.$ Now we must find all $\theta$ s.t. $2\theta$ = $\pi/2 + 2n\pi$ for all $n\in N$. The first and obvious one is $(r=1,\theta=\pi/4)$. The second (and last) root is $(r=1,\theta=5\pi/4)$. I found these simply using De Moivre's theorem, dividing $\pi/2$ by 2 and $5\pi/2$ by 2 to get our 2 $theta$'s. This is because of the fact that C is a field and $x^2-i$ only has two roots.
+    
+\noindent\textbf{Problem 2:}
+    
+     Let $R$ and $S$ be rings,  and let $\phi :R\rightarrow S$ be a surjective ring homomorphism. Prove that if $I$ is an ideal of $R$,  then $\phi(I)$ is an ideal of $S$. (Recall that the image of $I$ in $\phi$ is defined by $\phi(I) =\{y\in S\mid y=\phi(x) $ for some $ x\in I\}$.)   Prove  that  this  theorem  may  not  hold  if  we drop the assumption that $\phi$ is surjective.\\
+    
+    Proving that it is a subring follows from the fact that the image of a ring is a ring through a ring homomorphism. Now we just need to show that $\phi(I)$ absorbs multiplication from $S$. Since $\phi$ is surjective. There exists a $r$ s.t $\phi(r)=s$ for all $s\in S$. Therefore to absorb multiplication $s*\phi(q)\in\phi(I)$. Since each $s=\phi(r)$, $s*\phi(q)=\phi(r)*\phi(q)=\phi(r*q)$ due to homomorphism properties. Since $I$ is an ideal, $r*q\in I$. Therefore, $\phi(r*q)\in\phi(I)$. This means that $\phi(I)$ absorbs multiplication over $S$. Therefore $\phi(I)$ is an ideal of $S$
+
+\noindent\textbf{Problem 3:}
+    
+     Let $F$ be a field. Because $F$ is also an integral domain, we can construct the field of quotients of $F$ using the "equivalence classes of fractions" construction introduced in class. Let $K$ be the field of quotients of $F$. Prove that $K$ is isomorphic to $F$.
+    
+    We just need to show that the mapping is bijective to show that the homomorphism is isomorphic. It's easy to show it's injective since every element $f\in F$ maps to $(k,1)\in K$. Now to show every arbitrary $(a,b)\in K$ has a unique mapping. Let $f^{-1} \rightarrow (1,f)\in K$ and if $f\rightarrow(a,b), g\rightarrow (c,d)$, then map $gf\rightarrow (ac,bd)$. Now for all $(a,b)\in K$ we can write it as $\phi(a*b^{-1})=\phi(a)*\phi(b^{-1})$. Since each element can be inverted $\phi$ is inevitable therefore isomorphic.
+    
+\noindent\textbf{Problem 4:}
+    
+    Consider the four rings: $\mathbb{Q}[x]/\langle x^2-1\rangle$, $\mathbb{Q}[x]/\langle x^2-3\rangle$, $\mathbb{Q}[x]/\langle x^2-5\rangle$, $\mathbb{Q}[x]/\langle x^2-4x-1\rangle$. Exactly two of these rings are isomorphic. Bonus points: Show the other two rings are non-isomorphic.\\
+    
+    Since each of these polynomials has degree $2$, the equivalence classes either have degree $1$ or $0$ due to the division algorithm. One fact that I noticed fairly early was that the third and fourth quotient ring ideals reduction includes $\sqrt{5}$. This number however, is not in $\mathbb{Q}$ so this may imply a restriction on these quotient rings. $(x^2-5)=(x+\sqrt{5})(x-\sqrt{5})$ and $(x^2-4x-1)=(x-\sqrt{5}-2)(x+\sqrt{5}-2)=((x-2)-\sqrt{5})((x-2)+\sqrt{5})$. We can see here that these two functions are the exact same except for the substitution of $x-2$ in for $x$ in the function. Now we can define a homomorphism $\phi: \mathbb{Q}[x]/\langle x^2-5\rangle \rightarrow \mathbb{Q}[x]/\langle x^2-4x-1\rangle$ with $p(x) \mapsto p(x-2)$. This is easy enough to show that it is an isomorphism by showing that every point has an inverse $\phi^{-1}:q(x)\mapsto q(x+2)$.
+
+\end{document}

@@ -1,0 +1,57 @@
+\documentclass[letter paper, 12pt]{article}
+\usepackage{comment} % enables the use of multi-line comments (\ifx \fi) 
+\usepackage{fullpage} % changes the margin
+\usepackage[T1]{fontenc}
+\usepackage{selinput}
+\usepackage{enumitem}
+\usepackage{listings}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{setspace}
+
+\newcommand{\Mod}[1]{\ (\mathrm{mod}\ #1)}
+
+\begin{document}
+%Header-Make sure you update this information!!!!
+\noindent
+\large\textbf{Modern Abstract Algebra II} \hfill \textbf{Quinn Murphey} \\
+\normalsize MAT 4953.001 \hfill Date: 02/21/19 \\
+Dr. Patterson \hfill Due Date: 02/22/19 \\
+\noindent\makebox[\linewidth]{\rule{\paperwidth}{0.4pt}}
+
+\section*{Problem Set 6}
+\doublespacing
+\noindent\textbf{Problem 1:}
+    
+    To prove Eisenstein's Critereon, we must first assume the irreducible polynomial factors into two positive degree polynomials: $f(x) = p(x)q(x)$. Because the constant term of $f(x)$ is divisible by prime $r$ and not by $r^2$, we will let the constant term of $p(x)$ be divisible by $r$ and say that the constant term of $q(x)$ cannot be divisible by $r$. We can create a multiplication table as follows:\\
+    
+    \begin{tabular}{|c|c|c|c|c|c|c|}
+        \hline      &   $q_n$   &   $q_{n-1}$   &   \dots   &   $q_2$   &   $q_1$   &   $q_0$  \\ \hline
+        $p_k$       &           &               &   \dots   &           &           &          \\ \hline
+        $p_{k-1}$   &           &               &   \dots   &           &           &          \\ \hline
+        \vdots      &   \vdots  &   \vdots      &   \ddots  &   \vdots  &   \vdots  &   \vdots \\ \hline
+        $p_2$       &           &               &   \dots   &           &           &          \\ \hline
+        $p_1$       &           &               &   \dots   &           &           &          \\ \hline 
+        $p_0$       &           &               &   \dots   &           &           &          \\ \hline
+    \end{tabular}\\
+    
+    We can see that the $i$th diagonal from the bottom right adds to equal the the $i$th term of $f(x)$ by multiplication rules. Since $p_0$ is divisible by $r$, so is every element of the bottom row. Also $p_0q_1$ is divisible by $r$ which implies that $p_1q_0$ is divisible by $r$. We will make an induction argument out of this.
+    
+    We will prove $p(x)$ is divisible by $r$ , thus getting a contradiction.
+    \begin{itemize}
+        \item[Base Step:] As we have shown above, $p_0$ is divisible by $r$
+        
+        \item[Induction:] Assume the first $i$ terms of $p(x)$ are divisible by $r$, this is equivalent to the first $i$ rows (from the bottom up) being divisible by $r$. Then, since every term of $f(x)$ is divisible by $r$ (other than the leading), we can see that 
+        $$r\mid\sum_{k+n=i}p_kq_n$$
+        due to the definition of $f(x)$. By assumption, all but the term $p_{i+1}q_0$ are divisible by $r$, therefore since the sum is divisible by $r$, $p_{i+1}q_0$ must also be divisible by $r$. Also, since $q_0$ is not divisible by $r$, $p_{i+1}$ is. 
+    \end{itemize}
+    
+    This proves that $p_k$ is divisible by $r$ and therefore the leading term of $f(x)$ is divisible by $r$ so $f(x)$ is irreducible.
+    
+\noindent\textbf{Problem 2:}
+    
+    Since we know we can construct a uncollapsable compass, we can take two line segments (length $a$ and $b$) and draw a circle at the end of line $a$ with radius $b$. After this, when we extend line $a$ to the intersection with the circle, the distance from the furthest endpoints to each other is $a+b$.
+    
+    Using similar right triangles with one side length equal to 1, we can easily construct $ab$ from two line segments $a$ and $b$.
+    
+\end{document}

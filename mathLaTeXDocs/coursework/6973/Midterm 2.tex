@@ -1,0 +1,356 @@
+\documentclass[12pt]{amsart}
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb,amsfonts}
+\usepackage[pdftex]{graphicx}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{bm}
+\usepackage{mathrsfs}
+\usepackage{tikz}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{hyperref}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}{Corollary}[theorem]
+
+\theoremstyle{definition}
+\newtheorem*{definition}{Definition}
+
+\theoremstyle{remark}
+\newtheorem*{note}{Note}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue,
+  linkbordercolor={0 0 1}
+}
+ 
+\renewcommand\lstlistingname{Algorithm}
+\renewcommand\lstlistlistingname{Algorithms}
+\def\lstlistingautorefname{Alg.}
+
+\lstdefinestyle{Python}{
+    language        = Python,
+    frame           = lines, 
+    basicstyle      = \footnotesize,
+    keywordstyle    = \color{blue},
+    stringstyle     = \color{green},
+    commentstyle    = \color{red}\ttfamily
+}
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+
+\newcommand{\Mod}[1]{\ (\mathrm{mod}\ #1)}
+
+\setcounter{section}{-1}
+
+\begin{document}
+ 
+\renewcommand{\qedsymbol}{$\square$}
+%Good resources for looking up how to do stuff:
+%Binary operators: http://www.access2science.com/latex/Binary.html
+%General help: http://en.wikibooks.org/wiki/LaTeX/Mathematics
+%Or just google stuff
+ 
+\title{Midterm 2 for Advanced Number Theory (MAT 6973.001)}
+\author{Quinn Murphey}
+\date{November 2019}
+\maketitle
+
+\section*{Question 1}
+\textbf{Carry out an analysis of the ideal class group CL$_F$ for $F=\mathbb{Q}(-39)$.}\\
+
+First, note that $\mathcal{O}_F = \mathbb{Z}[\frac{1+\sqrt{-39}}{2}]$ and that the set of ideals of $\mathcal{O}_F$ is isomorphic to the set of complex lattices with complex multiplication by $\omega = \frac{1+\sqrt{-39}}{2}$. To help us calculate each possible j-invariant for an arbitrary lattice with CM by $\omega$ we use the following finite algorithm from exercise 1.6 from Weston. This j-invarient uniquely determines each homothety class of lattices and by equivalence, each similarity class of ideals. Additionally, we can use this j-invarient to generate a representative ideal from each similarity class. 
+
+Let $\mathcal{F} = \{z\in\mathbb{C} : \text{im}(z) > 0, |z| \geq 1, -1/2 < \text{re}(z) \leq 1/2, \text{ and } \text{re}(z) > 1 \text{ if } |z|=1 \}$ and $\mathcal{J}(\Lambda) = \{\beta/\alpha : \alpha, \beta \text{ a normalized basis for } \Lambda\}$. Then, each lattice's unique j-invarient is the only element in the intersection $\mathcal{J}(\Lambda) \cap \mathcal{F} = \{ j\}$.
+\begin{lemma}
+    Fix a squarefree positive integer $n \equiv 3 \mod 4$. Show that the lattice $\langle1,j\rangle$ with $j \in \mathcal{F}$ has CM by $\omega$ if and only if
+$$j = \frac{a + \sqrt{-39}}{b}$$
+where
+\begin{enumerate}
+    \item $a,b\in\mathbb{Z}$ with $a$ odd and $b$ even;
+    \item $0<b\leq 2\sqrt{\frac{n}{3}}$;
+    \item $-b < 2a\leq b$;
+    \item $a^2+n\geq b^2$  (and $a\geq 0$ if $a^2+n=b^2$); 
+    \item $2b$ divides $a^2 + n$.
+\end{enumerate}
+\end{lemma}
+\begin{proof}
+    Let $n\equiv 3 \mod 4$ and let $\Lambda$ be a lattice with complex multiplication by $\frac{1+\sqrt{-n}}{2}$. If $\gamma \cdot \Lambda$ is homothetic to $\Lambda$, then 
+    $$\frac{1+\sqrt{-n}}{2}\left(\gamma\cdot\Lambda\right) = \gamma \left(\frac{1+\sqrt{-n}}{2}\cdot\Lambda\right) \subseteq \gamma\cdot\Lambda.$$
+    So complex multiplication is preserved by homothety. Additionally, every lattice is homoethetic to a unique lattice $\langle 1,j\rangle$ for $j \in \mathcal{F}$. 
+    
+    We have $\frac{1+\sqrt{-n}}{2}\langle 1,j\rangle \subseteq \langle 1,j\rangle$ if and only if there exist integers $a,b,c,d$ such that
+    \begin{align*}
+        \frac{1+\sqrt{-n}}{2} &= -\alpha + \beta j\\
+        \frac{1+\sqrt{-n}}{2}\cdot j &= c + dj
+    \end{align*}
+    This is obvious since the new basis must be elements of the lattice $\langle 1,j\rangle$. Therefore, if we let $a = 2\alpha +1$ and $b = 2\beta$ 
+    $$ j = \frac{a + \sqrt{-n}}{b}.$$
+    Solving for $c$ in the second equation we get
+    $$c = \frac{a-n-2ad}{2b} + \frac{a+1-2d}{2b}\sqrt{-n}.$$
+    Since $c$ is real, $a+1-2d=0$ and $2d = a+1$. Therefore, 
+    \begin{align*}
+        c &= \frac{a-n-2ad}{2b}\\
+        &= \frac{a(1-2d)-n}{2b}\\
+        &= \frac{a(-a)-n}{2b}\\
+        &= \frac{-a^2-n}{2b}
+    \end{align*}
+    Therefore, due to all the above steps being reversible, we have the following:
+    (1) is necessary and sufficient by construction of $a$ and $b$ from $\alpha$ and $\beta$.
+    (3) and (4) are always true due to the restrictions of $j\in\mathcal{F}$. 
+    (5) is true because $c\in\mathbb{Z}$ and $c=-\frac{a^2+n}{2b}$. And (2) is true by combining (3) and (4). Therefore, the lemma holds.
+\end{proof}
+
+The algorithm written out in the above lemma is executed by the following sage math code.
+\lstset{caption={possible j-invariants of a lattice with CM by $\omega$}}
+        \lstset{label={lst:alg1}}
+            \begin{lstlisting}[style = Python]
+    n = 39
+    b = 1
+    jlist = []
+    if n%4 == 3:
+        while b <= 2*RR(sqrt(n/3)):
+            alist = []
+            alistfinal = []
+            if b%2==0:
+                for a in range((-b+1/2).round("up"), (b+1/2).round("up")):
+                    if a%4 == 2:
+                        alist.append(a/2)
+                for a in alist:
+                    if not ((a^2+n < b^2) or (a^2+n == b^2 and a < 0)):
+                        alistfinal.append(a)
+                alist = alistfinal
+                alistfinal = []
+                for a in alist:
+                    if (a^2+n)%(2*b) ==0:
+                        alistfinal.append(a)
+                for a in alistfinal:
+                    jlist.append([a,b])
+            b = b+1
+    print "jlist_=",jlist
+    print "jlist_length_=",len(jlist)
+        \end{lstlisting}
+
+\newpage
+
+\begin{lemma}
+    Let $F = \mathbb{Q}(\sqrt{-n})$ be a quadratic number field and $\mathcal{O}_F = \mathbb{Z}[\omega]$. Regarding an ideal $I$ as a subset of the complex numbers, $I$ is a complex lattice with complex multiplication by $\omega$. If $m$ is the least positive integer in $I$ and $a+b\sqrt{-n}$ is an element of $I$ with minimal positive coefficient of $\sqrt{-n}$, then $I = \langle m,a+b\sqrt{-n}\rangle$.
+\end{lemma}
+\begin{proof}
+    Proof in Weston Pg. 39, Lemma 3.5.
+\end{proof}
+\begin{lemma}
+    Let $\Lambda$ be a complex lattice and fix $j \in \mathcal{J}(\Lambda)$ as defined above. Then, the unique j-invarient of $\Lambda$ can be obtained by the following algorithm.
+    \begin{enumerate}
+        \item Set $j_0 = j$ and $k = 0$.
+        \item Let $j_{k+1} = j_k + m$ for the unique integer $m$ such that $$\frac{-1}{2} < \text{re}(j_k + m) \leq \frac{1}{2}.$$
+        \item If $j_{k+1}\in\mathcal{F}$, then $j(\Lambda) = j_{k+1}$. If not, then let $j_{k+2} = -1/j_{k+1}.$
+        \item If $j_{k+2}\in\mathcal{F}$, then $j(\Lambda) = j_{k+2}$. If not, then return to step (2) replacing $k$ with $k+2$.
+    \end{enumerate}
+\end{lemma}
+\begin{proof}
+    Proof in Weston Pg. 13, Proposition 1.9.
+\end{proof}
+The algorithm written out in the above lemma is executed by the following sage math code.
+\lstset{caption={j-invariant of $\Lambda$}}
+        \lstset{label={lst:alg2}}
+            \begin{lstlisting}[style = Python]
+a = [2,0]
+b = [2,RR(sqrt(39))]
+j = [(b[0]*a[0] + b[1]*a[1])/(a[0]^2+a[1]^2), (b[1]*a[0] - b[0]*a[1])/(a[0]^2+a[1]^2)]
+print "a =",a
+print "b =",b
+print "j = b/a =",j
+if j[1]>=0:
+    print "basis normalized"
+    jlist = [j]
+    k = 0
+    print "j",k,"=", jlist[k]
+    if not ((jlist[k][1] > 0) and (RR(sqrt(jlist[k][0]^2 + jlist[k][1]^2)) >= 1) 
+and (jlist[k][0] > -1/2 and jlist[k][0] <= 1/2) and 
+(not(RR(sqrt(jlist[k][0]^2 + jlist[k][1]^2)) == 1) or jlist[k][0] >= 0)):
+        while true:
+            if abs(jlist[k][0]%2) == .5:
+                alpha = jlist[k][0] - jlist[k][0].round("down")
+            else:
+                alpha = jlist[k][0] - round(RR(jlist[k][0]))
+            jlist.append([alpha,jlist[k][1]])
+            k = k + 1 
+            print "j",k,"=", jlist[k]
+            if ((jlist[k][1] > 0) and (RR(sqrt(jlist[k][0]^2 + jlist[k][1]^2)) >= 1) 
+and (jlist[k][0] > -1/2 and jlist[k][0] <= 1/2) and 
+(not(RR(sqrt(jlist[k][0]^2 + jlist[k][1]^2)) == 1) or jlist[k][0] >= 0)):
+                break
+            jlist.append([-jlist[k][0]/(jlist[k][0]^2+jlist[k][1]^2), 
+jlist[k][1]/(jlist[k][0]^2+jlist[k][1]^2)])
+            k = k + 1 
+            print "j",k,"=", jlist[k]
+            if ((jlist[k][1] > 0) and (RR(sqrt(jlist[k][0]^2 + jlist[k][1]^2)) >= 1) 
+and (jlist[k][0] > -1/2 and jlist[k][0] <= 1/2) and 
+(not(RR(sqrt(jlist[k][0]^2 + jlist[k][1]^2)) == 1) or jlist[k][0] >= 0)):
+                break
+    print "search complete"
+else:
+    print "basis not normalized"
+        \end{lstlisting}
+
+\begin{note}
+    Currently, this algorithm only functions with decimals, so for roots we use accurate decimal approximations of that root. Our answer is also given in a decimal, which if accurate enough can lead us to guess the correct root which is easily verifiable.
+\end{note}
+
+Using Algorithm 1, we find that our 4 possible j-invariants are $\frac{1+\sqrt{-39}}{2}, \frac{-1+\sqrt{-39}}{4}, \frac{1+\sqrt{-39}}{4}, \frac{3+\sqrt{-39}}{6}$. It's easy to see that the fractional ideals $$\langle 1, \frac{1+\sqrt{-39}}{2}\rangle,\langle 1 , \frac{-1+\sqrt{-39}}{4}\rangle, \langle 1 , \frac{1+\sqrt{-39}}{4}\rangle, \langle 1 , \frac{3+\sqrt{-39}}{6}\rangle$$ each have one of the j-invariants respectively by definiton of $j$-invariant. Obviously, these fractional ideals are similar to the ideals $$\langle 2 , 1+\sqrt{-39}\rangle, \langle 4 , -1+\sqrt{-39}\rangle, \langle 4 , 1+\sqrt{-39}\rangle, \langle 6 , 3+\sqrt{-39}\rangle,$$ and similar ideals are homothetic and have the same j-invariant. We know that none of these two ideals are similar because each has a different j-invariant. So, we now have 4 pairwise not similar ideals of $\mathcal{O}_F$, which implies that these ideals are representatives of one of the four ideal classes in the class group.
+
+Now, to find the group structure of the class group of $-39$ we will find the results of each of the squares of the classes. If each element squares to the identity, then we know that the class group shares the structure of the Klein 4-group. If not, then the class group must be a order 4 cyclic group.
+Let 
+\begin{align*}
+    \mathcal{C}_1 &= \mathcal{C}_{\langle 2 , 1+\sqrt{-39}\rangle}\\
+    \mathcal{C}_2 &= \mathcal{C}_{\langle 4 , -1+\sqrt{-39}\rangle}\\
+    \mathcal{C}_3 &= \mathcal{C}_{\langle 4 , 1+\sqrt{-39}\rangle}\\
+    \mathcal{C}_4 &= \mathcal{C}_{\langle 6 , 3+\sqrt{-39}\rangle}.
+\end{align*}
+First we will square $\mathcal{C}_1$ to get 
+$\mathcal{C}_1^2 = \mathcal{C}(\langle 2, 1+\sqrt{-39}\rangle^2) = \mathcal{C}(\langle 4, 2+2\sqrt{-39}, -38 + 2\sqrt{-39}\rangle) = \mathcal{C}(\langle 4, 2+2\sqrt{-39}\rangle) = \mathcal{C}_1$ because $-38 +2\sqrt{-39}$ is a linear combination of the previous two generators, and $\langle 4, 2+2\sqrt{-39}\rangle$ and $\langle 2, 1+\sqrt{-39}\rangle$ are obviously similar. 
+
+Next we will square $\mathcal{C}_2$ to get
+$\mathcal{C}_2^2 = \mathcal{C}(\langle 4,-1+\sqrt{-39}\rangle) = \mathcal{C}(\langle 16,-4+4\sqrt{-39},-38-2\sqrt{-39}\rangle) = \mathcal{C}(\langle 16,-4+4\sqrt{-39}\rangle) = \mathcal{C}_2$ for nearly the exact same argument as $\mathcal{C}_1^2$.
+
+Now that we have two elements squaring to equal two different elements of $CL(-39)$, we know that the class group must have the structure of an order 4 cyclic group.
+
+\begin{center}
+    
+\begin{tabular}{ |c|c|c|c|c| } 
+         \hline
+             & $\mathcal{C}_1$ & $\mathcal{C}_2$ & $\mathcal{C}_3$ & $\mathcal{C}_4$  \\ 
+         \hline
+            $\mathcal{C}_1$ & $\mathcal{C}_1$ &  &  &  \\ 
+        \hline
+            $\mathcal{C}_2$ &  & $\mathcal{C}_2$ &  &  \\ 
+        \hline                 
+            $\mathcal{C}_3$ &  &  &  &  \\ 
+        \hline                 
+            $\mathcal{C}_4$ &  &  &  &  \\ 
+        \hline
+    \end{tabular}\\
+    \end{center}
+        
+\begin{note}
+    Algorithm 2 was used in order to verify any similarities by calculating the j-invariant of the lattice once we found its two generators. While not necessary, it was useful to double check the answers. Lemma 2 was used in conjunction with Lemma 3 in order to assure that this process would always work. You can always find a 2 basis for the ideal, and then Lemma 3 allows you to find the j-invariant of any 2 basis lattice.
+\end{note}
+
+\section*{Question 2}
+Let $F = \mathbb{Q}(\sqrt{2})$ have discriminant $\delta = 8$ and $\mathcal{O}_F = \mathbb{Z} + \sqrt{2}\mathbb{Z} = \mathbb{Z} + \rho\mathbb{Z}$ for $\rho = \frac{\delta + \sqrt{\delta}}{2} = 4+\sqrt{2}$ .
+
+\qquad(i) \textbf{Show that $\epsilon = 1 + \sqrt{2}$ generates an infinite cyclic group of units of $\mathcal{O}_F$}.
+
+The norm of $\alpha = a + b\sqrt{2}$ is $N(\alpha) = \alpha\bar{\alpha} = a^2-2b^2$. Since the norm is multiplicative and maps from $\mathcal{O}_F$ to $\mathbb{Z}$, an element $\alpha \in \mathcal{O}_F$ is a unit if and only if $N(\alpha) = \pm 1$ because of a similar argument as below. Since $N(1+\sqrt{2}) = -1$ and $N((1+\sqrt{2})^n) = (-1)^n$, it is possible for $(1+\sqrt{2})^n$ to be a unit. The inverse of $(1+\sqrt{2})^n$ is 
+\begin{align*}
+    \frac{1}{(1+\sqrt{2})^n} &= \frac{1}{(1+\sqrt{2})^n}\cdot \frac{(1-\sqrt{2})^n}{(1-\sqrt{2})^n}\\
+    &= \frac{(1-\sqrt{2})^n}{N((1+\sqrt{2})^n)}\\
+    &= \frac{(1-\sqrt{2})^n}{(-1)^n}\\
+    &= (-1)^n(1-\sqrt{2})^n \in \mathcal{O}_F.
+\end{align*}
+Therefore, we have that $\epsilon^n$ is a unit of $\mathcal{O}_F$. Also, since $1+\sqrt{2} > 1, (1+\sqrt{2})^n > (1+\sqrt{2})^{n-1}$ so each $(1+\sqrt{2})^n$ is unique. Therefore $\langle \epsilon \rangle$ is an infinite cyclic group of units.\\
+
+\qquad(ii) \textbf{Show that the group $\mathcal{O}^*$ of units of $\mathcal{O}$ is equal to the direct product $\{\pm 1\}\times \langle \epsilon \rangle = \{\pm \epsilon^n : n \in \mathbb{Z}\}$ of the infinite cyclic group $\langle \epsilon \rangle$ and the order-2 cyclic group $\{\pm 1\}$ .}
+
+%For $\alpha \in \mathcal{O}_F$, $\alpha$ is a unit if and only if $N(\alpha) = \pm 1$. Therefore, for $F = \mathbb{Q}(\sqrt{2})$, $N(a + b\sqrt{2}) = a^2-2b^2$ and when we solve for $N(a+b\sqrt{2}) = a^2 -2b^2 = \pm1$ which is an example of Pell's equation both in the negative and positive case.
+
+It's easy to see that if $u$ is a unit of $\mathcal{O}_F$, then so is $-u,1/u,-1/u$ by the multiplicative propert of the norm. However, if $u \not = \pm 1 = \pm \epsilon^0$ one and only one of these is greater than 1. So all we need to prove is that every $u>1$ can be written $(1+\sqrt{2})^n$ for some $n\in\mathbb{Z}$.
+
+We first must prove that $1+\sqrt{2}$ is the smallest unit $>$ 1. Assume $u=a+b\sqrt{2}$ is the smallest positive unit of $\mathcal{O}_F$ greater than 1. $N(a+b\sqrt{2})= \pm1$ so $-1 < a-b\sqrt{2} < 1$. Suppose $u < 1 + \sqrt{2}$, then combining these two ineqalities we get $0 < 2a < 2 + 2\sqrt{2}$ which only has solution $a = 1$. However, there is no integer $b$ satisfying $1 + b\sqrt{2} < 1 + \sqrt{2}$ and $N(1 + b\sqrt{2}) = \pm 1$. Thereofer $1 + \sqrt{2}$ is the smallest unit greater than 1 in $\mathcal{O}_F$. 
+
+Since $(1+\sqrt{2})^k < (1+\sqrt{2})^{k+1}$ for all $k\in\mathbb{Z}^{\geq0}$, and $1+\sqrt{2}>1$, the half-open intervals $[(1+\sqrt{2})^k,(1+\sqrt{2})^{k+1})$ for $k\in\mathbb{Z}^{\geq0}$ partition the reals greater than or equal to 1. Therefore, any unit $u>1$ exists in one of these intervals and we have $$(1+\sqrt{2})^k \leq u < (1+\sqrt{2})^{k+1}$$ for some $k\in\mathbb{Z}^{\geq0}$. Since $(1+\sqrt{2})^k$ is a unit, multiply by $(1+\sqrt{2})^{-k}$ to get $$1 \leq u(1+\sqrt{2})^{-k} < 1+\sqrt{2}.$$ Then, since $1+\sqrt{2}$ is the least unit greater than 1, $u(1+\sqrt{2})^{-k} = 1$ and we have $u = (1+\sqrt{2})^k$. Therefore, every unit can be written $\pm \epsilon^n$ for $n\in\mathbb{Z}$.\\
+
+\qquad(iii) \textbf{Show that “the” fundamental unit of $F$ is not quite unique: In fact, any of the four numbers
+$\varepsilon = \pm 1 \pm \sqrt{2} = \epsilon, -\epsilon, \epsilon',-\epsilon'$ equally satisfy $\mathcal{O}^* = \{\pm 1\} \times \langle \epsilon \rangle$. However, only one of these is greater than 1.}
+
+To do this we must just show that each $u = \pm \epsilon^n$ can be rewritten in terms of each $\epsilon, -\epsilon,\epsilon', -\epsilon'$. Since $\epsilon' = -\epsilon^{-1}$ we can create relations from each of these terms to $\epsilon$
+\begin{align*}
+    u &= \pm \epsilon^n &&\in \{\pm1\}\times\langle \epsilon\rangle\\
+    &= \pm (-1)^n(-\epsilon)^n &&\in \{\pm1\}\times\langle -\epsilon\rangle\\
+    &= \pm (-1)^n(\epsilon')^{-n} &&\in \{\pm1\}\times\langle \epsilon'\rangle\\
+    &= \pm (-\epsilon')^{-n} &&\in \{\pm1\}\times\langle -\epsilon'\rangle
+\end{align*}
+
+Since the $(-1)^n$ terms only change the sign. Therefore, each of these terms satisfy $\mathcal{O}^* = \{\pm 1\} \times \langle \varepsilon \rangle$. However, by simple calculation, $1+\sqrt{2}$ is the only one greater than 1.\\
+
+It is customary to choose the unique fundamental unit to satisfy $\epsilon>1$ as we did above, namely $\epsilon = 1 + \sqrt{2}$.
+
+\qquad(iv) \textbf{Show that $\mathcal{O}$ is a Euclidean ring: For $\alpha, \beta \in \mathcal{O}_F$ with $\beta \not= 0$ there exist $\gamma, \delta \in \mathcal{O}$ such that $\alpha = \beta\gamma + \delta$ and
+$|N(\delta)| < |N(\beta)|$.}
+
+Let $\alpha,\beta\in F$ and $\beta \not = 0$. Let $\alpha = a_1 + a_2\sqrt{2}$ for $a_1,a_2\in\mathbb{Z}$ then can write $\alpha/\beta = \frac{a_1}{\beta} + \frac{a_2}{\beta}\sqrt{2}$. Then let $\gamma = n + m\sqrt{2} = \lfloor \frac{a_1}{\beta}\rceil +\lfloor \frac{a_2}{\beta}\rceil \sqrt{2}$. Where $\lfloor \cdot \rceil$ rounds to the nearest integers (upwards on tie). Then we have $\alpha/\beta - \gamma = (\frac{a_1}{\beta}-n) + (\frac{a_2}{\beta}-m)\sqrt{2} = x + y\sqrt{2}$ for $-1/2 \leq x,y\leq 1/2$ in $\mathbb{Q}$. 
+Then, let $\delta = \alpha - \beta\gamma = (a_1 - \beta n) + (a_2 - \beta m)\sqrt{2} \in \mathcal{O}_F$. Additionally, $N(\delta) = N(\beta)N(\alpha/\beta - \gamma)$, which since $\alpha/\beta - \gamma = x + y\sqrt{2}$, we have $|N(\alpha/\beta - \gamma)| \leq \sqrt{2}/2 < 1$ so $|N(\delta)| < |N(\beta)|$ and $\mathcal{O}_F$ is a euclidean domain.\\
+
+\qquad(v) \textbf{Describe the Dirichlet character $\chi_8(n) = (8|n)$ of $\mathbb{Q}(\sqrt{2})$ explicitly. Use a calculator or computer to evaluate $L(1,\chi_8)$, using sufficiently many terms of the series (2) to verify that
+$$\frac{\sqrt{8} L(1,\chi_8)}{2\ln(1+\sqrt{2})}$$ is very close to the value $h_8 = 1$ in agreement with the CNF, equation (1).}
+
+    The Dirichlet character $\chi_8(n) = (8 | n)$ is a periodic function such that $\chi_8(n) = \chi_8(n + 8k)$ for any $k\in\mathbb{Z}$. Therefore we only need to calculate it for $n = 1,2,3,4,5,6,7,8$ and we get the following:
+\begin{center}
+    \begin{tabular}{c|c}
+        $n$ & $\chi_8(n)$ \\ \hline
+        1 & 1 \\ 
+        2 & 0 \\
+        3 & -1\\
+        4 & 0\\
+        5 & -1\\
+        6 & 0\\
+        7 & 1\\
+        8 & 0
+    \end{tabular}
+\end{center}
+    
+    $\chi_8(2),\chi_8(4),\chi_8(6),\chi_8(8)$ are obviously zero because they all share a factor of 2 with 8. Then $\chi_8(1)$ is obviously 1 and same for $\chi_8(7)$ since $1^2 \equiv 1\mod 7$. Then, by exhaustion we can see that 8 is not a quadratic residue modulo 3 and 5. Then, using the following code:
+    \lstset{caption={partial L-function and class number approximation}}
+        \lstset{label={lst:alg3}}
+            \begin{lstlisting}[style = Python]
+n = 40000
+dlist = [0,1,0,-1,0,-1,0,1]
+s = 0
+for i in range(1,n+1):
+    s = s + (1/i)*(dlist[i%8])
+h = RR(sqrt(8)*s/(2*log(1 + RR(sqrt(2)))))
+        \end{lstlisting}
+        we get $h = 0.999999998997153$ which is very close to the predicted $h=1$.\\
+        
+\qquad(vi) \textbf{Use the identity
+$$L(1,\chi_D) = -\frac{1}{\sqrt{D}}\sum_{n=1}^{D-1}\chi_D(n)\ln(\sin(\pi n/D)).$$
+in section 13 of Shurman’s notes, to prove that the CNF, equation (1), hold for $D = 8$.}.
+
+Using the function 
+\lstset{caption={true L-function calculation}}
+        \lstset{label={lst:alg4}}
+            \begin{lstlisting}[style = Python]
+D = 8
+s = 0
+for i in range(1,D):
+    s = s + dlist[i]*ln(sin(pi*i/D))
+L = (-1/sqrt(D))* s
+        \end{lstlisting}
+    
+    we get $L(1,\chi_8) = \frac{1}{2}\sqrt{2}(\log(\frac{1}{2}\sqrt{\sqrt{2} + 2}) - \log(\frac{1}{2}\sqrt{-\sqrt{2} + 2}))$ which simplifies to $L(1,\chi_8) = \sqrt{8}/(2\log(1+\sqrt{2}))$ which gives us $h_8 = 1$.
+    
+    We can also do it manually as follows 
+    \begin{align*}
+        L(1,\chi_8) &= -\frac{1}{\sqrt{8}} \sum_{n=1}^7 \chi_8(n)\ln(\sin(n\pi/8))\\
+        &= -\frac{1}{\sqrt{8}} \left(\ln\sin(\pi/8) - \ln\sin(3\pi/8) - \ln\sin(5\pi/8) + \ln\sin(7\pi/8)\right)\\
+        &=-\frac{1}{\sqrt{8}}\left(\ln\left(\frac{\sqrt{2-\sqrt{2}}}{2}\right) - \ln\left(\frac{\sqrt{2+\sqrt{2}}}{2}\right) - \ln\left(\frac{\sqrt{2+\sqrt{2}}}{2}\right) + \ln\left(\frac{\sqrt{2-\sqrt{2}}}{2}\right)\right)\\
+        &= -\frac{1}{\sqrt{8}}\ln\left(\frac{(\frac{\sqrt{2-\sqrt{2}}}{2})^2}{(\frac{\sqrt{2+\sqrt{2}}}{2})^2}\right)\\
+        &= -\frac{1}{\sqrt{8}}\ln\left(\frac{2-\sqrt{2}}{2+\sqrt{2}}\right)\\
+        &= -\frac{1}{\sqrt{8}}\ln(3-2\sqrt{2})\\
+        &= \frac{2}{\sqrt{8}}\ln(1+\sqrt{2}).
+    \end{align*}
+    
+    Then, when we plug this back into equation (1) we get 
+    \begin{align*}
+        \frac{2}{\sqrt{8}}\ln(1+\sqrt{2}) &= \frac{2h_8\ln(1+\sqrt{2})}{\sqrt{8}}
+    \end{align*}
+    which, after some quick rearrangement we get $h_8 = 1$. Therefore, the CNF holds for $D = 8$
+\end{document}

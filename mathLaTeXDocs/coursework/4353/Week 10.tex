@@ -1,0 +1,238 @@
+\documentclass[a4paper, 11pt]{article}
+\usepackage{comment} % enables the use of multi-line comments (\ifx \fi) 
+\usepackage{fullpage} % changes the margin
+\usepackage[T1]{fontenc}
+\usepackage{selinput}
+\usepackage{enumitem}
+\usepackage{listings}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{setspace}
+\usepackage{bm}
+\usepackage{mathtools}
+\usepackage{xcolor}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue,
+  linkbordercolor={0 0 1}
+}
+ 
+\renewcommand\lstlistingname{Algorithm}
+\renewcommand\lstlistlistingname{Algorithms}
+\def\lstlistingautorefname{Alg.}
+
+\lstdefinestyle{Python}{
+    language        = Python,
+    frame           = lines, 
+    basicstyle      = \footnotesize,
+    keywordstyle    = \color{blue},
+    stringstyle     = \color{green},
+    commentstyle    = \color{red}\ttfamily
+}
+
+\SelectInputMappings{
+   aacute={á},
+   ntilde={ñ}
+}
+\newcommand{\Mod}[1]{\ (\mathrm{mod}\ #1)}
+
+\begin{document}
+%Header-Make sure you update this information!!!!
+\noindent
+\large\textbf{Mathematical Foundations of Cryptography} \hfill \textbf{Quinn Murphey} \\
+\normalsize MAT 4353.001 \hfill Date: 04/23/19 \\
+Dr. Dueñez \hfill Due Date: 04/30/19 \\
+\noindent\makebox[\linewidth]{\rule{\paperwidth}{0.4pt}}
+\section*{Week 10:}
+    6.10, 6.11 (I recommend you write your own double-and-add program), 6.12, 6.14, 6.17, 6.18, 6.20, 6.21 (write code for Lenstra's algorithm), 6.22, 6.23, 6.24(c), 6.25(d).
+    
+\section*{Mandatory}
+
+\noindent\textbf{Problem 6.10:}
+    \singlespacing
+    Let $\{P_1,P_2\}$ be a basis for $E[m]$. The \textit{Basis Problem} for $\{P_1,P_2\}$ is to express an arbitrary point $P\in E[m]$ as a linear combination of the basis vectors, i.e., to find $n_1$ and $n_2$ so that $Q=n_1P_1 + n_2P_2$. Prove that an algorithm that solves the basis problem for $\{P_1,P_2\}$ can be used to solve the ECDLP for points in $E[m]$.\\
+    
+    \doublespacing
+    If we let $P_1=P$ and $P_2=\mathcal{O}$, then, since $n_2\mathcal{O}=\mathcal{O}$ for any $n_2$. Finding $n_1$ such that $Q=n_1P_1+\mathcal{O}=n_1P$ breaks the ECDLP for $P$.\\
+    
+\noindent\textbf{Problem 6.11:}
+    \singlespacing
+    Use the double-and-add algorithm to compute $nP$ in $E(\mathbb{F}_p)$ for each of the following curves and points, as we did in Fig. 6.4.
+    \begin{enumerate}[label=(\alph*)]
+        \item $E:Y^2=X^3+23X+13$, \qquad $p=83$, \qquad $P=(24,14)$, \qquad $n=19$;
+        
+        $$19\cdot P = (24,69).$$
+        
+        \item $E:Y^2=X^3+143X+367$, \qquad $p=613$, \qquad $P=(195,9)$, \qquad $n=23$;
+        
+        $$Q = 19\cdot P = (485, 573)$$
+        
+        \item $E:Y^2=X^3+1828X+1675$, \qquad $p=1999$, \qquad $P=(1756,348)$, \qquad $n=11$;
+        
+        $$Q = 11\cdot P = (1068, 1540)$$
+        
+        \item $E:Y^2=X^3+1541X+1335$, \qquad $p=3221$, \qquad $P=(2898,439)$, \qquad $n=3211$;
+        
+        $$Q = 3211\cdot P = (243, 1875)$$
+    
+    \end{enumerate}
+    (Code on next page)
+    \newpage
+    Code:
+    \lstset{caption={Double-Add Algorithm}}
+        \lstset{label={lst:alg1}}
+            \begin{lstlisting}[style = Python]
+                def doubleAdd(n,P,EC):
+                n=list(bin(n)[2:])
+                list.reverse(n)
+                Q = EC(0)
+                for i in n:
+                    Q = Q + int(i)*P
+                    P = 2*P
+                return(Q)
+        \end{lstlisting}\\
+\noindent\textbf{Problem 6.12:}
+    
+    Convert the proof of Proposition 6.18 into an algorithm and use it to write each of the following numbers $n$ as a sum of positive and negative powers of 2 with at most $\frac{1}{2}\lfloor\log n\rfloor+1$ nonzero terms. Compare the nonzero terms in the binary expansion of $n$ with the number of nonzero terms in the ternary expansion of $n$.
+    \begin{enumerate}[label=(\alph*)]
+        \item 349 = [1, 0, -1, 0, 0, 1, 1, 0, 1]$_{\text{tern}}$
+        \item 9937 = [1, 0, 0, 0, 1, 0, 1, 1, 0, 1, 1, 0, 0, 1]$_{\text{tern}}$
+        \item 38728 = [0, 0, 0, 1, 0, 0, 1, 0, -1, 0, 0, 1, 1, 0, 0, 1]$_{\text{tern}}$
+        \item 8379473273489 = [1, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, -1, 0, 0, 1, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 1, -1, 0, 0, 0, 1, 0, -1, 0, 0, 0, 1]$_{\text{tern}}$
+    \end{enumerate}
+    \lstset{caption={Binary To Ternary Algorithm}}
+        \lstset{label={lst:alg1}}
+            \begin{lstlisting}[style = Python]
+                def binToTern(n):
+                list.reverse(n)
+                i = 0
+                p = 0
+                while i < len(n):
+                    while i < len(n) and int(n[i]) == 1:
+                        p = p+1
+                        i = i+1
+                    if p > 2:
+                        for j in range(i - p,i):
+                            n[j]='0'
+                        n[i-p]='-1'
+                        if i < len(n):
+                            n[i]='1'
+                        else:
+                            n.append('1')
+                    p = 0
+                    i = i+1
+                return(n)
+        \end{lstlisting}
+        \textit{Note}: n is input as bin(N)[2:] for int N.\\
+        
+\noindent\textbf{Problem 6.14:}
+    
+    Alice and Bob agree to use elliptic Diffie-Hellman key exchange with the prime, elliptic curve, and point 
+    $$p=2671, \qquad E:Y^2 = X^3 + 171X + 853, \qquad P=(1980,431)\in E(\mathbb{F}_{2671}).$$
+    \begin{enumerate}[label=(\alph*)]
+        \item Alice sends Bob the point $Q_A = (2110,543).$ Bob decides to use the secret multiplier $n_B = 1943.$ What point should Bob send to Alice?
+        
+        
+        
+        \item What is their secret shared value?
+        
+        
+        
+        \item How difficult is it for Eve to figure out Alice's secret multiplier $n_A$? If you know how to program, use a computer to find $n_A$.
+        
+        
+        
+        \item Alice and Bob decide to exchange a new piece of secret information using the same prime, curve, and point. This time Alice sends Bob only the x-coordinate $x_A=2$ of her point $Q_A$. Bob decides to use the secret multiplier $n_B=875$. What single number modulo $p$ should Bob send to Alice, and what is their shared value?
+        
+        
+        
+    \end{enumerate}
+    
+\noindent\textbf{Problem 6.17:}
+    
+    The Menezes-Vanstone variant of the elliptic Elgamal public key cryptosystem improves the message expansion while avoiding the difficulty of directly attatching plaintext to points in $E(\mathbb{F}_p)$.
+    \begin{enumerate}[label=(\alph*)]
+        \item The last line of Table 6.13 claims that $m_1'=m_1$ and $m_2'=m_2$. Prove that this is true, so that the decryption process does work.
+        \item What is the message expansion of MV-Elgamal?
+        \item Alice and Bob agree to use
+        $$p=1201, \qquad E:Y^2=X^3+19X+17, \qquad P=(278,285)\in E(\mathbb{F}_p ).$$
+        for MV-Elgamal. Alice's secret value is $n_A=595$. What is her public key? Bob sends Alice the encrypted message ((1147,640),279,1189). What is the plaintext?
+    \end{enumerate}
+    
+\noindent\textbf{Problem 6.18:}
+    
+    This exercise continues the discussion of the MV-Elgamal cryptosystem described.
+    \begin{enumerate}[label=(\alph*)]
+        \item Eve knows the elliptic curve $E$ and the ciphertext values $c_1$ and $c_2$. Show how Eve can use this knowledge to write down a polynomial equation (modulo $p$) that relates the two pieces $m_1$ and $m_2$ of the plaintext. In particular, if Eve can figure out one piece of the plaintext, then she can recover the other piece by finding roots of a certain polynomial.
+        \item Alice and Bob exchange a message using MV-Elgamal cryptosystem with the prime, elliptic curve, and point in 6.17(c). Eve intercepts the ciphertext 
+        $$((269,339),814,1050),$$
+        and through other sources she discovers that the first part of the plaintext is $m_1=1050$. Use your algorithm in (a) to recover the second part of the plaintext.
+    \end{enumerate}
+    
+\noindent\textbf{Problem 6.20:}
+    
+    This exercise asks you to compute some numberical instances of the elliptic curve digital signature algorithm described in table 6.7 for the public parameters $$E:y^2=x^3+231+473, \quad p=17389, \quad q=1321, \quad G=(11259,11278)\in E(\mathbb{F}_p).$$
+    You should begin by verifying that $G$ is a point of order $g$ in $E(\mathbb{F}_p).$
+    \begin{enumerate}[label=(\alph*)]
+        \item Samantha's private signing key is $s=542$. What is her public verification key? What is her digital signature on the document $d=664$ using the random element $e=847$?
+        \item Tabitha's public verification key is $V=(11017,14637).$ Is $(s_1,s_2)=(907,296)$ a valid signature on the document $d=993$?
+        \item Umberto's public erification key is $V=(14594,308).$ Use any method that you want to find Umberto's orivate signing key, and then use the private key to forge his signature on the document $d=516$ using the random element $e=365$.
+    \end{enumerate}
+    
+\noindent\textbf{Problem 6.21:}
+    
+    Use the elliptic curve factorization algorithm to factor each of the numbers $N$ using the given elliptic curve $E$ and point $P$.
+    \begin{enumerate}[label=(\alph*)]
+        \item $N=589, \qquad E:Y^2=X^3+4X+9, \qquad P=(2,5).$
+        \item $N=26167, \qquad E:Y^2=X^3+4X+128, \qquad P=(2,12).$
+        \item $N=1386493, \qquad E:Y^2=X^3+3X-2, \qquad P=(1,1).$
+        \item $N=28102844557, \qquad E:Y^2=X^3+18X-453, \qquad P=(7,4).$
+    \end{enumerate}
+    
+\noindent\textbf{Problem 6.22:}
+    
+    Let $E$ be an elliptic curve given by an generalized Weierstrass equation
+    $$E:Y^2+a_1XY+a_3Y=X^3+a_2X^2+a_4X+a_6.$$
+    Let $P_1=(x_1,y_1)$ and $P_2=(x_2,y_2)$ be points on $E$. Prove that the following algorithm computes thier sum $P_3=P_1+P_2.$\\
+    If $x_1=x_2$ and $y_1+y_2+a_1x_2+a_3=\mathcal{O}$ then $P_1+P_2=\mathcal{O}$.\\
+    Otherwise, define $\lambda$ and $\nu$ as follows
+    \begin{align*}
+        &[\text{If } x_1\not=x_2] \quad\lambda=\frac{y_2-y_1}{x_2-x_1},\quad &&\nu=\frac{y_1x_2-y_2x_1}{x_2-x_1},\\
+        &[\text{If } x_1=x_2] \quad\lambda=\frac{3x_1^2+2a_2x_1+a_4-a_1y_1}{2y_1+a_1x_1+a_3}, \quad &&\nu=\frac{-x_1^3+a_4x_1+2a_6-a_3y_1}{2y_1+a_1x_1+a_3}.
+    \end{align*}
+    
+\noindent\textbf{Problem 6.23:}
+    
+    Let $\mathbb{F}_8=\mathbb{F}_2[T]/(T^3+T+1)$ be as in example 6.28, and let $E$ be the elliptic curve 
+    $$E:Y^2+XY+Y=X^3+TX+(T+1).$$
+    \begin{enumerate}[label=(\alph*)]
+        \item Calculate the discriminant of $E$.
+        \item Verify that the points 
+        $$P=(1+T+T^2,1+T), \quad Q=(T^2,T), \quad R=(1+T+T^2, 1+T^2).$$
+        are in $E(\mathbb{F}_8)$ and compute the values of $P+Q$ and $2R.$
+        \item Find all of the points in $E(\mathbb{F}_8)$.
+        \item Find a point $P\in E(\mathbb{F}_8)$ such that every point in $E(\mathbb{F}_8)$ is a multiple of $P$.
+    \end{enumerate}
+    
+    
+\noindent\textbf{Problem 6.24(c):}
+    
+    Let $\tau(\alpha) = \alph^p$ be the Frobenius map on $\mathbb{F}_{p^k}.$\\
+    Let $E$ be an elliptic curve over $\mathbb{F}_p$ and let $\tau(x,y)=(x^p,y^p)$ be the Frobenius map from $E(\mathbb{F}_{p^k})$ to itself. Prove that
+    $$\tau(P+Q) = \tau(P) + \tau(Q) \quad\text{for all }P\in E(\mathbb{F}_{p^k}).$$
+    
+    
+    
+\noindent\textbf{Problem 6.25(d):}
+    
+    Let $E_0$ be the Koblitz curve $Y^2+XY=X^3+1$ over the field $\mathbb{F}_2$, and for every $k\geq1$, let
+    $$t_k=2^k+1-\#(E\mathbb{F}_{2^k}).$$
+    Program a computer to calculate the recursion and use it to compute the values of 
+    \begin{itemize}
+        \item $\#E(\mathbb{F}_{2^{11}})$
+        \item $\#E(\mathbb{F}_{2^{31}})$
+        \item $\#E(\mathbb{F}_{2^{101}})$
+    \end{itemize}
+    
+\end{document}

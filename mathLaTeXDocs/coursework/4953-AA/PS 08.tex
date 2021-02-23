@@ -1,0 +1,71 @@
+\documentclass[letter paper, 12pt]{article}
+\usepackage{comment} % enables the use of multi-line comments (\ifx \fi) 
+\usepackage{fullpage} % changes the margin
+\usepackage[T1]{fontenc}
+\usepackage{selinput}
+\usepackage{enumitem}
+\usepackage{listings}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{setspace}
+
+
+\newcommand{\Mod}[1]{\ (\mathrm{mod}\ #1)}
+
+\begin{document}
+%Header-Make sure you update this information!!!!
+\noindent
+\large\textbf{Modern Abstract Algebra II} \hfill \textbf{Quinn Murphey} \\
+\normalsize MAT 4953.001 \hfill Date:  \\
+Dr. Patterson \hfill Due Date:  \\
+\noindent\makebox[\linewidth]{\rule{\paperwidth}{0.4pt}}
+
+\section*{Problem Set 8}
+\doublespacing
+\noindent\textbf{Problem 1:}
+    
+    Let $F$ be a field, let $G$ and $H$ be extensions of $F$, and let $\phi:G\rightarrow H$ be a nontrivial ring homomorphism (one that does not send every element of $G$ to zero). Let $E = \{x \in F : \phi(x) = x\}$. Prove that $E$ is a subfield of $F$. (This is slightly tedious, but we're going to do a magic trick with it later.)
+    
+    Since $\phi$ is a ring homomorphism, obviously both 0 and 1 are in $E$. Next, assume $a,b$ are in $E$, then $ab$ is in $E$ because $\phi(ab)=\phi(a)\phi(b)=ab$. Finally assume $a,b$ in $E$, then $a+b$ is in $E$ because $\phi(a+b) = \phi(a) + \phi(b) = a+b$. Therefore, $E$ is a subfield of $F$.
+    
+\noindent\textbf{Problem 2:}
+    
+    Use the general approach for finding roots of a cubic to find the roots of the polynomial $x^3 + 9x^2 + 25x + 22$. Please see the notes on the back of this sheet.
+    
+    The depressed form of this cubic obtained by $ x=y-\frac{9}{3}=y-3$ is 
+    \begin{align*}
+        y^3 - 2y + 1 &= 0.
+    \end{align*}
+    We can see that $y=1$ is a root of this cubic so $x=-2$ is a root. Dividing out by $x+2$ gives us 
+    $x^2 + 7x + 11$. Which using the quadratic equation gives us $x = \frac{-7\pm\sqrt{5}}{2}$ which are our last two roots.
+    \newpage
+    
+\noindent\textbf{Problem 3:}
+    
+    This problem is meant to tidy up some of the stray observations we've made in class this week: Let $F$ be a field, let $E$ be an extension of $F$, and let $a \in E$ be algebraic over $F$. Let $f(x) \in F[x]$ be a monic polynomial having $a$ as a root. Prove that $f(x)$ is the minimal polynomial for $a$ over $F$ if and only if $f(x)$ is irreducible. (This should help with the next problem.)
+    
+    I don't see what this question is asking, by definition the minimal polynomial is the unique monic irreducible polynomial such that $a$ is a root.
+
+\noindent\textbf{Problem 4:}
+    
+    Find the minimal polynomial and the degree of each of the following numbers over the field indicated. Be sure to justify any claim that the polynomial you've given is minimal. (1) The number $4 + \sqrt[3]{2}$ over $\mathbb{Q}$. (2) The golden ratio over $\mathbb{Q}$. (3) The value of cos$(20^{\circ})$ over $\mathbb{Q}$. (4) The number $e + \pi i$ over $\mathbb{R}$. See the reverse side of this sheet for some helpful notes.
+    
+    (1) Since $4+\sqrt[3]{2}$ is degree 3 over the reals, the minimal polynomial must be degree 3. Which is $a^3 - 12a^2 + 48a -66 = 0$.
+    
+    (2) Since the golden ration is quadratic over $\mathbb{Q}$, the minimal polynomial must also be degree 2. Which is $\phi^2 - \phi +1 = 0$
+    
+    (3) 
+    
+\noindent\textbf{Problem 20.x:}
+    
+    
+    
+    
+    
+\noindent\textbf{Problem 20.x:}
+    
+    
+    
+    
+    
+\end{document}

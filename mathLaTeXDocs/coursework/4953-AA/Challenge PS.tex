@@ -1,0 +1,54 @@
+\documentclass[letterpaper, 12pt]{article}
+\usepackage{comment} % enables the use of multi-line comments (\ifx \fi) 
+\usepackage{fullpage} % changes the margin
+\usepackage[T1]{fontenc}
+\usepackage{selinput}
+\usepackage{enumitem}
+\usepackage{listings}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+
+\theoremstyle{definition}
+\newtheorem{problem}{Problem}
+\newcommand{\Mod}[1]{\ (\mathrm{mod}\ #1)}
+
+\begin{document}
+%Header-Make sure you update this information!!!!
+\noindent
+\large\textbf{Modern Abstract Algebra II} \hfill \textbf{Quinn Murphey} \\
+\normalsize MAT 4953.001 \hfill Date: 03/15/19 \\
+Dr. Patterson \hfill Due Date:\\
+\noindent\makebox[\linewidth]{\rule{\paperwidth}{0.4pt}}
+
+\section*{Challenge Problem Set}
+
+\begin{problem}
+    In a previous problem set, I asked you to prove that in a principal ideal domain, if $x$ is a nonzero element, then $\langle x\rangle$ is maximal if and only if $x$ is irreducible. Jalisa dropped by one day to talk about this problem, and she came up with a fiendishly clever way to prove that if $\langle x\rangle$ is maximal, then $x$ is irreducible. Here's how to start: use the fact that a maximal ideal must also be a prime ideal. See if you can complete the proof.
+\end{problem}
+
+\begin{problem}
+    Is it possible for a principal ideal domain other than Z to have a quotient ring that is isomorphic to $\mathbb{Z}$? Either find an example, or show that this is impossible.
+\end{problem}
+
+\begin{problem}
+    Here is an open ended question. We know that the multiplicative group of units in $\mathbb{Z}_5[\sqrt{5}]$ is an abelian group. Is it cyclic? If not, what is it's isomorphism type. Another open ended question: If $d>1$ is square-free, what is the structure of the abelian group of units in $\mathbb{Z}[\sqrt{d}]$? What about $d$ negative?
+\end{problem}
+
+\begin{problem}
+    In a couple of weeks, we're going to learn how to build fields of order $p^k$ by extending the field $\mathbb{Z}_p$. One way you might extend the field $\mathbb{Z}_p$ is to take the quotient of $\mathbb{Z}_p[x]$ by an irreducible polynomial. But for that to happen, we need to be able to find irreducible polynomials in $\mathbb{Z}_p$. This got me to thinking: are there irreducible polynomials of degree $d$ in $\mathbb{Z}_p[x]$; and if so, how many are there?
+\end{problem}
+
+\begin{problem}
+    Try and find an endomorphism on a field that is not an isomorphism. Also, Let $K$ be a field, and let $\phi : K \rightarrow K$ be an endomorphism. Let $F$ be the set of all $x \in K$ that are fixed by $\phi$; that is, the set of all $x \in K$ satisfying $\phi(x) = x$. Prove that $F$ is a field.
+\end{problem}
+
+\begin{problem}
+    In class we proved that every principal ideal domain is Noetherian. It turns out that there are unique factorization domains that are not Noetherian. Can you find an example? (You might find it helpful to use the following result, which we didn’t cover directly in class: if $R$ is a UFD, then $R[x]$ is a UFD.)    
+\end{problem}
+
+\begin{problem}
+    Instead of using typical Euclidean Constructions. Can you use folding and reflections of points across a line to construct the typical shapes. (Oragami)
+\end{problem}
+
+\end{document}
