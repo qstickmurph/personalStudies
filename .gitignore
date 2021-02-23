@@ -5,6 +5,7 @@ pythonEnv/
 HOMLenv/
 dsenv/
 *.zip
+*.pdf
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
