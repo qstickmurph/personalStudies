@@ -1,0 +1,196 @@
+\documentclass[letterpaper, 12pt]{article}
+\usepackage{comment} % enables the use of multi-line comments (\ifx \fi) 
+\usepackage{fullpage} % changes the margin
+\usepackage[T1]{fontenc}
+\usepackage{selinput}
+\usepackage{enumitem}
+\usepackage{listings}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{setspace}
+\usepackage{bm}
+\usepackage{mathtools}
+
+\newcommand{\Mod}[1]{\ (\mathrm{mod}\ #1)}
+\newcommand{\E}{ \mathbb{E} }
+\newcommand{\Var}{ \text{Var} }
+\newcommand{\Pr}{ \text{Pr} }
+
+\allowdisplaybreaks
+
+\begin{document}
+
+
+%Header-Make sure you update this information!!!!
+\noindent
+\large\textbf{SP: Probability and Computing} \hfill \textbf{Quinn Murphey} \\
+\normalsize MAT 4953.001 \hfill Date: 03/09/21\\
+Dr. Ergur\hfill Due Date: 03/16/21\\
+\noindent\makebox[\linewidth]{\rule{\paperwidth}{0.4pt}}
+
+
+\section*{HW 3\#:}
+\noindent\textbf{1. Let $X$ be a number chosen uniformly at random from [1,n]. Find Var[X].}
+
+We will use the definition
+$$\Var[X] = \E[X^2] - \E[X]^2.$$
+
+We already know that the expectation of $X$ is $\sum_{1 \leq i \leq n} \Pr(X=i)*i = \frac{1}{n}\sum_{1 \leq i \leq n} i = \frac{1}{n}(\frac{n(n+1)}{2}) = \frac{n+1}{2}.$
+
+Now we just need to find the expectation of $X^2$.
+\begin{align*}
+    \E[X^2] &= \sum_{1 \leq i \leq n} \Pr(X^2 = i^2)*i^2 \\
+            &= \frac{1}{n}\sum_{1 \leq i \leq n} i^2 \\
+            &= \frac{1}{n} (\frac{n(n+1)(2n+1)}{6}) \\
+            &= \frac{(n+1)(2n+1)}{6}.
+\end{align*}
+
+Thus,
+\begin{align*}
+    \Var[X] &= \E[X^2] - \E[X]^2 \\
+            &= \frac{(n+1)(2n+1)}{6} - \frac{(n+1)^2}{4} \\
+\end{align*}
+
+\noindent\textbf{3. Suppose that we roll a standard fair die 100 times. Let $X$ be the sum of the numbers that appear over the 100 rolls. Use Chebyshev's inequality to bound Pr($|X - 350| \geq 50$).}
+
+Let $X_i$ represent each of the 100 standard fair die rolls respectively.
+
+Then, we get the following values for the expectaion and variance of $X_i$.
+$$\E[X_i] = \sum_{k=1}^6 \Pr(X_i = k) * k = \frac{1}{6}\sum_{k=1}^6 k = \frac{6*7}{6*2} = \frac{7}{2}.$$
+\begin{align*}
+    \Var[X_i] &= \E[X^2] - \E[X]^2 \\
+              &= \sum_{k=1}^6 \Pr(X_i^2 = k^2) * k^2 - (\frac{7}{2}) \\
+              &= \frac{1}{6}\sum_{k=1}^6  k^2 - (\frac{7}{2}) \\
+              &= \frac{1}{6} (\frac{(6(7)(13)}{6}) - \frac{7}{2} \\
+              &= \frac{91}{6} - \frac{7}{2} \\
+              &= \frac{35}{3} \approx 11.\bar{6}
+\end{align*}
+
+Chebyshev's Inequality is
+$$\Pr(|X - \E[X]| \geq a) \leq \frac{\Var[X]}{a^2}.$$
+
+For our $X$, we know that it is the sum of 100 uniform distributions from 1 to 6. Thus, it's easy to see that 
+\begin{align*}
+    \E[X] &= \E[X_1 + \dots + X_{100}] \\
+          &= \sum_{i=1}^{100} \E[X_i] \\
+          &= \sum_{i=1}^{100} \sum_{j=1}^6 \frac{1}{6}*j \\
+          &= \sum_{i=1}^{100} \frac{7}{2} \\
+          &= 350.
+\end{align*}
+
+Thus, we can apply Chebyshev's Inequality to our desired probability to get
+$$\Pr(|X - 350| \geq 50) \leq \frac{\Var[X]}{50^2}.$$
+
+So we will compute the value of $\Var[X]$.
+\begin{align*}
+    \Var[X] &= \Var[\sum_{i=1}^{100}X_i] \\
+            &= \sum_{i=1}^{100}\Var[X_i] \\
+            &= \sum_{i=1}^{100} (\frac{35}{3})  \\
+            &= \frac{3500}{3} \approx 1166.\bar{6}.
+\end{align*}
+
+The variance is linear here because each of the 100 die rolls are independent from the rest by definition ("standard fair die").
+
+Therefore, we end up with the bound 
+$$\Pr(|X - 350| \geq 50) \leq \frac{3500/3}{50^2} = \frac{7}{15}.$$
+
+\noindent\textbf{4. Prove that, for any real number $c$ and any discrete random variable $X$, $\Var[cX] = c^2\Var[X]$}
+
+\begin{align*}
+    \Var[cX] &= \E[(cX)^2] - \E[cX]^2 \\
+             &= \E[c^2X^2] - (c\E[X])^2 \\
+             &= \E[c^2X^2] - c^2\E[X]^2 \\
+             &= c^2( \E[X^2] - \E[X]^2 ) \\
+             &= c^2\Var[X].
+\end{align*}
+
+This proof relies on commutativity of expectation, real numbers, and discrete random variables several times. However, because all of these things are strictly real numbers, commutativity always holds.
+
+\noindent\textbf{5. Given any two random variables $X$ and $Y$, by the lienarity of expectations, we have $\E[X - Y] = \E[X] - \E[Y].$ Prove that, when $X$ and $Y$ are independent, $\Var[X - Y] = \Var[X] + \Var[Y]$.}
+
+Assume that $X$ and $Y$ are independent random variables. Then,
+\begin{align*}
+    \Var[X - Y] &= \E[(X - Y)^2] - \E[X - Y]^2 \\ 
+                &= \E[X^2 - 2XY + Y^2] - (\E[X] - \E[Y])^2 \\
+                &= \E[X^2] - 2\E[XY] + \E[Y^2] - (\E[X]^2 - 2\E[X]\E[Y] + \E[Y]^2)  \\ 
+\end{align*}
+Then, since $X$ and $Y$ are independent, $\E[XY] = \E[X]\E[Y]$
+\begin{align*}
+                &= \E[X^2] - 2\E[X]\E[Y] + \E[Y^2] - (\E[X]^2 - 2\E[X]\E[Y] + \E[Y]^2)  \\
+                &= \E[X^2] + \E[Y^2] - \E[X]^2 - \E[Y]^2 \\
+                &= \Var[X] + \Var[Y].
+\end{align*}
+
+\noindent\textbf{2. Let $X$ be a number chosen uniformly at random from $[-k, k]$. Find $\Var[X]$.}
+
+First we will find both $\E[X]$ and $\E[X^2]$.
+\begin{align*}
+    \E[X] &= \sum_{i=-k}^{k} \Pr(X = i) * i \\
+          &= 0 + \sum_{i=1}^{k}\Pr(X = i) * i + \sum_{i=-k}^{-1}\Pr(X = i) * i && \text{(pull out i=0)} \\
+          &= \sum_{i=1}^k Pr(X = i) * i + Pr(X = -i) * (-i) \\
+          &= \sum_{i=1}^k 0 \\
+          &= 0.
+\end{align*}
+
+First, note that $\Pr(X^2 = i^2) = (\Pr(X = i) + \Pr(X = -i))$ since $X^2 = i^2 \Leftrightarrow (X = i) \lor (X = -i)$ and the two terms on the right are mutually exclusive.
+
+\begin{align*}
+    \E[X^2] &= \sum_{i=0}^k \Pr(X^2 = i^2) * i^2 \\
+            &= 0 + \sum_{i=1}^{k}\Pr(X^2 = i^2) * i^2 && \text{(pull out i=0)} \\
+            &= \sum_{i=1}^{k}(\Pr(X = i) + \Pr(X = -i)) * i^2 \\
+            &= \sum_{i=1}^{k} 2\Pr(X = i) * i^2 && \text{(Uniform distribution)}\\
+            &= \sum_{i=1}^{k} 2(\frac{1}{2k + 1}) * i^2 && \text{(Uniform distribution)}\\
+            &= \frac{2}{2k + 1} \sum_{i=1}^{k} i^2 \\
+            &= \frac{2}{2k + 1} (\frac{k(k+1)(2k+1)}{6}) \\
+            &= \frac{n(n+1)}{3}.
+\end{align*}
+
+Then, it is easy to compute $\Var[X]$ as follows:
+\begin{align*}
+    \Var[X] &= \E[X^2] - \E[X]^2 \\
+            &= \frac{n(n+1)}{3} - 0 \\
+            &= \frac{n(n+1)}{3}
+\end{align*}
+
+\newpage
+\nodindent\textbf{6. For a coin that comes up heads independently with probability $p$ on each flip, what is the variance in the number of flips until the $k$th head appears? }
+
+Let $X$ be the number of flips until the $k$th flips. We can write $X = X_1 + X_2 + \dots + X_k$ where $X_i$ is the number of flips it takes to get the $i$th flip after the $i-1$th flip. By the memoryless property of geometric variables, each of these are geometric random variables with the same parameter $p = 1/2$.
+
+Thus, since each of these sets of trials are independent, $\Var[X] = \Var[X_1] + \Var[X_2] + \dots + \Var[X_k]$.
+\begin{align*}
+    \Var[X] &= \Var[X_1 + X_2 + \dots + X_k] \\
+            &= \Var[X_1] + \Var[X_2] + \dots + \Var[X_k] \\
+            &= k * \Var[X_1] \\
+            &= k * \frac{1-1/2}{(1/2)^2} \\
+            &= k * \frac{1}{8} \\
+            &= \frac{k}{8}
+\end{align*}
+
+\nodindent\textbf{18. Show that, for a random variable $X$ with standard deviation $\sigma[X]$ and any positive real number $t$.}
+
+\begin{enumerate}
+    \item $\Pr(X - \E[X] \geq t\sigma[X]) \leq \frac{1}{1+t^2}.$
+
+        Note that if there are any values in $X$ not equal to $\E[X]$, then there must be at least one value less than $\E[X]$. This is by a simple contradiction on the value of $\E[X]$. Let $N = \E[X]$. Then, let $y > N$ such that $Pr(X=y) \not= 0$. Then, if there are no values of $X$ less than 0, $\E[X] \not= N$.
+        
+        
+        
+        Unanswered from here.
+
+    \item $\Pr(|X - \E[X]| \geq t\sigma[X]) \leq \frac{2}{1+t^2}$
+        
+        From Corollary 3.7 we have $\Pr(|X - \E[X]| \geq t\sigma[X]) \leq \frac{1}{t^2}$ when $t>1$.
+
+        Also, $\frac{2}{1 + t^2} \geq \frac{1}{t^2}$ for all $t > 1$ and when $t \leq 1$, both are greater than 1 so bound is obvious and meaningless. Thus, the bound is always true for $t>0$.
+
+        We know that $\frac{2}{1 + t^2} \geq \frac{1}{t^2}$ for all $t > 1$ because $\frac{2}{1 + t^2} - \frac{1}{t^2} = \frac{(t-1)(t+1)}{t^4+t^2} > 0$ for t>1.
+        
+
+\end{enumerate}
+
+\nodindent\textbf{19. Using Ex 3.18, show that $|\mu - m| \leq \sigma$ for a random variable with standard deviation $\sigma$, expectation $\mu$, and median $m$.}
+
+Let $t = 1$. Then assume that $|\mu - m| > \sigma$. Also assume that $m\geq\mu$, the proof is symmetric for the other case. Then $m > \sigma + \mu$. Then, we would have, by definition of median, that $\Pr(X - \E[X] \geq \sigma) = \Pr(X \geq \sigma + \E[X]) > \Pr(X \geq m) \geq 1/2$. However, by Ex 3.18(a) we have that $\Pr(X - \E[X] \geq \sigma) \leq \frac{1}{1+2^2} = \frac{1}{2}.$ Thus, after the same proof for $\mu \geq m$, we get a contradiction and $|\mu - m| \leq \sigma$.
+
+\end{document}

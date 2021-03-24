@@ -11,10 +11,6 @@
 \usepackage{bm}
 \usepackage{mathtools}
 
-\SelectInputMappings{
-   aacute={á},
-   ntilde={ñ}
-}
 \newcommand{\Mod}[1]{\ (\mathrm{mod}\ #1)}
 
 \begin{document}
@@ -22,14 +18,106 @@
 
 %Header-Make sure you update this information!!!!
 \noindent
-\large\textbf{Class} \hfill \textbf{Quinn Murphey} \\
-\normalsize Class \hfill Date: \\
-Professor \hfill Due Date: \\
+\large\textbf{SP: Probability and Computing} \hfill \textbf{Quinn Murphey} \\
+\normalsize MAT 4953.001 \hfill Date: 02/24/21\\
+Dr. Ergur\hfill Due Date: 02/24/21\\
 \noindent\makebox[\linewidth]{\rule{\paperwidth}{0.4pt}}
 
 
-\section*{HW \#:}
+\section*{HW 1\#:}
+	\textbf{1.2) We roll two standard six sided dice. Find the probability of the following events, assuming that the outcomes of the rolls are independent:} \\
+		Let $\Omega = \{1, \dots, 6\}^2$ and $\mathcal{F} = \mathcal{P}(\Omega)$ with Pr defined by Pr$(x_i = n) = \frac{1}{6}$ for all $i = 1,2$ and $n = 1,\dots,6$.
+	\begin{enumerate}
+		\item \textbf{The two dice show the same number}
+
+			Pr$(\{\bar{x}\in\Omega : x_1 = x_2\}) = $ Pr$(\cup_{i=1}^6\{\bar{x}\in\Omega : x_1 = x_2 = i\}) \\ = $ $\sum_{i=1}^6$Pr$(\{\bar{x}\in\Omega : x_1=i\} \cap \{\bar{x}\in\Omega : x_2 = i\}) = \sum_{i=1}^6\text{Pr}(x_1=i)\cdot\text{Pr}(x_2=i) = \sum_{i=1}^6 (\frac{1}{6})^2 = \frac{1}{6}$.
+			Because the two die rolls are independent.
+
+		\item \textbf{The number that appears on the first die is larger than the number on the second}
+			
+			Pr$(x_1 > x_2) = $ Pr$(\cup_{i=1}^5\{\bar{x}\in\Omega : x_1 > i = x_2\}) $
+			$$= \text{Pr}(\cup_{i=5}^5\cup_{j=i+1}^6\{\bar{x}\in\Omega : x_i = j \land x_2=i\}) $$
+			$$= \sum_{i=1}^5\sum_{j=i+1}^6\text{Pr}(\{\bar{x}\in\Omega : x_1 = j \land x_2 = i\}) $$
+			$$= \sum_{i=1}^5\sum_{j=i+1}^6\text{Pr}(x_1 = j)\text{Pr}(x_2 = i) $$
+			$$=\sum_{i=1}^5\sum_{j=i+1}^6\frac{1}{36} = \frac{15}{36}. $$
+			
+		\item \textbf{The sum of the dice is even}
+
+			Pr$(x_1 + x_2 \text{ even }) =$ Pr$((x_1 \text{ odd } \land x_2 \text{ odd }) \lor (x_1 \text{ even } \land x_2 \text{ even })) = $ Pr$(x_1 \text{ odd })$Pr$(x_2 \text{ odd }) + $ Pr$(x_1 \text{ even } )$ Pr$(x_2 \text{ even }) = \frac{1}{2}\cdot\frac{1}{2} + \frac{1}{2}\cdot\frac{1}{2} = \frac{1}{2}$ since the two rolls are independent.
+			
+		\item \textbf{The product of the dice is a perfect square}
+
+			Pr$(x_1\cdot x_2\text{ a perfect square}) = \text{Pr}(x_1 = x_2) = \frac{1}{6}$ by part (a)
+	\end{enumerate}
+
+	\noindent\textbf{1.11) I choose a number uniformly at random from the range \{1, ..., 1000000\}. Using the inclusion-exclusion principle, determine the probability that the number chosen is divisible by one or more of 4, 6, or 9.} \\
+	Let $\Omega = \{1, \dots, 1000000\}, \mathcal{F}=\mathcal{P}(\Omega)$ and Pr$:\mathcal{F} \rightarrow \mathbb{R}$ defined by Pr$(x = n) = \frac{1}{1000000}$ for all $n\in\Omega$.
+
+	\begin{align*}
+		\text{Pr}( 4| x \lor 6| x \lor 9| x) = &\text{Pr}(4| x) + \text{Pr}(6| x) + \text{Pr}(9| x) \\
+														&-\text{Pr}(4| x \land 6| x) -\text{Pr}(4| x \land 9| x) -\text{Pr}(6| x \land 9| x)\\
+														&+\text{Pr}(4| x \land 6| x \land 9| x)
+	\end{align*}
 	
+	We will evaluate each term above seperately.
+
+	Note: if $x|n$, then $<x>$ is a subgroup of $\mathbb{Z}_n$, thus each pair of cosets, or modular equivalence classes, are equipotent.
+
+	Pr$(4|x) = \frac{1}{4}$ since $4|1000000$.
 	
+	\begin{align*}
+		\text{Pr}(6|x) &= \text{Pr}((x < 999996 \land 6|x) \lor (x \geq 999996 \land 6|x)) \\
+		&= \text{Pr}(x < 999996 \land 6|x) + \text{Pr}(x \geq 999996 \land 6|x) \\
+		&= \text{Pr}(x < 999996 \land 6|x) + 0 \\
+		&= \text{Pr}( 6|x \mid x<999996)\text{Pr}(x < 999996) \\
+		&= \frac{1}{6}\frac{999996}{1000000} \\
+		&= \frac{166666}{1000000}.
+	\end{align*}
+		
+	\begin{align*}
+		\text{Pr}(9|x) &= \text{Pr}((x < 999999 \land 9|x) \lor (x \geq 999999 \land 9|x)) \\
+		&= \text{Pr}(x < 999999 \land 9|x) + \text{Pr}(x \geq 999999 \land 9|x) \\
+		&= \text{Pr}(x < 999999 \land 9|x) + 0 \\
+		&= \text{Pr}( 9|x \mid x<999999)\text{Pr}(x < 999999) \\
+		&= \frac{1}{9}\frac{999999}{1000000} \\
+		&= \frac{111111}{1000000}.
+	\end{align*}
+
+	Note: $a|x \land b|x \leftrightarrow \text{lcm}(a,b) | x$.
 	
+	$$\text{Pr}(4|x \land 6|x) = \text{Pr}(12|x) = \frac{1}{12}\frac{999996}{1000000} = \frac{83333}{1000000}.$$
+	
+	$$\text{Pr}(4|x \land 9|x) = \text{Pr}(36|x) = \frac{1}{36}\frac{999972}{1000000} = \frac{27777}{1000000}.$$
+	
+	$$\text{Pr}(6|x \land 9|x) = \text{Pr}(18|x) = \frac{1}{18}\frac{999990}{1000000} = \frac{55555}{1000000}.$$
+
+	$$\text{Pr}(4|x \land 6|x \land 9|x) = \text{Pr}(36|x) = \frac{1}{36}\frac{999972}{1000000} = \frac{27777}{1000000}.$$
+
+	Now we can combine all these to get
+
+	$$\text{Pr}( 4| x \lor 6| x \lor 9| x) = \frac{1}{4} - \frac{83333}{1000000} - \frac{27777}{100000} - \frac{55555}{1000000} + \frac{27777}{1000000} = \frac{388889}{1000000}.$$
+	
+	\noindent\textbf{1.11) Show that if a bit undergoes n attempted flips with probability p, the chance of preserving the original bit is} \\
+	$$\sum_{k=0}^{\lfloor n/2 \rfloor}\binom{n}{2k}p^{2k}(1-p)^{n-2k}.$$
+
+	The original bit is preserved iff the total number of flips is even.
+
+	\begin{align*}
+		\text{Pr( even number of flips )} &= \sum_{k=0}^{\lfloor n/2 \rfloor}\text{Pr}(2k\text{ flips})\\
+		&= \sum_{k=0}^{\lfloor n/2 \rfloor} \#\{ x\in\Omega : x \text{ has } 2k \text{ flips}\} * \text{Pr}(\text{ first } 2k \text{ are flips, the rest are not})\\
+		&= \sum_{k=0}^{\lfloor n/2 \rfloor} \frac{n!}{(2k)!(n-2k)!}\cdot p^{2k}(1-p)^{n-2k}.
+	\end{align*}
+
+	\noindent\textbf{1.15) Roll 10 standard six sided dice. What is the probability that their sum will be divisible by 6?} \\
+
+	Let $\Omega = \{1, \dots, 6\}^{10}, \mathcal{F}=\mathcal{P}(\Omega)$ and Pr defined by Pr$(x_i = n) = 1/6$ for all $1\leq i\leq 10, 1\leq n\leq6$.
+
+	\begin{align*}
+		\text{Pr}(\sum_{i=1}^{10}x_i \equiv 0 \Mod{6}) &= \sum_{(r_1,\dots,r_9) \in \{1,\dots,6\}^9}\text{Pr}((\sum_{i=1}^{10}x_i \equiv 0 \Mod{6}) \cap ((x_1,\dots,x_9) = (r_1,\dots,r_9))) \\
+		&= \sum_{(r_1,\dots,r_9) \in \{1,\dots,6\}^9}\text{Pr}((\sum_{i=1}^{10}x_i \equiv 0 \Mod{6}))\cdot \text{Pr}((x_1,\dots,x_9) = (r_1,\dots,r_9)) \\
+		&= \sum_{(r_1,\dots,r_9) \in \{1,\dots,6\}^9}\frac{1}{6}\cdot\frac{1}{6^9} = \frac{1}{6}.
+	\end{align*}
+
+	We can split up the intersection in line 1 because the tenth roll result is independent from the first 9 and has a 1/6 probability to make the sum $\equiv 0 \Mod{6}$.
+
 \end{document}

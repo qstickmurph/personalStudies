@@ -1,0 +1,148 @@
+\documentclass[letterpaper, 12pt]{article}
+\usepackage{comment} % enables the use of multi-line comments (\ifx \fi) 
+\usepackage{fullpage} % changes the margin
+\usepackage[T1]{fontenc}
+\usepackage{selinput}
+\usepackage{enumitem}
+\usepackage{listings}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{setspace}
+\usepackage{bm}
+\usepackage{mathtools}
+
+\newcommand{\Mod}[1]{\ (\mathrm{mod}\ #1)}
+
+\begin{document}
+
+
+%Header-Make sure you update this information!!!!
+\noindent
+\large\textbf{SP: Probability and Computing} \hfill \textbf{Quinn Murphey} \\
+\normalsize MAT 4953.001 \hfill Date: 02/24/21\\
+Dr. Ergur\hfill Due Date: 02/24/21\\
+\noindent\makebox[\linewidth]{\rule{\paperwidth}{0.4pt}}
+
+
+\section*{HW 2\#:}
+	\noindent\textbf{2.7) Let X and Y be independent geometric random variables with parameters p and q respectively. Find the values of the following}
+	\begin{enumerate}
+		\item Pr$(X = Y)$.
+
+			\begin{align*}
+				\text{Pr}(X=Y) &= \sum_{n=1}^\infty \text{Pr}(X=n \land Y=n) \\
+				&= \sum_{n=1}^\infty \text{Pr}(X=n)\text{Pr}(Y=n) \\
+				&= \sum_{n=1}^\infty (1-p)^{n-1}p\cdot(1-q)^{n-1}q \\
+				&= pq\sum_{n=1}^\infty ((1-p)(1-q))^{n-1} \\
+				&= \frac{pq}{1 - (1-p)(1-q)} = \frac{pq}{p + q - pq}.
+			\end{align*}
+
+		\item $\mathbb{E}[\text{max}(X,Y)]$.
+
+			\begin{align*}
+				\mathbb{E}[\text{max}(X,Y)] &= \sum_{n=1}^\infty \text{Pr}(\text{max}(X,Y)\geq n) \text{Lem 2.9} \\
+				&= \sum_{n=1}^\infty \text{Pr}(X\geq n) + \text{Pr}(Y\geq n) - \text{Pr}(X\geq n \land Y\geq n) \\
+				&= \sum{n=1}^\infty (1-p)^{n-1} + (1-q)^{n-1} - (1-p)^{n-1}(1-q)^{n-1} \\
+				&= \frac{1}{1 - (1-p)} + \frac{1}{1 - (1-q)} - \frac{1}{1 - (1-p)(1-q)} \\
+				&= \frac{1}{p} + \frac{1}{q} - \frac{1}{p + q - pq}.
+			\end{align*}
+			
+		\item Pr$(\text{min}(X,Y) = k)$.
+
+			\begin{align*}
+				\text{Pr}(\text{min}(X,Y) = k) &= \text{Pr}(X = k \land Y>k) + \text{Pr}(Y = k \land x \geq k) \\
+				&= \text{Pr}(X=k)\text{Pr}(Y>k) + \text{Pr}(y=k)\text{Pr}(x\geq Y) \\
+				&= (1-p)^{k-1}p(1-q)^{k-1} + (1-q)^{k-1}q(1-p)^{k-1}\\
+				&= (1-p)^{k-1}(1-q)^{k-1}(p(1-q) + q) \\
+				&= (1 - (p + q - pq))^{k-1}(p + q -pq)
+			\end{align*}
+
+		\item $\mathbb{E}[X \mid X\leq Y]$.
+
+			\begin{align*}
+				\mathbb{E}[X\mid X\leq Y] &= \sum_{n=1}^{\infty}n\cdot\text{Pr}(X=n\mid X\leq Y) \\
+                &= \sum_{n=1}^\infty n \cdot \frac{\text{Pr}(X=n \land X\leq Y}{\text{Pr}(X\leq Y)} \\
+			\end{align*}
+			
+			We will first evaluate the inner parts of this sum.
+
+			\begin{align*}
+				\text{Pr}(X\leq Y) &= \sum_{n=1}^{\infty} \text{Pr}(X=n \land n\leq Y) \\
+				&= \sum_{n=1}^\infty \text{Pr}(X=n)\text{Pr}(n\leq Y) \\
+				&= \sum_{n=1}^\infty (1-p)^{n-1}p(1-q)^{n-1} \\
+				&= \frac{p}{1 - (1-p)(1-q)} = \frac{p}{p + q - pq}.
+			\end{align*}
+
+			\begin{align*}
+				\text{Pr}(X=n \land n\leq Y) &= \text{Pr}(X=n)\text{Pr}(n\leq Y) \\
+				&= (1-p)^{n-1}p(1-q)^{n-1}.
+			\end{align*}
+
+			Thus,
+
+			\begin{align*}
+				\mathbb{E}[X\mid X\leq Y] &= \sum_{n=1}^{\infty}n\cdot\frac{(1-p)^{n-1}p(1-q)^{n-1}}{\frac{p}{p + q - pq}} \\
+				&= \sum_{n=0}^\infty n\cdot (1-(p + q - pq))^{n-1}(p+q-pq) \\
+				&= \frac{1}{p + q - pq}
+			\end{align*}
+
+			since the second line is the expectation of a geometric random variable with parameter $p+q-pq$.
+	\end{enumerate}
+
+	\noindent\textbf{2.9) Suppose we roll two fair k-sided dice to get the values $X_1$ and $X_2$. Find the following values:}
+	\begin{enumerate}
+		\item $\mathbb{E}[\text{max}(X_1,X_2)]$
+
+			\begin{align*}
+				\mathbb{E}[\text{max}(X_1,X_2)] &= \sum_{i=1}^{k}\text{Pr}(\text{max}(X_1,X_2)\geq i) \\
+				&= \sum_{i=1}^k \text{Pr}(X_1 \geq i) + \text{Pr}(X_2 \geq i) = \text{Pr}(X_1 \geq i \land X_2\geq i) \\
+				&= \sum_{i=1}^k (\frac{i}{k}) + (\frac{i}{k}) - (\frac{i}{k})(\frac{i}{k}) \\
+				&= \sum_{i=1}^k 2\frac{i}{k} - \frac{i^2}{k^2} \\
+				&= \frac{k(k+1)}{k} - \frac{k(k+1)(2k+1)}{6k^2} \\
+				&= k+1 - \frac{(k+1)(2k+1)}{6k}.
+			\end{align*}
+
+		\item $\mathbb{E}[\text{max}(X_1,X_2)$
+	
+
+			Note: $\mathbb{E}[X_1] = \mathbb{E}[X_2] = \frac{k+1}{2}$ by multiplying the sum of the first $k$ numbers by the probability of each roll: $\frac{1}{k}$.
+
+			\begin{align*}
+				\mathbb{E}[\text{min}(X_1,X_2)] &= \mathbb{E}[X_1 + X_2 - \text{max}(X_1,X_2)] \\
+				&= \mathbb{E}[X_1] + \mathbb{E}[X_2] - \mathbb{E}[\text{max}(X_1,X_2)] \text{ (linearity of E)}\\
+				&= \frac{k+1}{2} \frac{k+1}{2} - (k+1 - \frac{(k+1)(2k+1)}{6k}).
+			\end{align*}
+
+	\end{enumerate}
+
+	(b) and (c) follow directly from how we defined min$(X_1, X_2)$ in the beginning of its evaluation and the fact that max$(X,Y) = X + Y -$ min$(X,Y)$.
+
+	\noindent\textbf{2.15) Let $X = X_1 + \dots + X_k$ where each $X_i$ is a geometric random variable with parameter $p$. Find $\mathbb{E}[X]$ }
+
+	By the linearity of expectation we get $\mathbb{E}[X] = \sum_{i=1}^k\mathbb{E}[X_i] = k\cdot p$.
+
+	\noindent\textbf{2.25) When rolling one six sided dice at a time, what is the expected number of rolls until consecutive sixes are shown}
+	
+	Let $X$ denote the random variable on the number of rolls before consecutive sixes are rolled and $X_1$ a geometric random variable with $p=1/6$.
+
+	We first note that if we roll a six, then we have $1/6$ probability of rolling consecutive sixes on the next roll and a 5/6 probability of not. This means our next roll can be treated as the first roll of a new run because it's independent from the rolls that came before. However, if we don't roll 6, then, there is no possibility of rolling consecutive sixes on the next roll.
+
+	Formalizing this, we get
+
+	\begin{align*}
+		\mathbb{E}[X\mid X_1] &= \frac{1}{6}(X_1 + 1) + \frac{5}{6}(X_1 + 1 + \mathbb{E}[X]) \\
+		&= X_1 + 1 +\frac{5}{6}\mathbb{E}[X].
+	\end{align*}
+
+	We can then solve for $\mathbb{E}$ to get
+	\begin{align*}
+		\mathbb{E}[X] &= \mathbb{E} \mathbb{E} [X \mid X_1] \\
+		&= \mathbb{E}[X_1 + 1 \mathbb{E}[X]] \\
+		&= \mathbb{E}[X] = \mathbb{E}[X_1] + 1 + \frac{5}{6}\mathbb{E}[X] \\
+		&\Rightarrow \frac{1}{6}\mathbb{E}[X] = 7 \\
+		&\Rightarrow \mathbb{E}[X] = 42.
+	\end{align*}
+	
+	Thus, we expect it will take 42 rolls to roll consecutive sixes
+	
+\end{document}
