@@ -1,0 +1,14 @@
+<html>
+    <body>
+        <h1>ONLINE NOTICE OF OVERENROLLMENT - COURSE x{adept_codeb}yx{acourse_numb}y - x{adatestampb}y</h1>
+        <p>
+            Dear Instructor,
+        </p>
+        <p>
+            Your course, x{acourse_nameb}y, scheduled from x{acourse_startb}y to x{acourse_endb}y, has exceeded normal capacity with an enrollment of x{anum_studentsb}y students. This must be corrected within thirty days or this issue will be referred to the x{adept_nameb}y department for further review.
+        </p>
+        <p>
+            - Administration
+        </p>
+    </body>
+</html>
