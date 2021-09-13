@@ -1,0 +1,3 @@
+a) This program is complete and will work on space, tab, and line break delimeted words
+b) The program creates N children processes and stores them inside of a custom linked list to wait for later. (I chose to use waitpid() rather than wait()). The parent process then waits for all the children processes in order of creation. After that it prints. The children processes each loop through the file's characters and adds 1 to the numWords variable whenever it encounters a non-whitespace character immediately following a sequence of any length of whitespace (start of file is considered whitespace for this).
+c) I used the general documentation for fopen, fclose, waitpid, fork, bool, and fgetc.
