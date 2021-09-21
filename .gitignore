@@ -4,6 +4,7 @@ logs/
 pythonEnv/
 HOMLenv/
 dsenv/
+*/target/*
 *.zip
 *.pdf
 *.log
