@@ -163,6 +163,7 @@ public class StudentFunctions {
      * Otherwise, return RC_REC_NOT_FOUND
      */
     public static int vehicleRead(HashFile hashFile, int rbn, Vehicle vehicle) {
+        /*
         rbn = Main.hash(vehicle.getVehicleId(), hashFile.getHashHeader().getMaxHash());
         String oldString = vehicle.getVehicleIdAsString();
         int rc = readRec(hashFile, rbn, vehicle);
@@ -171,6 +172,16 @@ public class StudentFunctions {
         }
         
         return ReturnCodes.RC_OK;
+        */
         
+        rbn = Main.hash(vehicle.getVehicleId(), hashFile.getHashHeader().getMaxHash());
+        Vehicle testVehicle = new Vehicle();
+        int rc = readRec(hashFile, rbn, testVehicle);
+        if( rc != ReturnCodes.RC_OK || (! vehicle.getVehicleIdAsString().equals(testVehicle.getVehicleIdAsString())) ){
+            return ReturnCodes.RC_REC_NOT_FOUND;
+        }
+        vehicle.fromByteArray(testVehicle.toByteArray());
+        
+        return ReturnCodes.RC_OK;
     }
 }

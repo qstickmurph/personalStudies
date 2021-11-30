@@ -1,0 +1,10 @@
+Quinn Murphey (pfl955)
+
+I have collaborated with noone on this assignment other than the book.
+
+I believe this program is complete, given that the output md5sums are correct (at least the first 4 characters). 
+
+c6c8cbad38688cf325f7427c89dc5044  fcfs.all
+b0e52eaab5f374dd7607df8857fd5496  psjf.all
+b14567f00bf659498d1715731fb705e2  rr.all
+a65715976409787c395f3442cf904d9a  sjf.all
