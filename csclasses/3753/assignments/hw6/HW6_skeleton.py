@@ -11,6 +11,7 @@ def k_means_clustering(data, centroids, k):
     # iterate until convergence
     while not centroid_current.equals(centroid_last):
         
+        clusters = pd.DataFrame()
         cluster_count = 0 #it counts the number of clusters. Cluster IDs start from 0.
         # calculate the distance of each point to the K centroids
         for idx, position in centroid_current.iterrows():# the idx will not be used. We just separate the index with the actual data "position" in the dataset. You will use "cluster_count" as the column index in "clusters".
@@ -20,20 +21,24 @@ def k_means_clustering(data, centroids, k):
                 distanceList.append(((position['x'] - data['x'][i]) ** 2 + (position['y'] - data['y'][i]) ** 2) ** (1/2))
             
             clusters.insert(cluster_count, cluster_count, distanceList)
-            
             # your code ends
             cluster_count += 1
         
-        print(clusters)
-        return
         # update cluster, assign the points to clusters
         clusterIDs = []
         for row_idx in range(len(clusters)):
             # your code is here. Check the distances at every row in 'clusters'. Save the assigned cluster IDs to points. The IDs start from 0
-            pass
- 
- 
-           # your code ends
+            minDist = -1;
+            minIdx = -1;
+
+            for col_idx in range(len(clusters.columns)):
+                if clusters.iloc[row_idx][col_idx] < minDist or minDist == -1:
+                    minDist = clusters.iloc[row_idx][col_idx]
+                    minIdx = col_idx
+            
+            clusterIDs.append(minIdx)
+            # your code ends
+
         # assign points to clusters. The information is saved in the list and assigned to the dataset.
         data['Cluster'] = clusterIDs
         
@@ -45,9 +50,21 @@ def k_means_clustering(data, centroids, k):
         centroids =[]
         points= [] # save k lists of points in the list. The points in the same list are in the same cluster. 
         # your code is here. The K centroids will be saved in 'centroids', e.g. [[1, 2], [3, 4], [5, 6]]
-        
-        
-        
+        for cluster in range(cluster_count):
+            numInCluster = 0
+            summationX = 0
+            summationY = 0
+            pointsOfCluster = []
+            for idx in range(len(clusterIDs)):
+                if clusterIDs[idx] == cluster:
+                    numInCluster += 1
+                    summationX += data['x'][idx]
+                    summationY += data['y'][idx]
+                    pointsOfCluster.append([data['x'][idx], data['y'][idx]])
+
+            centroids.append([summationX/numInCluster, summationY/numInCluster])
+            points.append(pointsOfCluster)
+
         # your code ends
         centroid_current = pd.DataFrame(data=centroids, columns = ['x', 'y'])
          
