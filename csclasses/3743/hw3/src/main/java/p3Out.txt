@@ -1,0 +1,110 @@
+Beginning Customers
+    CustNr Name                           State Birth Dt   Gender
+    111    Ava Kashun                     TX    2000-04-01 M     
+    222    Cam Aruh                       CA    1990-09-11 M     
+    333    Pete Moss                      FL    1992-03-03 M     
+    444    Bill Board                     CA    1985-04-04 M     
+    480    Anita Vacay                    TX    1975-06-01 F     
+    555    Perry Scope                    OK    1927-04-15 M     
+    601    E Race                         OK    1986-10-01 M     
+    666    Tom E Gunn                     ---   ---        M     
+    755    Ray Mee                        CA    1965-04-01 M     
+    777    Bob Wire                       OK    1973-07-07 M     
+    855    T Doh                          CA    1975-04-15 F     
+    888    Penny Lane                     CA    1990-08-08 F     
+    890    Anita Break                    CA    1992-08-09 F     
+    901    Peg Board                      NY    1987-04-04 F     
+    902    Al B Tross                     CA    1957-07-12 M     
+    903    B B Gunn                       ---   ---        F     
+    904    Sally Mander                   NY    ---        F     
+    999    Marcus Absent                  NY    1999-09-09 M     
+Beginning Properties
+    propId... locDesc........................ state propType rating.... 
+    BEANSBD   Friole Heaven                   TX    T        74         
+    FIREHHH   Forest View                     CA    T        61         
+    HOMEJJJ   Home Alone                      CO    T        73         
+    MTNDDD    Mountain View                   CO    T        79         
+    NYCCC     Times Square                    NY    T        96         
+    OILAAA    Oil Slick                       TX    T        68         
+    QUAKELLL  Rock N Roll                     CA    M        85         
+    RVBBB     Water Logged Camper             FL    M        99         
+    SAEEE     River Shores                    TX    T        91         
+    SNOWFFF   Snowcap Ridge                   CO    T        100        
+    SNOWNNN   Snowy View                      CO    T        84         
+    STARIII   Star View                       CO    C        72         
+    TENTGGG   Kamp Komfort                    CO    C        NULL       
+    VACAYKKK  Griswold Paradise               CO    T        67         
+    WESTMMM   Desert View                     TX    C        95         
+    15 Rows
+Customers after I was added
+    CustNr Name                           State Birth Dt   Gender
+    111    Ava Kashun                     TX    2000-04-01 M     
+    222    Cam Aruh                       CA    1990-09-11 M     
+    333    Pete Moss                      FL    1992-03-03 M     
+    444    Bill Board                     CA    1985-04-04 M     
+    480    Anita Vacay                    TX    1975-06-01 F     
+    555    Perry Scope                    OK    1927-04-15 M     
+    601    E Race                         OK    1986-10-01 M     
+    666    Tom E Gunn                     ---   ---        M     
+    755    Ray Mee                        CA    1965-04-01 M     
+    777    Bob Wire                       OK    1973-07-07 M     
+    855    T Doh                          CA    1975-04-15 F     
+    888    Penny Lane                     CA    1990-08-08 F     
+    890    Anita Break                    CA    1992-08-09 F     
+    901    Peg Board                      NY    1987-04-04 F     
+    902    Al B Tross                     CA    1957-07-12 M     
+    903    B B Gunn                       ---   ---        F     
+    904    Sally Mander                   NY    ---        F     
+    999    Marcus Absent                  NY    1999-09-09 M     
+    1999   Quinn Murphey                  TX    2000-12-05 M     
+My Rental Indexes
+    TABLE_SCHEMA.................... TABLE_NAME...................... INDEX_NAME...................... SEQ_IN_INDEX COLUMN_NAME..................... CARDINALITY. 
+    cs3743_pfl955                    Rental                           PRIMARY                          1            custNr                           54           
+    cs3743_pfl955                    Rental                           PRIMARY                          2            propId                           54           
+    2 Rows
+My rentals
+    custNr propId... startDt... totalCost... 
+    1999   HOMEJJJ   2019-12-14 220.0        
+    1999   MTNDDD    2019-12-14 200.0        
+    1999   NYCCC     2019-12-14 210.0        
+    3 Rows
+Other customers renting my properties
+    propId... custNr name.......................... totalCost... 
+    NYCCC     222    Cam Aruh                       200.0        
+    MTNDDD    444    Bill Board                     200.0        
+    MTNDDD    555    Perry Scope                    200.0        
+    NYCCC     555    Perry Scope                    200.0        
+    NYCCC     855    T Doh                          200.0        
+    HOMEJJJ   888    Penny Lane                     200.0        
+    HOMEJJJ   890    Anita Break                    200.0        
+    MTNDDD    901    Peg Board                      300.0        
+    MTNDDD    902    Al B Tross                     600.0        
+    MTNDDD    903    B B Gunn                       600.0        
+    MTNDDD    904    Sally Mander                   600.0        
+    MTNDDD    999    Marcus Absent                  800.0        
+    12 Rows
+My cheaper rentals
+    custNr propId... startDt... totalCost... 
+    1999   HOMEJJJ   2019-12-14 198.0        
+    1999   MTNDDD    2019-12-14 180.0        
+    1999   NYCCC     2019-12-14 189.0        
+    3 Rows
+Properties having more than 2 rentals
+    propId... count(*).... 
+    BEANSBD   2            
+    HOMEJJJ   3            
+    MTNDDD    8            
+    NYCCC     4            
+    OILAAA    2            
+    QUAKELLL  4            
+    RVBBB     8            
+    SAEEE     5            
+    SNOWNNN   3            
+    STARIII   7            
+    TENTGGG   2            
+    VACAYKKK  3            
+    WESTMMM   5            
+    13 Rows
+Other customers renting my properties
+    propId... custNr name.......................... totalCost... 
+    No results
